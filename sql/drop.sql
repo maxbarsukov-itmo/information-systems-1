@@ -10,12 +10,11 @@ DROP INDEX IF EXISTS idx_dragon_type;
 DROP INDEX IF EXISTS idx_person_name;
 
 -- Tables
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS admin_requests;
 DROP TABLE IF EXISTS locations;
-DROP TABLE IF EXISTS coordinates;
 DROP TABLE IF EXISTS dragon_caves;
 DROP TABLE IF EXISTS dragon_heads;
+DROP TABLE IF EXISTS coordinates;
+DROP TABLE IF EXISTS admin_requests;
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS people;
 DROP TABLE IF EXISTS dragons;
-DROP TABLE IF EXISTS a;
