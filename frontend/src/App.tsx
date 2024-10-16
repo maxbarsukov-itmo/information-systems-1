@@ -1,25 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/DragonList';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import DragonList from './pages/DragonList';
+import PrivateRoute from './components/PrivateRoute';
+import Error from './pages/Error'; 
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/dragons"
+          element={
+            <PrivateRoute>
+              <DragonList />
+            </PrivateRoute>
+          }
+        />
+        <Route path=":code" element={<Error />} />
+        <Route path="*" element={<Error />} />
+      </Routes>
+    </>
   );
 }
 
