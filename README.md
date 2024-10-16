@@ -187,7 +187,7 @@ public enum Color {
 
 ## Лицензия <a name="license"></a>
 
-Проект доступен с открытым исходным кодом на условиях [Лицензии MIT](https://opensource.org/licenses/MIT).
+Проект доступен с открытым исходным кодом на условиях [Лицензии MIT](https://opensource.org/licenses/MIT). \
 *Авторские права 2024 Max Barsukov*
 
 **Поставьте звезду :star:, если вы нашли этот проект полезным.**
