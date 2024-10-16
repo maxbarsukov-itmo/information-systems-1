@@ -1,6 +1,8 @@
 package ru.ifmo.is.lab1.locations;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
 import ru.ifmo.is.lab1.locations.dto.*;
@@ -8,7 +10,6 @@ import ru.ifmo.is.lab1.users.User;
 import ru.ifmo.is.lab1.users.UserService;
 
 import java.time.ZonedDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,13 +20,11 @@ public class LocationService {
   private final LocationPolicy policy;
   private final UserService userService;
 
-  public List<LocationDto> getAll() {
+  public Page<LocationDto> getAll(Pageable pageable) {
     policy.showAll(currentUser());
 
-    var locations = repository.findAll();
-    return locations.stream()
-      .map(mapper::map)
-      .toList();
+    var locations = repository.findAll(pageable);
+    return locations.map(mapper::map);
   }
 
   public LocationDto create(LocationCreateDto locationData) {

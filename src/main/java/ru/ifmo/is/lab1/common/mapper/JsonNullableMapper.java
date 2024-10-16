@@ -3,10 +3,12 @@ package ru.ifmo.is.lab1.common.mapper;
 import org.mapstruct.Condition;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 @Mapper(
-  componentModel = MappingConstants.ComponentModel.SPRING
+  componentModel = MappingConstants.ComponentModel.SPRING,
+  unmappedTargetPolicy = ReportingPolicy.WARN
 )
 public abstract class JsonNullableMapper {
 
