@@ -29,30 +29,46 @@ CREATE TABLE admin_requests (
 
 -- Таблица локаций
 CREATE TABLE locations (
-  id SERIAL PRIMARY KEY,   -- Уникальный идентификатор местоположения
-  x DOUBLE PRECISION,      -- Координата X
-  y BIGINT,                -- Координата Y
-  z BIGINT NOT NULL        -- Координата Z
+  id SERIAL PRIMARY KEY,                                           -- Уникальный идентификатор местоположения
+  x DOUBLE PRECISION,                                              -- Координата X
+  y BIGINT,                                                        -- Координата Y
+  z BIGINT NOT NULL,                                               -- Координата Z
+  created_by INTEGER NOT NULL REFERENCES users(id),                -- Идентификатор пользователя, создавшего местоположение
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),      -- Время создания персоны
+  updated_by INTEGER REFERENCES users(id),                         -- Идентификатор пользователя, последнего обновившего местоположение
+  updated_at TIMESTAMP WITH TIME ZONE                              -- Время последнего обновления
 );
 
 -- Таблица координат
 CREATE TABLE coordinates (
-  id SERIAL PRIMARY KEY,                -- Уникальный идентификатор координат
-  x INTEGER NOT NULL CHECK (x <= 301),  -- Координата X (максимум 301)
-  y FLOAT NOT NULL                      -- Координата Y
+  id SERIAL PRIMARY KEY,                                           -- Уникальный идентификатор координат
+  x INTEGER NOT NULL CHECK (x <= 301),                             -- Координата X (максимум 301)
+  y FLOAT NOT NULL,                                                -- Координата Y
+  created_by INTEGER NOT NULL REFERENCES users(id),                -- Идентификатор пользователя, создавшего координату
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),      -- Время создания персоны
+  updated_by INTEGER REFERENCES users(id),                         -- Идентификатор пользователя, последнего обновившего координату
+  updated_at TIMESTAMP WITH TIME ZONE                              -- Время последнего обновления
 );
 
 -- Таблица пещер драконов
 CREATE TABLE dragon_caves (
-  id SERIAL PRIMARY KEY,  -- Уникальный идентификатор пещеры
-  depth REAL              -- Глубина пещеры
+  id SERIAL PRIMARY KEY,                                           -- Уникальный идентификатор пещеры
+  depth REAL,                                                      -- Глубина пещеры
+  created_by INTEGER NOT NULL REFERENCES users(id),                -- Идентификатор пользователя, создавшего пещеру дракона
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),      -- Время создания персоны
+  updated_by INTEGER REFERENCES users(id),                         -- Идентификатор пользователя, последнего обновившего пещеру дракона
+  updated_at TIMESTAMP WITH TIME ZONE                              -- Время последнего обновления
 );
 
 -- Таблица голов драконов
 CREATE TABLE dragon_heads (
-  id SERIAL PRIMARY KEY,  -- Уникальный идентификатор головы дракона
-  size BIGINT,            -- Размер головы
-  tooth_count REAL        -- Количество зубов (может быть NULL)
+  id SERIAL PRIMARY KEY,                                           -- Уникальный идентификатор головы дракона
+  size BIGINT,                                                     -- Размер головы
+  tooth_count REAL,                                                -- Количество зубов (может быть NULL)
+  created_by INTEGER NOT NULL REFERENCES users(id),                -- Идентификатор пользователя, создавшего голову дракона
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),      -- Время создания персоны
+  updated_by INTEGER REFERENCES users(id),                         -- Идентификатор пользователя, последнего обновившего голову дракона
+  updated_at TIMESTAMP WITH TIME ZONE                              -- Время последнего обновления
 );
 
 -- Таблица персон
