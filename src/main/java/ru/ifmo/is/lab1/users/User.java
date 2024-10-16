@@ -49,26 +49,36 @@ public class User implements UserDetails {
   @Convert(converter = ZonedDateTimeConverter.class)
   private ZonedDateTime createdAt;
 
+  @JsonIgnore
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return List.of(new SimpleGrantedAuthority(role.name()));
   }
 
+  @JsonIgnore
+  public boolean isAdmin() {
+    return this.role.equals(Role.ROLE_ADMIN);
+  }
+
+  @JsonIgnore
   @Override
   public boolean isAccountNonExpired() {
     return true;
   }
 
+  @JsonIgnore
   @Override
   public boolean isAccountNonLocked() {
     return true;
   }
 
+  @JsonIgnore
   @Override
   public boolean isCredentialsNonExpired() {
     return true;
   }
 
+  @JsonIgnore
   @Override
   public boolean isEnabled() {
     return true;

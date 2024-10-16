@@ -1,12 +1,14 @@
 package ru.ifmo.is.lab1.users;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import ru.ifmo.is.lab1.common.exceptions.UserWithThisUsernameAlreadyExists;
+import ru.ifmo.is.lab1.common.errors.UserWithThisPasswordAlreadyExists;
+import ru.ifmo.is.lab1.common.errors.UserWithThisUsernameAlreadyExists;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +34,14 @@ public class UserService {
       throw new UserWithThisUsernameAlreadyExists("Пользователь с таким именем уже существует");
     }
 
+    var anotherUserWithThisPassword = repository.findByPassword(user.getPassword());
+    if (anotherUserWithThisPassword.isPresent()) {
+      throw new UserWithThisPasswordAlreadyExists(
+        "Этот пароль уже занят пользователем '" + anotherUserWithThisPassword.get().getUsername()
+          + "'. Попробуйте другой."
+      );
+    }
+
     return save(user);
   }
 
@@ -40,6 +50,7 @@ public class UserService {
    *
    * @return пользователь
    */
+  @Cacheable("users")
   public User getByUsername(String username) {
     return repository.findByUsername(username)
       .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
@@ -62,21 +73,20 @@ public class UserService {
    *
    * @return текущий пользователь
    */
+  @Cacheable("users")
   public User getCurrentUser() {
     // Получение имени пользователя из контекста Spring Security
     var username = SecurityContextHolder.getContext().getAuthentication().getName();
     return getByUsername(username);
   }
 
-  // TODO: remove
   /**
-   * Выдача прав администратора текущему пользователю
-   * <p>
-   * Нужен для демонстрации
+   * Получение имени текущего пользователя
+   *
+   * @return имя текущего пользователь
    */
-  @Deprecated
-  public void makeAdmin(User user) {
-    user.setRole(Role.ROLE_ADMIN);
-    save(user);
+  public String getCurrentUsername() {
+    // Получение имени пользователя из контекста Spring Security
+    return SecurityContextHolder.getContext().getAuthentication().getName();
   }
 }

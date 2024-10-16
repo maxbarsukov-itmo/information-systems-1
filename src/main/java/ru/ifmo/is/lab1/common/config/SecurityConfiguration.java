@@ -3,6 +3,7 @@ package ru.ifmo.is.lab1.common.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -46,12 +47,30 @@ public class SecurityConfiguration {
       }))
 
       .authorizeHttpRequests(request -> request
-        // Можно указать конкретный путь,
-        // * — 1 уровень вложенности,
-        // ** — любое количество уровней вложенности
+        // Доступ к методам /api/auth/** открыт для всех
         .requestMatchers("/api/auth/**").permitAll()
+
+        // Доступ к администраторским действиям только для админов
         .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+        // Доступ к Swagger UI (для документации)
         .requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
+
+        // Доступ к данным локаций
+        .requestMatchers(HttpMethod.GET, "/api/locations/**").authenticated() // все авторизованные пользователи могут читать данные
+        .requestMatchers(HttpMethod.POST, "/api/locations/**").authenticated() // только авторизованные могут создавать
+        .requestMatchers(HttpMethod.PUT, "/api/locations/**").authenticated() // обновление доступно только авторам или администраторам (будет проверяться в контроллере)
+        .requestMatchers(HttpMethod.PATCH, "/api/locations/**").authenticated() // обновление доступно только авторам или администраторам (будет проверяться в контроллере)
+        .requestMatchers(HttpMethod.DELETE, "/api/locations/**").authenticated() // удаление доступно только авторам или администраторам
+
+        // Доступ к данным персонажей
+        .requestMatchers(HttpMethod.GET, "/api/people/**").authenticated() // все авторизованные пользователи могут читать данные
+        .requestMatchers(HttpMethod.POST, "/api/people/**").authenticated() // только авторизованные могут создавать
+        .requestMatchers(HttpMethod.PUT, "/api/people/**").authenticated() // обновление доступно только авторам или администраторам (будет проверяться в контроллере)
+        .requestMatchers(HttpMethod.PATCH, "/api/people/**").authenticated() // обновление доступно только авторам или администраторам (будет проверяться в контроллере)
+        .requestMatchers(HttpMethod.DELETE, "/api/people/**").authenticated() // удаление доступно только авторам или администраторам
+
+        // Любой другой запрос должен быть аутентифицирован
         .anyRequest().authenticated())
       .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
       .authenticationProvider(authenticationProvider())
@@ -77,4 +96,3 @@ public class SecurityConfiguration {
     return config.getAuthenticationManager();
   }
 }
-
