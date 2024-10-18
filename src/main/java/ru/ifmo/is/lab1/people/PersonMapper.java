@@ -2,6 +2,7 @@ package ru.ifmo.is.lab1.people;
 
 import org.mapstruct.*;
 
+import ru.ifmo.is.lab1.common.framework.CrudMapper;
 import ru.ifmo.is.lab1.common.mapper.JsonNullableMapper;
 import ru.ifmo.is.lab1.common.mapper.ReferenceMapper;
 import ru.ifmo.is.lab1.people.dto.*;
@@ -12,7 +13,7 @@ import ru.ifmo.is.lab1.people.dto.*;
   componentModel = MappingConstants.ComponentModel.SPRING,
   unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
-public abstract class PersonMapper {
+public abstract class PersonMapper implements CrudMapper<Person, PersonDto, PersonCreateDto, PersonUpdateDto> {
   @Mapping(source = "locationId", target = "location")
   public abstract Person map(PersonCreateDto dto);
 

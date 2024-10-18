@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.annotations.ColumnTransformer;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import ru.ifmo.is.lab1.common.entity.Auditable;
+import ru.ifmo.is.lab1.common.framework.Auditable;
 import ru.ifmo.is.lab1.common.entity.BaseEntity;
 import ru.ifmo.is.lab1.locations.Location;
 
@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "people")
-public class Person extends Auditable implements BaseEntity {
+public class Person extends Auditable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "people_id_seq")

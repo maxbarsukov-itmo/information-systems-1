@@ -1,11 +1,11 @@
-package ru.ifmo.is.lab1.common.policies;
+package ru.ifmo.is.lab1.common.framework;
 
 import org.springframework.stereotype.Component;
-import ru.ifmo.is.lab1.common.entity.Auditable;
+import ru.ifmo.is.lab1.common.policies.Policy;
 import ru.ifmo.is.lab1.users.User;
 
 @Component
-public abstract class DefaultPolicy<T extends Auditable> extends Policy<T> {
+public abstract class CrudPolicy<T extends Auditable> extends Policy<T> {
 
   @Override
   public boolean canShowAll(User user) {
