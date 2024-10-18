@@ -15,7 +15,6 @@ public class PersonUpdateDto {
   @NotNull
   private JsonNullable<Color> eyeColor;
 
-  @NotNull
   private JsonNullable<Color> hairColor;
 
   @NotNull
@@ -27,6 +26,5 @@ public class PersonUpdateDto {
   @NotNull
   private JsonNullable<Double> height;
 
-  @NotNull
   private JsonNullable<String> passportId;
 }
