@@ -1,19 +1,16 @@
 package ru.ifmo.is.lab1.common.framework.dto;
 
+import lombok.Getter;
+import lombok.Setter;
 import ru.ifmo.is.lab1.users.User;
 
 import java.time.ZonedDateTime;
 
-public interface AuditableDto {
-  User getCreatedBy();
-  void setCreatedBy(User user);
-
-  ZonedDateTime getCreatedAt();
-  void setCreatedAt(ZonedDateTime timestamp);
-
-  User getUpdatedBy();
-  void setUpdatedBy(User user);
-
-  ZonedDateTime getUpdatedAt();
-  void setUpdatedAt(ZonedDateTime timestamp);
+@Getter
+@Setter
+public abstract class AuditableDto {
+  private User createdBy;
+  private ZonedDateTime createdAt;
+  private User updatedBy;
+  private ZonedDateTime updatedAt;
 }
