@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.ifmo.is.lab1.auth.dto.AuthenticationResponse;
-import ru.ifmo.is.lab1.auth.dto.SignInRequest;
-import ru.ifmo.is.lab1.auth.dto.SignUpRequest;
+import ru.ifmo.is.lab1.auth.dto.AuthenticationDto;
+import ru.ifmo.is.lab1.auth.dto.SignInDto;
+import ru.ifmo.is.lab1.auth.dto.SignUpDto;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -23,13 +23,13 @@ public class AuthenticationController {
 
   @Operation(summary = "Регистрация пользователя")
   @PostMapping("/sign-up")
-  public AuthenticationResponse signUp(@RequestBody @Valid SignUpRequest request) {
+  public AuthenticationDto signUp(@RequestBody @Valid SignUpDto request) {
     return authenticationService.signUp(request);
   }
 
   @Operation(summary = "Авторизация пользователя")
   @PostMapping("/sign-in")
-  public AuthenticationResponse signIn(@RequestBody @Valid SignInRequest request) {
+  public AuthenticationDto signIn(@RequestBody @Valid SignInDto request) {
     return authenticationService.signIn(request);
   }
 }

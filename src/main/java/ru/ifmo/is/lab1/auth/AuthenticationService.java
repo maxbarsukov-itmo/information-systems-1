@@ -6,9 +6,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ru.ifmo.is.lab1.auth.dto.AuthenticationResponse;
-import ru.ifmo.is.lab1.auth.dto.SignInRequest;
-import ru.ifmo.is.lab1.auth.dto.SignUpRequest;
+import ru.ifmo.is.lab1.auth.dto.AuthenticationDto;
+import ru.ifmo.is.lab1.auth.dto.SignInDto;
+import ru.ifmo.is.lab1.auth.dto.SignUpDto;
 import ru.ifmo.is.lab1.users.User;
 import ru.ifmo.is.lab1.users.Role;
 import ru.ifmo.is.lab1.users.UserService;
@@ -27,7 +27,7 @@ public class AuthenticationService {
    * @param request данные пользователя
    * @return токен
    */
-  public AuthenticationResponse signUp(SignUpRequest request) {
+  public AuthenticationDto signUp(SignUpDto request) {
     var user = User.builder()
       .username(request.getUsername())
       .password(passwordEncoder.encode(request.getPassword()))
@@ -37,7 +37,7 @@ public class AuthenticationService {
     userService.create(user);
 
     var jwt = jwtService.generateToken(user);
-    return new AuthenticationResponse(jwt);
+    return new AuthenticationDto(jwt, user);
   }
 
   /**
@@ -46,7 +46,7 @@ public class AuthenticationService {
    * @param request данные пользователя
    * @return токен
    */
-  public AuthenticationResponse signIn(SignInRequest request) {
+  public AuthenticationDto signIn(SignInDto request) {
     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
       request.getUsername(),
       request.getPassword()
@@ -57,6 +57,6 @@ public class AuthenticationService {
       .loadUserByUsername(request.getUsername());
 
     var jwt = jwtService.generateToken(user);
-    return new AuthenticationResponse(jwt);
+    return new AuthenticationDto(jwt, userService.getByUsername(user.getUsername()));
   }
 }

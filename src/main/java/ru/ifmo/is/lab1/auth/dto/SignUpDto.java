@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Schema(description = "Запрос на регистрацию")
-public class SignUpRequest {
+public class SignUpDto {
   @Schema(description = "Имя пользователя", example = "JohnyBoy")
   @Size(min = 3, max = 255, message = "Имя пользователя должно содержать от 3 до 255 символов")
   @NotBlank(message = "Имя пользователя не может быть пустыми")
