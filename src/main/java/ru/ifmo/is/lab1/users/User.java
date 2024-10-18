@@ -13,6 +13,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.ifmo.is.lab1.common.entity.BaseEntity;
 import ru.ifmo.is.lab1.common.utils.datetime.ZonedDateTimeConverter;
 
 @Entity
@@ -23,7 +24,7 @@ import ru.ifmo.is.lab1.common.utils.datetime.ZonedDateTimeConverter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="users")
-public class User implements UserDetails {
+public class User implements UserDetails, BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_seq")
   @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", allocationSize = 1)
