@@ -57,14 +57,16 @@ public class SecurityConfiguration {
         .requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
 
         // Доступ к данным локаций
-        .requestMatchers(HttpMethod.GET, "/api/locations/**").permitAll() // все авторизованные пользователи могут читать данные
+        .requestMatchers(HttpMethod.GET, "/api/locations/**").permitAll() // все пользователи могут читать данные
+        .requestMatchers(HttpMethod.POST, "/api/locations/search").permitAll() // все пользователи могут искать данные
         .requestMatchers(HttpMethod.POST, "/api/locations/**").authenticated() // только авторизованные могут создавать
         .requestMatchers(HttpMethod.PUT, "/api/locations/**").authenticated() // обновление доступно только авторам или администраторам (будет проверяться в контроллере)
         .requestMatchers(HttpMethod.PATCH, "/api/locations/**").authenticated() // обновление доступно только авторам или администраторам (будет проверяться в контроллере)
         .requestMatchers(HttpMethod.DELETE, "/api/locations/**").authenticated() // удаление доступно только авторам или администраторам
 
         // Доступ к данным персонажей
-        .requestMatchers(HttpMethod.GET, "/api/people/**").permitAll() // все авторизованные пользователи могут читать данные
+        .requestMatchers(HttpMethod.GET, "/api/people/**").permitAll() // все пользователи могут читать данные
+        .requestMatchers(HttpMethod.POST, "/api/people/search").permitAll() // все пользователи могут искать данные
         .requestMatchers(HttpMethod.POST, "/api/people/**").authenticated() // только авторизованные могут создавать
         .requestMatchers(HttpMethod.PUT, "/api/people/**").authenticated() // обновление доступно только авторам или администраторам (будет проверяться в контроллере)
         .requestMatchers(HttpMethod.PATCH, "/api/people/**").authenticated() // обновление доступно только авторам или администраторам (будет проверяться в контроллере)

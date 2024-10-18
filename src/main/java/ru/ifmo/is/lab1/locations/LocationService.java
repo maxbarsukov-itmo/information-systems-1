@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
+import ru.ifmo.is.lab1.common.search.SearchDto;
+import ru.ifmo.is.lab1.common.search.SearchMapper;
 import ru.ifmo.is.lab1.locations.dto.*;
 import ru.ifmo.is.lab1.users.User;
 import ru.ifmo.is.lab1.users.UserService;
@@ -18,6 +20,7 @@ public class LocationService {
 
   private final LocationRepository repository;
   private final LocationMapper mapper;
+  private final SearchMapper<Location> searchMapper;
   private final LocationPolicy policy;
   private final UserService userService;
 
@@ -25,6 +28,13 @@ public class LocationService {
     policy.showAll(currentUser());
 
     var locations = repository.findAll(pageable);
+    return locations.map(mapper::map);
+  }
+
+  public Page<LocationDto> findBySearchCriteria(SearchDto searchData, Pageable pageable) {
+    policy.search(currentUser());
+
+    var locations = repository.findAll(searchMapper.map(searchData), pageable);
     return locations.map(mapper::map);
   }
 

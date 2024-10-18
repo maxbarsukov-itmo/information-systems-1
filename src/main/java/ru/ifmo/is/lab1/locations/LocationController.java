@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import ru.ifmo.is.lab1.common.search.SearchDto;
 import ru.ifmo.is.lab1.locations.dto.LocationCreateDto;
 import ru.ifmo.is.lab1.locations.dto.LocationUpdateDto;
 import ru.ifmo.is.lab1.locations.dto.LocationDto;
@@ -28,6 +29,18 @@ public class LocationController {
   @Operation(summary = "Получить все локации")
   public ResponseEntity<Page<LocationDto>> index(@PageableDefault(size = 20) Pageable pageable) {
     var locations = service.getAll(pageable);
+    return ResponseEntity.ok()
+      .header("X-Total-Count", String.valueOf(locations.getTotalElements()))
+      .body(locations);
+  }
+
+  @PostMapping("/search")
+  @Operation(summary = "Поиск и фильтрация локаций")
+  public ResponseEntity<Page<LocationDto>> search(
+    @PageableDefault(size = 20) Pageable pageable,
+    @RequestBody(required = false) SearchDto request
+  ) {
+    var locations = service.findBySearchCriteria(request, pageable);
     return ResponseEntity.ok()
       .header("X-Total-Count", String.valueOf(locations.getTotalElements()))
       .body(locations);

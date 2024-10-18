@@ -13,6 +13,11 @@ public class LocationPolicy extends Policy<Location> {
   }
 
   @Override
+  public boolean canSearch(User user) {
+    return true;
+  }
+
+  @Override
   public boolean canShow(User user, Location object) {
     return true;
   }

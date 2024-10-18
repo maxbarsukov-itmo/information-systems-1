@@ -9,6 +9,7 @@ abstract public class Policy<T> {
     return switch (actionType) {
       case SHOW -> canShow(user, object);
       case SHOW_ALL -> canShowAll(user);
+      case SEARCH -> canSearch(user);
       case CREATE -> canCreate(user);
       case DELETE -> canDelete(user, object);
       case UPDATE -> canUpdate(user, object);
@@ -21,6 +22,13 @@ abstract public class Policy<T> {
   public void showAll(User user) {
     if (canShowAll(user)) return;
     throw constructViolationError(user, "view all");
+  }
+
+  abstract public boolean canSearch(User user);
+
+  public void search(User user) {
+    if (canSearch(user)) return;
+    throw constructViolationError(user, "search and filter data");
   }
 
   abstract public boolean canShow(User user, T object);
