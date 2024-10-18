@@ -1,14 +1,8 @@
 package ru.ifmo.is.lab1.locations;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.ReportingPolicy;
-
+import org.mapstruct.*;
 import ru.ifmo.is.lab1.common.framework.CrudMapper;
-import ru.ifmo.is.lab1.common.mapper.JsonNullableMapper;
-import ru.ifmo.is.lab1.common.mapper.ReferenceMapper;
+import ru.ifmo.is.lab1.common.mapper.*;
 import ru.ifmo.is.lab1.locations.dto.*;
 
 @Mapper(
