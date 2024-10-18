@@ -55,7 +55,7 @@ public class LocationController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+  @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   @Operation(summary = "Создать локацию")
   public ResponseEntity<LocationDto> create(@Valid @RequestBody LocationCreateDto request) {
     var location = service.create(request);
@@ -63,7 +63,7 @@ public class LocationController {
   }
 
   @PutMapping("/{id}")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+  @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   @Operation(summary = "Обновить локацию по ID")
   public ResponseEntity<LocationDto> update(@PathVariable int id, @Valid @RequestBody LocationUpdateDto request) {
     var location = service.update(request, id);
@@ -71,7 +71,7 @@ public class LocationController {
   }
 
   @DeleteMapping("/{id}")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+  @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   @Operation(summary = "Удалить локацию по ID")
   public ResponseEntity<Void> delete(@PathVariable int id) {
     if (service.delete(id)) {

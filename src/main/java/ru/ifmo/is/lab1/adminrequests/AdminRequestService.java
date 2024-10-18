@@ -30,16 +30,16 @@ public class AdminRequestService {
     policy.showAll(user);
 
     if (user.isAdmin()) {
-      return repository.findAllByOrderByCreatedAtAsc(pageable).map(mapper::map);
+      return repository.findAllByOrderByCreatedAtDesc(pageable).map(mapper::map);
     }
 
-    return repository.findAllByUserOrderByCreatedAtAsc(user, pageable).map(mapper::map);
+    return repository.findAllByUserOrderByCreatedAtDesc(user, pageable).map(mapper::map);
   }
 
   public Page<AdminRequestDto> getAllPending(Pageable pageable) {
     policy.showAll(currentUser());
 
-    var adminRequests = repository.findAllByStatusOrderByCreatedAtAsc(Status.PENDING, pageable);
+    var adminRequests = repository.findAllByStatusOrderByCreatedAtDesc(Status.PENDING, pageable);
     return adminRequests.map(mapper::map);
   }
 
@@ -54,7 +54,7 @@ public class AdminRequestService {
     var user = currentUser();
     policy.create(user);
 
-    var previousRequests = repository.findByStatusAndUserOrderByCreatedAtAsc(Status.PENDING, user);
+    var previousRequests = repository.findByStatusAndUserOrderByCreatedAtDesc(Status.PENDING, user);
     if (previousRequests.isPresent()) {
       throw new SomePendingRequestsExists("У вас уже есть необработанная заявка.");
     }

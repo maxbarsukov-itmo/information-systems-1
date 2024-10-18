@@ -62,6 +62,6 @@ abstract public class Policy<T> {
   abstract public String getPolicySubject();
 
   private PolicyViolationError constructViolationError(User user, String action) {
-    return new PolicyViolationError("User#" + user.getId() + "cant " + action + " " + getPolicySubject() + ".");
+    return new PolicyViolationError("User#" + user.getId() + " cant " + action + " " + getPolicySubject() + ".");
   }
 }

@@ -23,7 +23,7 @@ public class AdminRequestController {
 
   @GetMapping
   @Operation(summary = "Получить все запросы на администрирование")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+  @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   public ResponseEntity<Page<AdminRequestDto>> index(@PageableDefault(size = 20) Pageable pageable) {
     var adminRequests = service.getAll(pageable);
     return ResponseEntity.ok()
@@ -33,7 +33,7 @@ public class AdminRequestController {
 
   @GetMapping("/pending")
   @Operation(summary = "Получить все нерассмотренные запросы на администрирование")
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Page<AdminRequestDto>> indexPending(@PageableDefault(size = 20) Pageable pageable) {
     var adminRequests = service.getAllPending(pageable);
     return ResponseEntity.ok()
@@ -42,7 +42,7 @@ public class AdminRequestController {
   }
 
   @GetMapping("/{id}")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+  @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   @Operation(summary = "Получить запрос на администрирование по ID")
   public ResponseEntity<AdminRequestDto> show(@PathVariable int id) {
     var adminRequest = service.getById(id);
@@ -51,7 +51,7 @@ public class AdminRequestController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasRole('ROLE_USER')")
+  @PreAuthorize("hasRole('USER')")
   @Operation(summary = "Подать запрос на администрирование")
   public ResponseEntity<AdminRequestDto> create() {
     var adminRequest = service.create();
@@ -59,7 +59,7 @@ public class AdminRequestController {
   }
 
   @PutMapping("/{id}")
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @PreAuthorize("hasRole('ADMIN')")
   @Operation(summary = "Обработать запрос на администрирование по ID")
   public ResponseEntity<AdminRequestDto> process(@PathVariable int id, @RequestParam boolean approved) {
     var adminRequest = service.process(id, approved);

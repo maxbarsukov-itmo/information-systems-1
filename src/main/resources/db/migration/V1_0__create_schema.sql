@@ -21,7 +21,7 @@ CREATE TABLE users (
 -- Таблица для запросов на получение прав администратора
 CREATE TABLE admin_requests (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   request_date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
   approved_by INTEGER REFERENCES users(id),
   approval_date TIMESTAMP WITH TIME ZONE
@@ -77,7 +77,8 @@ CREATE TABLE people (
   name VARCHAR(255) NOT NULL CHECK (name <> ''),                   -- Имя персонажа (не может быть пустым)
   eye_color color NOT NULL,                                        -- Цвет глаз
   hair_color color,                                                -- Цвет волос (может быть NULL)
-  location_id INTEGER NOT NULL REFERENCES locations(id),           -- Идентификатор местоположения (ссылка на таблицу location)
+  location_id INTEGER NOT NULL
+    REFERENCES locations(id) ON DELETE RESTRICT,                   -- Идентификатор местоположения (ссылка на таблицу location)
   birthday DATE NOT NULL,                                          -- Дата рождения персонажа
   height DOUBLE PRECISION NOT NULL CHECK (height > 0),             -- Рост персонажа (больше 0)
   passport_id VARCHAR(255) UNIQUE,                                 -- Паспорт персонажа (может быть NULL, уникален)
@@ -91,14 +92,15 @@ CREATE TABLE people (
 CREATE TABLE dragons (
   id SERIAL PRIMARY KEY,                                          -- Уникальный идентификатор дракона (генерируется автоматически)
   name VARCHAR(255) NOT NULL CHECK (name <> ''),                  -- Имя дракона (не может быть пустым)
-  coordinates_id INTEGER NOT NULL REFERENCES coordinates(id),     -- Идентификатор координат
+  coordinates_id INTEGER NOT NULL
+    REFERENCES coordinates(id) ON DELETE RESTRICT,                -- Идентификатор координат
   cave_id INTEGER REFERENCES dragon_caves(id) ON DELETE SET NULL, -- Идентификатор пещеры дракона
   killer_id INTEGER REFERENCES people(id) ON DELETE SET NULL,     -- Идентификатор убийцы дракона
   age INTEGER CHECK (age IS NULL OR age > 0),                     -- Возраст дракона (больше 0), может быть NULL
   wingspan INTEGER CHECK (wingspan IS NULL OR wingspan > 0),      -- Размах крыльев (больше 0), может быть NULL
   speaking BOOLEAN,                                               -- Может ли говорить, может быть NULL
   type dragon_type NOT NULL,                                      -- Тип дракона
-  head_id INTEGER REFERENCES dragon_heads(id) ON DELETE SET NULL, -- Идентификатор головы дракона
+  head_id INTEGER REFERENCES dragon_heads(id) ON DELETE RESTRICT, -- Идентификатор головы дракона
   created_by INTEGER NOT NULL REFERENCES users(id),               -- Идентификатор пользователя, создавшего дракона
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),     -- Время создания дракона
   updated_by INTEGER REFERENCES users(id),                        -- Идентификатор пользователя, последнего обновившего дракона

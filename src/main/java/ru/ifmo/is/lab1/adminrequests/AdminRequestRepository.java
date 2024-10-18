@@ -12,8 +12,8 @@ public interface AdminRequestRepository
   extends JpaRepository<AdminRequest, Integer>,
           JpaSpecificationExecutor<AdminRequest> {
 
-  Page<AdminRequest> findAllByOrderByCreatedAtAsc(Pageable pageable);
-  Page<AdminRequest> findAllByUserOrderByCreatedAtAsc(User user, Pageable pageable);
-  Page<AdminRequest> findAllByStatusOrderByCreatedAtAsc(Status status, Pageable pageable);
-  Optional<AdminRequest> findByStatusAndUserOrderByCreatedAtAsc(Status status, User user);
+  Page<AdminRequest> findAllByOrderByCreatedAtDesc(Pageable pageable);
+  Page<AdminRequest> findAllByUserOrderByCreatedAtDesc(User user, Pageable pageable);
+  Page<AdminRequest> findAllByStatusOrderByCreatedAtDesc(Status status, Pageable pageable);
+  Optional<AdminRequest> findByStatusAndUserOrderByCreatedAtDesc(Status status, User user);
 }

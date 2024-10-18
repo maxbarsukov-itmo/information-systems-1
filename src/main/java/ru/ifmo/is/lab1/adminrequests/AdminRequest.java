@@ -4,6 +4,8 @@ import lombok.*;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ru.ifmo.is.lab1.common.entity.BaseEntity;
 import ru.ifmo.is.lab1.common.utils.datetime.ZonedDateTimeConverter;
@@ -31,7 +33,8 @@ public class AdminRequest implements BaseEntity {
   private User user;
 
   @Enumerated(EnumType.STRING)
-  @ColumnTransformer(write="?::status")
+  @JdbcType(PostgreSQLEnumJdbcType.class)
+  @ColumnTransformer(write="?::request_status")
   @Column(name="status", nullable=false)
   private Status status;
 

@@ -55,7 +55,7 @@ public class PersonController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+  @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   @Operation(summary = "Создать персонажа")
   public ResponseEntity<PersonDto> create(@Valid @RequestBody PersonCreateDto request) {
     var person = service.create(request);
@@ -63,7 +63,7 @@ public class PersonController {
   }
 
   @PutMapping("/{id}")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+  @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   @Operation(summary = "Обновить персонажа по ID")
   public ResponseEntity<PersonDto> update(@PathVariable int id, @Valid @RequestBody PersonUpdateDto request) {
     var person = service.update(request, id);
@@ -71,7 +71,7 @@ public class PersonController {
   }
 
   @DeleteMapping("/{id}")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+  @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   @Operation(summary = "Удалить персонажа по ID")
   public ResponseEntity<Void> delete(@PathVariable int id) {
     if (service.delete(id)) {
