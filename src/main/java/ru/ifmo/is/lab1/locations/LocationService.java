@@ -3,6 +3,7 @@ package ru.ifmo.is.lab1.locations;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
 import ru.ifmo.is.lab1.locations.dto.*;
@@ -63,6 +64,10 @@ public class LocationService {
   }
 
   private User currentUser() {
-    return userService.getCurrentUser();
+    try {
+      return userService.getCurrentUser();
+    } catch (UsernameNotFoundException _ex) {
+      return null;
+    }
   }
 }
