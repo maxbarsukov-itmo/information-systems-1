@@ -8,11 +8,8 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.Nullable;
-import ru.ifmo.is.lab1.common.utils.datetime.ZonedDateTimeConverter;
-import ru.ifmo.is.lab1.common.utils.datetime.ZonedDateTimeDeserializer;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.Objects;
 
 import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
@@ -39,6 +36,14 @@ public class SearchSpecification<T> implements Specification<T> {
       );
       case DOES_NOT_CONTAIN -> cb.notLike(
         cb.lower(root.get(searchCriteria.getFilterKey())),
+        "%" + strToSearch + "%"
+      );
+      case STR_CONTAINS -> cb.like(
+        cb.lower(root.get(searchCriteria.getFilterKey()).as(String.class)),
+        "%" + strToSearch + "%"
+      );
+      case STR_DOES_NOT_CONTAIN -> cb.notLike(
+        cb.lower(root.get(searchCriteria.getFilterKey()).as(String.class)),
         "%" + strToSearch + "%"
       );
       case BEFORE -> {
@@ -72,6 +77,14 @@ public class SearchSpecification<T> implements Specification<T> {
       case NOT_EQUAL -> cb.notEqual(
         root.get(searchCriteria.getFilterKey()),
         searchCriteria.getValue()
+      );
+      case STR_EQUAL -> cb.equal(
+        root.get(searchCriteria.getFilterKey()).as(String.class),
+        searchCriteria.getValue().toString()
+      );
+      case STR_NOT_EQUAL -> cb.notEqual(
+        root.get(searchCriteria.getFilterKey()).as(String.class),
+        searchCriteria.getValue().toString()
       );
       case NUL -> cb.isNull(
         root.get(searchCriteria.getFilterKey())
