@@ -9,7 +9,7 @@ import ru.ifmo.is.lab1.common.entity.Auditable;
 import ru.ifmo.is.lab1.common.entity.BaseEntity;
 import ru.ifmo.is.lab1.locations.Location;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -49,7 +49,7 @@ public class Person extends Auditable implements BaseEntity {
   @NotNull
   @Past
   @Column(name = "birthday", nullable = false, columnDefinition = "DATE")
-  private Date birthday;
+  private LocalDate birthday;
 
   @NotNull
   @Min(0)

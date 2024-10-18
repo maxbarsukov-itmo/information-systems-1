@@ -4,7 +4,7 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 import ru.ifmo.is.lab1.people.Color;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 public class PersonCreateDto {
@@ -22,7 +22,7 @@ public class PersonCreateDto {
 
   @NotNull
   @Past
-  private Date birthday;
+  private LocalDate birthday;
 
   @NotNull
   @Min(0)

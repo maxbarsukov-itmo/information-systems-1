@@ -5,7 +5,7 @@ import ru.ifmo.is.lab1.locations.Location;
 import ru.ifmo.is.lab1.people.Color;
 import ru.ifmo.is.lab1.users.User;
 import java.time.ZonedDateTime;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 public class PersonDto {
@@ -14,7 +14,7 @@ public class PersonDto {
   private Color eyeColor;
   private Color hairColor;
   private Location location;
-  private Date birthday;
+  private LocalDate birthday;
   private double height;
   private String passportId;
   private User createdBy;

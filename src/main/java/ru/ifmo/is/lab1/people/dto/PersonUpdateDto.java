@@ -5,7 +5,7 @@ import jakarta.validation.constraints.*;
 import org.openapitools.jackson.nullable.JsonNullable;
 import ru.ifmo.is.lab1.people.Color;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 public class PersonUpdateDto {
@@ -22,7 +22,7 @@ public class PersonUpdateDto {
   private JsonNullable<Integer> locationId;
 
   @NotNull
-  private JsonNullable<Date> birthday;
+  private JsonNullable<LocalDate> birthday;
 
   @NotNull
   private JsonNullable<Double> height;
