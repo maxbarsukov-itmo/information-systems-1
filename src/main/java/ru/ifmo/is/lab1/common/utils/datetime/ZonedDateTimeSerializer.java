@@ -10,9 +10,13 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ZonedDateTimeSerializer extends JsonSerializer<ZonedDateTime> {
+  public Class<ZonedDateTime> handledType() {
+    return ZonedDateTime.class;
+  }
+
   @Override
   public void serialize(ZonedDateTime dateTime, JsonGenerator generator, SerializerProvider provider) throws IOException {
-    var dateTimeString = dateTime.format(DateTimeFormatter.ISO_INSTANT.withZone(ZoneId.systemDefault()));
+    var dateTimeString = dateTime.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.systemDefault()));
     generator.writeString(dateTimeString);
   }
 }

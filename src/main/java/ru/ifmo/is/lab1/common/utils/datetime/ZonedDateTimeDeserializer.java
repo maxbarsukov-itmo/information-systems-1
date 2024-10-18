@@ -9,10 +9,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 
-import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
+import static java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 
 public class ZonedDateTimeDeserializer extends JsonDeserializer<ZonedDateTime> {
   private static final String NULL_VALUE = "null";
+
+  public Class<ZonedDateTime> handledType() {
+    return ZonedDateTime.class;
+  }
 
   @Override
   public ZonedDateTime deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -22,7 +26,7 @@ public class ZonedDateTimeDeserializer extends JsonDeserializer<ZonedDateTime> {
 
     ZonedDateTime dateTime = null;
     if (!NULL_VALUE.equals(dateString)) {
-      dateTime = ZonedDateTime.parse(dateString, ISO_DATE_TIME);
+      dateTime = ZonedDateTime.parse(dateString, ISO_OFFSET_DATE_TIME);
     }
     return dateTime;
   }
