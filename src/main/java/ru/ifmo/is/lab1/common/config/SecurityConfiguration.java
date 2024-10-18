@@ -50,11 +50,14 @@ public class SecurityConfiguration {
         // Доступ к методам /api/auth/** открыт для всех
         .requestMatchers("/api/auth/**").permitAll()
 
-        // Доступ к администраторским действиям только для админов
-        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-
         // Доступ к Swagger UI (для документации)
         .requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
+
+        // Доступ к данным запросов на администрирование
+        .requestMatchers(HttpMethod.GET, "/api/admin-requests/pending").hasRole("ROLE_ADMIN") // только админы могут просматривать все ожидающие запросы
+        .requestMatchers(HttpMethod.GET, "/api/admin-requests/**").authenticated() // только авторизованные могут читать данные
+        .requestMatchers(HttpMethod.POST, "/api/admin-requests/**").hasRole("ROLE_USER") // подавать запросы могут только пользователи
+        .requestMatchers(HttpMethod.PUT, "/api/admin-requests/**").hasRole("ROLE_ADMIN") // рассматривать запросы могут только админы
 
         // Доступ к данным локаций
         .requestMatchers(HttpMethod.GET, "/api/locations/**").permitAll() // все пользователи могут читать данные

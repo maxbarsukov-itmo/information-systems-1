@@ -1,6 +1,8 @@
 package ru.ifmo.is.lab1.users;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -9,10 +11,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import ru.ifmo.is.lab1.common.errors.UserWithThisPasswordAlreadyExists;
 import ru.ifmo.is.lab1.common.errors.UserWithThisUsernameAlreadyExists;
+import ru.ifmo.is.lab1.common.ws.WebSocketHandler;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
+
+  private static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
   private final UserRepository repository;
 
   /**
@@ -42,6 +47,12 @@ public class UserService {
       );
     }
 
+    if (repository.count() == 0) {
+      logger.info("Creating first user with ADMIN role");
+      user.setRole(Role.ROLE_ADMIN);
+    } else {
+      user.setRole(Role.ROLE_USER);
+    }
     return save(user);
   }
 

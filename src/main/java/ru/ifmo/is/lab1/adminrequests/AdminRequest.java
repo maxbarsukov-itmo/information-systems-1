@@ -36,16 +36,16 @@ public class AdminRequest implements BaseEntity {
   private Status status;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "approved_by", nullable = false)
+  @JoinColumn(name = "approved_by")
   private User approvedBy;
 
-  @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name="approval_date", nullable=false)
+  @Column(name="approval_date")
   @Convert(converter = ZonedDateTimeConverter.class)
   private ZonedDateTime approvalDate;
 
   @CreationTimestamp
+  @Temporal(TemporalType.TIMESTAMP)
   @Column(name="created_at", nullable=false)
   @Convert(converter = ZonedDateTimeConverter.class)
   private ZonedDateTime createdAt;
