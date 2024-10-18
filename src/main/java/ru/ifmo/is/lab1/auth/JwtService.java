@@ -19,8 +19,11 @@ import ru.ifmo.is.lab1.users.User;
 
 @Service
 public class JwtService {
-  @Value("${app.jwt.secret}")
+  @Value("${app.jwt.token.secret}")
   private String jwtSigningKey;
+
+  @Value("${app.jwt.token.expiration}")
+  private String jwtExpirationTime;
 
   /**
    * Извлечение имени пользователя из токена
@@ -84,7 +87,7 @@ public class JwtService {
       .claims(extraClaims)
       .subject(userDetails.getUsername())
       .issuedAt(new Date(System.currentTimeMillis()))
-      .expiration(new Date(System.currentTimeMillis() + 1_000 * 60 * 24 * 100))
+      .expiration(new Date(System.currentTimeMillis() + Long.parseLong(jwtExpirationTime)))
       .signWith(getSigningKey(), Jwts.SIG.HS256)
       .compact();
   }
