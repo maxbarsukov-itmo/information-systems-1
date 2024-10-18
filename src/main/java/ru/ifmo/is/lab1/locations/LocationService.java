@@ -60,6 +60,8 @@ public class LocationService {
     policy.update(currentUser(), location);
 
     mapper.update(locationData, location);
+    location.setUpdatedBy(currentUser());
+    location.setUpdatedAt(ZonedDateTime.now());
     repository.save(location);
     return mapper.map(location);
   }
