@@ -23,7 +23,7 @@ import ru.ifmo.is.lab1.common.utils.datetime.ZonedDateTimeConverter;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="users")
+@Table(name = "users")
 public class User implements UserDetails, BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_seq")
