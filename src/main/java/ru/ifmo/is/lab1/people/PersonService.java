@@ -16,7 +16,7 @@ public class PersonService
     PersonDto,
     PersonCreateDto,
     PersonUpdateDto
-    > {
+  > {
 
   public PersonService(
     PersonRepository repository,
