@@ -3,6 +3,7 @@ package ru.ifmo.is.lab1.people;
 import org.springframework.stereotype.Service;
 import ru.ifmo.is.lab1.common.framework.CrudService;
 import ru.ifmo.is.lab1.common.search.SearchMapper;
+import ru.ifmo.is.lab1.events.EventService;
 import ru.ifmo.is.lab1.people.dto.*;
 import ru.ifmo.is.lab1.users.UserService;
 
@@ -23,8 +24,9 @@ public class PersonService
     PersonMapper mapper,
     PersonPolicy policy,
     SearchMapper<Person> searchMapper,
-    UserService userService
+    UserService userService,
+    EventService eventService
   ) {
-    super(repository, mapper, policy, searchMapper, userService);
+    super(repository, mapper, policy, searchMapper, userService, eventService);
   }
 }

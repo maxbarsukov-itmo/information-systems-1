@@ -8,6 +8,8 @@ import ru.ifmo.is.lab1.adminrequests.dto.AdminRequestDto;
 import ru.ifmo.is.lab1.common.errors.AdminRequestAlreadyProcessed;
 import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
 import ru.ifmo.is.lab1.common.errors.SomePendingRequestsExists;
+import ru.ifmo.is.lab1.events.EventService;
+import ru.ifmo.is.lab1.events.EventType;
 import ru.ifmo.is.lab1.users.Role;
 import ru.ifmo.is.lab1.users.User;
 import ru.ifmo.is.lab1.users.UserRepository;
@@ -24,6 +26,7 @@ public class AdminRequestService {
   private final AdminRequestPolicy policy;
   private final UserRepository userRepository;
   private final UserService userService;
+  private final EventService eventService;
 
   public Page<AdminRequestDto> getAll(Pageable pageable) {
     var user = currentUser();
@@ -66,6 +69,7 @@ public class AdminRequestService {
       .build();
 
     repository.save(adminRequest);
+    eventService.notify(EventType.CREATE, adminRequest);
     return mapper.map(adminRequest);
   }
 
@@ -92,6 +96,7 @@ public class AdminRequestService {
     }
 
     repository.save(adminRequest);
+    eventService.notify(EventType.UPDATE, adminRequest);
     return mapper.map(adminRequest);
   }
 

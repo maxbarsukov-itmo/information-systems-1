@@ -8,6 +8,8 @@ import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
 import ru.ifmo.is.lab1.common.framework.dto.AuditableDto;
 import ru.ifmo.is.lab1.common.search.SearchDto;
 import ru.ifmo.is.lab1.common.search.SearchMapper;
+import ru.ifmo.is.lab1.events.EventService;
+import ru.ifmo.is.lab1.events.EventType;
 import ru.ifmo.is.lab1.users.User;
 import ru.ifmo.is.lab1.users.UserService;
 
@@ -29,6 +31,7 @@ public abstract class CrudService<
   private TPolicy policy;
   private SearchMapper<T> searchMapper;
   private UserService userService;
+  private EventService eventService;
 
   public Page<TDto> getAll(Pageable pageable) {
     policy.showAll(currentUser());
@@ -51,6 +54,7 @@ public abstract class CrudService<
     obj.setCreatedBy(currentUser());
     obj.setCreatedAt(ZonedDateTime.now());
     repository.save(obj);
+    eventService.notify(EventType.CREATE, obj);
     return mapper.map(obj);
   }
 
@@ -69,6 +73,7 @@ public abstract class CrudService<
     obj.setUpdatedBy(currentUser());
     obj.setUpdatedAt(ZonedDateTime.now());
     repository.save(obj);
+    eventService.notify(EventType.UPDATE, obj);
     return mapper.map(obj);
   }
 
@@ -76,6 +81,7 @@ public abstract class CrudService<
     return repository.findById(id)
       .map(obj -> {
         policy.delete(currentUser(), obj);
+        eventService.notify(EventType.DELETE, obj);
         repository.delete(obj);
         return true;
       }).orElse(false);

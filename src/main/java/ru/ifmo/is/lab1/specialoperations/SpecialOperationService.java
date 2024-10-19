@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
 import ru.ifmo.is.lab1.dragons.*;
+import ru.ifmo.is.lab1.events.EventService;
+import ru.ifmo.is.lab1.events.EventType;
 import ru.ifmo.is.lab1.specialoperations.dto.*;
 
 @Service
@@ -15,6 +17,7 @@ public class SpecialOperationService {
 
   private final DragonRepository repository;
   private final DragonMapper mapper;
+  private final EventService eventService;
 
   public AverageAgeDto getAverageDragonAge() {
     var result = repository.getAverageAge();
@@ -47,6 +50,7 @@ public class SpecialOperationService {
     dragon.setName(DEATH_PREFIX + dragon.getName());
     dragon.setSpeaking(false);
     repository.save(dragon);
+    eventService.notify(EventType.KILL, dragon);
     return new DragonResultDto(null, mapper.map(dragon));
   }
 }
