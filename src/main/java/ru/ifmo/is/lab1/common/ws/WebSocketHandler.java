@@ -10,8 +10,7 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import ru.ifmo.is.lab1.common.entity.BaseEntity;
-import ru.ifmo.is.lab1.common.entity.EntityTypeExtractor;
+import ru.ifmo.is.lab1.events.Event;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +24,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
   private static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
   private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
   private final ObjectMapper objectMapper;
-  private final EntityTypeExtractor entityTypeExtractor;
 
   @Override
   public void afterConnectionEstablished(@NonNull WebSocketSession session) {
@@ -37,14 +35,12 @@ public class WebSocketHandler extends TextWebSocketHandler {
     sessions.remove(session);
   }
 
-  public void notifyClients(EventType eventType, BaseEntity entity) {
+  public void notifyClients(Event event) {
     try {
       Map<String, Object> payload = new HashMap<>();
-      var entityType = entityTypeExtractor.getEntityIdentification(entity);
-
-      payload.put("eventType", eventType.name());
-      payload.put("entityType", entityType.getLeft());
-      payload.put("entityId", entityType.getRight());
+      payload.put("eventType", event.getType());
+      payload.put("resourceType", event.getResourceType());
+      payload.put("resourceId", event.getResourceId());
 
       var message = objectMapper.writeValueAsString(payload);
       sendMessageToAll(message);

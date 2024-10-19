@@ -19,7 +19,7 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(name="events")
+@Table(name = "events")
 public class Event implements BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "events_id_seq")
@@ -30,7 +30,7 @@ public class Event implements BaseEntity {
   @Column(name = "resource_id", nullable = false)
   private int resourceId;
 
-  @Enumerated(EnumType.STRING)
+  @Convert(converter = ResourceTypeConverter.class)
   @ColumnTransformer(write = "?::resource_type")
   @Column(name = "resource_type", nullable = false)
   private ResourceType resourceType;

@@ -1,0 +1,63 @@
+package ru.ifmo.is.lab1.events;
+
+import jakarta.annotation.Nullable;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import ru.ifmo.is.lab1.common.entity.BaseEntity;
+import ru.ifmo.is.lab1.common.entity.ResourceExtractor;
+import ru.ifmo.is.lab1.common.ws.WebSocketHandler;
+import ru.ifmo.is.lab1.events.dto.EventCreateDto;
+import ru.ifmo.is.lab1.users.User;
+import ru.ifmo.is.lab1.users.UserService;
+
+import java.time.ZonedDateTime;
+
+@Service
+@RequiredArgsConstructor
+public class EventService {
+
+  private static final Logger logger = LoggerFactory.getLogger(EventService.class);
+
+  private final EventRepository repository;
+  private final WebSocketHandler webSocketHandler;
+  private final UserService userService;
+  private final ResourceExtractor resourceExtractor;
+
+  public Event create(EventCreateDto eventDto, @Nullable User creator) {
+    logger.info("Event({}): {}-{} by User#{}",
+      eventDto.getType(),
+      eventDto.getResourceType(),
+      eventDto.getResourceId(),
+      creator
+    );
+
+    var event = new Event();
+    event.setResourceId(eventDto.getResourceId());
+    event.setResourceType(eventDto.getResourceType());
+    event.setType(eventDto.getType());
+    event.setCreatedBy(creator);
+    event.setCreatedAt(ZonedDateTime.now());
+    return repository.save(event);
+  }
+
+  public void notify(EventType eventType, BaseEntity entity) {
+    var entityMetaInfo = resourceExtractor.getIdentification(entity);
+    var resourceType = ResourceType.valueOfResource(entityMetaInfo.getLeft());
+    var resourceId = entityMetaInfo.getRight();
+
+    var eventDto = new EventCreateDto(resourceId, resourceType, eventType);
+    var event = create(eventDto, currentUser());
+    webSocketHandler.notifyClients(event);
+  }
+
+  private User currentUser() {
+    try {
+      return userService.getCurrentUser();
+    } catch (UsernameNotFoundException _ex) {
+      return null;
+    }
+  }
+}
