@@ -63,7 +63,7 @@ CREATE TABLE dragon_caves (
 -- Таблица голов драконов
 CREATE TABLE dragon_heads (
   id SERIAL PRIMARY KEY,                                           -- Уникальный идентификатор головы дракона
-  size BIGINT,                                                     -- Размер головы
+  size BIGINT NOT NULL,                                            -- Размер головы
   tooth_count REAL,                                                -- Количество зубов (может быть NULL)
   created_by INTEGER NOT NULL REFERENCES users(id),                -- Идентификатор пользователя, создавшего голову дракона
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),      -- Время создания персоны
