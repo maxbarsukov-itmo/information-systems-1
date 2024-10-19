@@ -7,5 +7,5 @@ public enum ActionType {
   CREATE,
   DELETE,
   UPDATE,
-  MANAGE,
+  MANAGE
 }

@@ -6,7 +6,6 @@ import jakarta.validation.constraints.*;
 import org.hibernate.annotations.ColumnTransformer;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ru.ifmo.is.lab1.common.framework.Auditable;
-import ru.ifmo.is.lab1.common.entity.BaseEntity;
 import ru.ifmo.is.lab1.locations.Location;
 
 import java.time.LocalDate;
