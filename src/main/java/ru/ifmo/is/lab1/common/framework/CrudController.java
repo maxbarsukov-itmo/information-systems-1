@@ -61,7 +61,7 @@ public abstract class CrudController<
     return ResponseEntity.ok(obj);
   }
 
-  @PutMapping("/{id}")
+  @PatchMapping("/{id}")
   @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   @Operation(summary = "Обновить объект по ID")
   public ResponseEntity<TDto> update(@PathVariable int id, @Valid @RequestBody TUpdateDto request) {
