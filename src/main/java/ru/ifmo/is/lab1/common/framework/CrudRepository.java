@@ -2,8 +2,10 @@ package ru.ifmo.is.lab1.common.framework;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.NoRepositoryBean;
 
-public interface CrudRepository<T>
+@NoRepositoryBean
+public interface CrudRepository<T extends Auditable>
   extends JpaRepository<T, Integer>,
           JpaSpecificationExecutor<T> {
 }
