@@ -1,9 +1,6 @@
 package ru.ifmo.is.lab1.people;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import ru.ifmo.is.lab1.common.framework.CrudRepository;
 
-public interface PersonRepository
-  extends JpaRepository<Person, Integer>,
-          JpaSpecificationExecutor<Person> {
+public interface PersonRepository extends CrudRepository<Person> {
 }

@@ -3,8 +3,6 @@ package ru.ifmo.is.lab1.common.framework;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
 import ru.ifmo.is.lab1.common.framework.dto.AuditableDto;
@@ -18,7 +16,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 public abstract class CrudService<
   T extends Auditable,
-  TRepository extends JpaRepository<T, Integer> & JpaSpecificationExecutor<T>,
+  TRepository extends CrudRepository<T>,
   TMapper extends CrudMapper<T, TDto, TCreateDto, TUpdateDto>,
   TPolicy extends CrudPolicy<T>,
   TDto extends AuditableDto,
