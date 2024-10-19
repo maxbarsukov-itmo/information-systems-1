@@ -4,7 +4,9 @@ BEGIN;
 CREATE TYPE event_type AS ENUM ('CREATE', 'UPDATE', 'DELETE', 'KILL');
 
 -- Вспомогательный тип для типов сущностей
-CREATE TYPE resource_type AS ENUM ('dragons', 'coordinates', 'dragon-caves', 'people', 'dragon-heads', 'locations');
+CREATE TYPE resource_type AS ENUM (
+  'dragons', 'coordinates', 'dragon-caves', 'people', 'dragon-heads', 'locations', 'admin-requests'
+);
 
 -- Таблица событий
 CREATE TABLE events (
