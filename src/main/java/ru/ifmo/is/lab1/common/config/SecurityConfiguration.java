@@ -71,6 +71,14 @@ public class SecurityConfiguration {
           .requestMatchers(HttpMethod.POST, "/api/admin-requests/**").hasRole("USER") // подавать запросы могут только пользователи
           .requestMatchers(HttpMethod.PUT, "/api/admin-requests/**").hasRole("ADMIN"); // рассматривать запросы могут только админы
 
+        request
+          // Доступ к специальным операциям над объектами
+          .requestMatchers(HttpMethod.GET, "/api/special-operations/average-age").permitAll() // рассчитать среднее значение поля age для всех объектов
+          .requestMatchers(HttpMethod.GET, "/api/special-operations/oldest-dragon").permitAll() // вернуть один (любой) объект, значение поля age которого является максимальным
+          .requestMatchers(HttpMethod.GET, "/api/special-operations/filter-by-name").permitAll() // вернуть массив объектов, значение поля name которых начинается с заданной подстроки
+          .requestMatchers(HttpMethod.GET, "/api/special-operations/deepest-cave-dragon").permitAll() // найти дракона, живущего в самой глубокой пещере
+          .requestMatchers(HttpMethod.POST, "/api/special-operations/kill-dragon/**").authenticated(); // убить указанного дракона
+
         crudResources.forEach(resource ->
           request
             // Доступ к данным ресурса

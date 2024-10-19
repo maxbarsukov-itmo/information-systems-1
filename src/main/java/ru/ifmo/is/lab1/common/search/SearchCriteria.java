@@ -3,6 +3,7 @@ package ru.ifmo.is.lab1.common.search;
 import lombok.*;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class SearchCriteria {
