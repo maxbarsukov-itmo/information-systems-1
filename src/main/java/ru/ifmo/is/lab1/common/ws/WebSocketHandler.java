@@ -39,7 +39,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
     try {
       Map<String, Object> payload = new HashMap<>();
       payload.put("eventType", event.getType());
-      payload.put("resourceType", event.getResourceType());
+      payload.put("resourceType", event.getResourceType().resource);
       payload.put("resourceId", event.getResourceId());
 
       var message = objectMapper.writeValueAsString(payload);
