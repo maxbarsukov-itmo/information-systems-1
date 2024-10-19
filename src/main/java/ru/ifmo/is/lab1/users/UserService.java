@@ -11,13 +11,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import ru.ifmo.is.lab1.common.errors.UserWithThisPasswordAlreadyExists;
 import ru.ifmo.is.lab1.common.errors.UserWithThisUsernameAlreadyExists;
-import ru.ifmo.is.lab1.common.ws.WebSocketHandler;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
-  private static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
+  private static final Logger logger = LoggerFactory.getLogger(UserService.class);
   private final UserRepository repository;
 
   /**
