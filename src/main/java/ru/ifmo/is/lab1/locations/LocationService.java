@@ -16,7 +16,7 @@ public class LocationService
     LocationDto,
     LocationCreateDto,
     LocationUpdateDto
-    > {
+  > {
 
   public LocationService(
     LocationRepository repository,
