@@ -50,14 +50,21 @@ public class SecurityConfiguration {
       .cors(cors -> cors.configurationSource(request -> {
         var corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedOriginPatterns(List.of("*"));
-        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        corsConfiguration.setAllowedMethods(List.of(
+          "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD", "CONNECT", "OPTIONS")
+        );
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setMaxAge(10L);
         return corsConfiguration;
       }))
 
       .authorizeHttpRequests(request -> {
         request
+          // WebSockets
+          .requestMatchers("/ws/**").permitAll()
+          .requestMatchers("/ws").permitAll()
+
           // Доступ к методам /api/auth/** открыт для всех
           .requestMatchers("/api/auth/**").permitAll()
 
