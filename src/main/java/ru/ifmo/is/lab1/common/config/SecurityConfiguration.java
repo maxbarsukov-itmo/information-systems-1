@@ -21,6 +21,7 @@ import ru.ifmo.is.lab1.auth.JwtAuthenticationFilter;
 import ru.ifmo.is.lab1.common.utils.crypto.Sha512PasswordEncoder;
 import ru.ifmo.is.lab1.users.UserService;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -32,6 +33,15 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfiguration {
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
   private final UserService userService;
+
+  private static final List<String> crudResources = Arrays.asList(
+    "dragons",
+    "coordinates",
+    "dragon-caves",
+    "people",
+    "dragon-heads",
+    "locations"
+  );
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -46,37 +56,36 @@ public class SecurityConfiguration {
         return corsConfiguration;
       }))
 
-      .authorizeHttpRequests(request -> request
-        // Доступ к методам /api/auth/** открыт для всех
-        .requestMatchers("/api/auth/**").permitAll()
+      .authorizeHttpRequests(request -> {
+        request
+          // Доступ к методам /api/auth/** открыт для всех
+          .requestMatchers("/api/auth/**").permitAll()
 
-        // Доступ к Swagger UI (для документации)
-        .requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
+          // Доступ к Swagger UI (для документации)
+          .requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**").permitAll();
 
-        // Доступ к данным запросов на администрирование
-        .requestMatchers(HttpMethod.GET, "/api/admin-requests/pending").hasRole("ADMIN") // только админы могут просматривать все ожидающие запросы
-        .requestMatchers(HttpMethod.GET, "/api/admin-requests/**").authenticated() // только авторизованные могут читать данные
-        .requestMatchers(HttpMethod.POST, "/api/admin-requests/**").hasRole("USER") // подавать запросы могут только пользователи
-        .requestMatchers(HttpMethod.PUT, "/api/admin-requests/**").hasRole("ADMIN") // рассматривать запросы могут только админы
+        request
+          // Доступ к данным запросов на администрирование
+          .requestMatchers(HttpMethod.GET, "/api/admin-requests/pending").hasRole("ADMIN") // только админы могут просматривать все ожидающие запросы
+          .requestMatchers(HttpMethod.GET, "/api/admin-requests/**").authenticated() // только авторизованные могут читать данные
+          .requestMatchers(HttpMethod.POST, "/api/admin-requests/**").hasRole("USER") // подавать запросы могут только пользователи
+          .requestMatchers(HttpMethod.PUT, "/api/admin-requests/**").hasRole("ADMIN"); // рассматривать запросы могут только админы
 
-        // Доступ к данным локаций
-        .requestMatchers(HttpMethod.GET, "/api/locations/**").permitAll() // все пользователи могут читать данные
-        .requestMatchers(HttpMethod.POST, "/api/locations/search").permitAll() // все пользователи могут искать данные
-        .requestMatchers(HttpMethod.POST, "/api/locations/**").authenticated() // только авторизованные могут создавать
-        .requestMatchers(HttpMethod.PUT, "/api/locations/**").authenticated() // обновление доступно только авторам или администраторам (будет проверяться в контроллере)
-        .requestMatchers(HttpMethod.PATCH, "/api/locations/**").authenticated() // обновление доступно только авторам или администраторам (будет проверяться в контроллере)
-        .requestMatchers(HttpMethod.DELETE, "/api/locations/**").authenticated() // удаление доступно только авторам или администраторам
+        crudResources.forEach(resource ->
+          request
+            // Доступ к данным ресурса
+            .requestMatchers(HttpMethod.GET, "/api/" + resource + "/**").permitAll() // все пользователи могут читать данные
+            .requestMatchers(HttpMethod.POST, "/api/" + resource + "/search").permitAll() // все пользователи могут искать данные
+            .requestMatchers(HttpMethod.POST, "/api/" + resource + "/**").authenticated() // только авторизованные могут создавать данные
+            .requestMatchers(HttpMethod.PUT, "/api/" + resource + "/**").authenticated() // обновление доступно только авторам или администраторам
+            .requestMatchers(HttpMethod.PATCH, "/api/" + resource + "/**").authenticated() // обновление доступно только авторам или администраторам
+            .requestMatchers(HttpMethod.DELETE, "/api/" + resource + "/**").authenticated() // удаление доступно только авторам или администраторам
+        );
 
-        // Доступ к данным персонажей
-        .requestMatchers(HttpMethod.GET, "/api/people/**").permitAll() // все пользователи могут читать данные
-        .requestMatchers(HttpMethod.POST, "/api/people/search").permitAll() // все пользователи могут искать данные
-        .requestMatchers(HttpMethod.POST, "/api/people/**").authenticated() // только авторизованные могут создавать
-        .requestMatchers(HttpMethod.PUT, "/api/people/**").authenticated() // обновление доступно только авторам или администраторам (будет проверяться в контроллере)
-        .requestMatchers(HttpMethod.PATCH, "/api/people/**").authenticated() // обновление доступно только авторам или администраторам (будет проверяться в контроллере)
-        .requestMatchers(HttpMethod.DELETE, "/api/people/**").authenticated() // удаление доступно только авторам или администраторам
-
-        // Любой другой запрос должен быть аутентифицирован
-        .anyRequest().authenticated())
+        request
+          // Любой другой запрос должен быть аутентифицирован
+          .anyRequest().authenticated();
+      })
       .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
       .authenticationProvider(authenticationProvider())
       .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
