@@ -3,7 +3,7 @@ package ru.ifmo.is.lab1.dragoncaves;
 import lombok.*;
 import jakarta.persistence.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import ru.ifmo.is.lab1.common.framework.Auditable;
+import ru.ifmo.is.lab1.common.framework.CrudEntity;
 
 @Entity
 @Getter
@@ -13,7 +13,7 @@ import ru.ifmo.is.lab1.common.framework.Auditable;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "dragon_caves")
-public class DragonCave extends Auditable {
+public class DragonCave extends CrudEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dragon_caves_id_seq")

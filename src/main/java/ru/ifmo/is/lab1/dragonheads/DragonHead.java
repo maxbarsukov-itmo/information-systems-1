@@ -4,7 +4,7 @@ import lombok.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import ru.ifmo.is.lab1.common.framework.Auditable;
+import ru.ifmo.is.lab1.common.framework.CrudEntity;
 
 @Entity
 @Getter
@@ -14,7 +14,7 @@ import ru.ifmo.is.lab1.common.framework.Auditable;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "dragon_heads")
-public class DragonHead extends Auditable {
+public class DragonHead extends CrudEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dragon_heads_id_seq")

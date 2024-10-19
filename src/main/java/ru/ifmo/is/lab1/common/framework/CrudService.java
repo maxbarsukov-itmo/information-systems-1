@@ -15,7 +15,7 @@ import java.time.ZonedDateTime;
 
 @AllArgsConstructor
 public abstract class CrudService<
-  T extends Auditable,
+  T extends CrudEntity,
   TRepository extends CrudRepository<T>,
   TMapper extends CrudMapper<T, TDto, TCreateDto, TUpdateDto>,
   TPolicy extends CrudPolicy<T>,

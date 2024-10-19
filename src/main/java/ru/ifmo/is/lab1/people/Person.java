@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.annotations.ColumnTransformer;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import ru.ifmo.is.lab1.common.framework.Auditable;
+import ru.ifmo.is.lab1.common.framework.CrudEntity;
 import ru.ifmo.is.lab1.locations.Location;
 
 import java.time.LocalDate;
@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "people")
-public class Person extends Auditable {
+public class Person extends CrudEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "people_id_seq")

@@ -5,7 +5,7 @@ import ru.ifmo.is.lab1.common.policies.Policy;
 import ru.ifmo.is.lab1.users.User;
 
 @Component
-public abstract class CrudPolicy<T extends Auditable> extends Policy<T> {
+public abstract class CrudPolicy<T extends CrudEntity> extends Policy<T> {
 
   @Override
   public boolean canShowAll(User user) {

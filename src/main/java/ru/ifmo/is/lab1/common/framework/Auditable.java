@@ -3,7 +3,6 @@ package ru.ifmo.is.lab1.common.framework;
 import lombok.*;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
-import ru.ifmo.is.lab1.common.entity.BaseEntity;
 import ru.ifmo.is.lab1.common.utils.datetime.ZonedDateTimeConverter;
 import ru.ifmo.is.lab1.users.User;
 
@@ -12,7 +11,7 @@ import java.time.ZonedDateTime;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class Auditable implements BaseEntity {
+public abstract class Auditable {
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "created_by", nullable = false)
   private User createdBy;

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
-public interface CrudRepository<T extends Auditable>
+public interface CrudRepository<T extends CrudEntity>
   extends JpaRepository<T, Integer>,
           JpaSpecificationExecutor<T> {
 }

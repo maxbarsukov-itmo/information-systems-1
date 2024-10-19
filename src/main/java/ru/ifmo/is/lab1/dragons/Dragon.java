@@ -7,7 +7,7 @@ import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import ru.ifmo.is.lab1.common.framework.Auditable;
+import ru.ifmo.is.lab1.common.framework.CrudEntity;
 import ru.ifmo.is.lab1.coordinates.Coordinate;
 import ru.ifmo.is.lab1.dragoncaves.DragonCave;
 import ru.ifmo.is.lab1.dragonheads.DragonHead;
@@ -21,7 +21,7 @@ import ru.ifmo.is.lab1.people.Person;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "dragons")
-public class Dragon extends Auditable {
+public class Dragon extends CrudEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dragons_id_seq")

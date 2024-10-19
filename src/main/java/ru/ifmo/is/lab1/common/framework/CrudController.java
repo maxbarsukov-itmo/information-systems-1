@@ -15,7 +15,7 @@ import ru.ifmo.is.lab1.common.search.SearchDto;
 
 @AllArgsConstructor
 public abstract class CrudController<
-  T extends Auditable,
+  T extends CrudEntity,
   TDto extends AuditableDto,
   TCreateDto,
   TUpdateDto,
