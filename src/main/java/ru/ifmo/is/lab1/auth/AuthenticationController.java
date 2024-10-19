@@ -17,7 +17,7 @@ import ru.ifmo.is.lab1.auth.dto.SignUpDto;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@Tag(name = "Аутентификация")
+@Tag(name = "Authentication")
 public class AuthenticationController {
   private final AuthenticationService authenticationService;
 

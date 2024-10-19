@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.ifmo.is.lab1.common.search.SearchCriteria;
 import ru.ifmo.is.lab1.common.search.SearchDto;
@@ -67,12 +66,9 @@ public class SpecialOperationController {
   }
 
   @PostMapping("/kill-dragon/{id}")
-  @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   @Operation(summary = "Убить указанного дракона")
   public ResponseEntity<DragonResultDto> killDragon(@PathVariable int id) {
-    if (dragonService.delete(id)) {
-      return ResponseEntity.noContent().build();
-    }
-    return ResponseEntity.notFound().build();
+    var dragon = service.killDragon(id);
+    return ResponseEntity.ok(dragon);
   }
 }

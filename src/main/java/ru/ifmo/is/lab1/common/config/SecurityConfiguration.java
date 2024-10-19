@@ -77,7 +77,7 @@ public class SecurityConfiguration {
           .requestMatchers(HttpMethod.GET, "/api/special-operations/oldest-dragon").permitAll() // вернуть один (любой) объект, значение поля age которого является максимальным
           .requestMatchers(HttpMethod.GET, "/api/special-operations/filter-by-name").permitAll() // вернуть массив объектов, значение поля name которых начинается с заданной подстроки
           .requestMatchers(HttpMethod.GET, "/api/special-operations/deepest-cave-dragon").permitAll() // найти дракона, живущего в самой глубокой пещере
-          .requestMatchers(HttpMethod.POST, "/api/special-operations/kill-dragon/**").authenticated(); // убить указанного дракона
+          .requestMatchers(HttpMethod.POST, "/api/special-operations/kill-dragon/**").permitAll(); // убить указанного дракона
 
         crudResources.forEach(resource ->
           request
