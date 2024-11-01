@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'ru.ifmo.is'
-version = '0.0.1-SNAPSHOT'
+version = file('./version').text.trim()
 
 java {
   toolchain {
