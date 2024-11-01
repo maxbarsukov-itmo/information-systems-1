@@ -29,6 +29,7 @@
     "i18next-http-backend": "^1.2.6",
     "is-mobile": "^3.0.0",
     "konva": "9.1.0",
+    "luxon": "3.5.0",
     "notistack": "^1.0.5",
     "react": "^17.0.1",
     "react-detect-offline": "^2.4.3",

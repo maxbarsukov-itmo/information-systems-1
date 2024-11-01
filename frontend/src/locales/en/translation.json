@@ -1,7 +1,7 @@
 {
   "pages": {
     "app": {
-      "appName": "Lab 9 Client",
+      "appName": "Lab 1 Client",
       "goBack": "Back",
       "routes": {
         "home": "Table",
@@ -246,11 +246,11 @@
     "Auth": {
       "errors": {
         "username": {
-          "from4to15": "The username must contain between 4 and 15 characters!",
+          "from4to255": "The username must contain between 4 and 255 characters!",
           "blank": "Username cannot be empty!"
         },
         "password": {
-          "from4": "The password must contain more than 4 characters!",
+          "from6to128": "The password must contain between 6 and 128 characters!",
           "blank": "Password cannot be empty!"
         }
       },
