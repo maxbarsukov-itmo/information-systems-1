@@ -25,7 +25,7 @@ public class LocationService
     LocationPolicy policy,
     SearchMapper<Location> searchMapper,
     UserService userService,
-    EventService eventService
+    EventService<Location> eventService
   ) {
     super(repository, mapper, policy, searchMapper, userService, eventService);
   }

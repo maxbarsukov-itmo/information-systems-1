@@ -25,7 +25,7 @@ public class DragonCaveService
     DragonCavePolicy policy,
     SearchMapper<DragonCave> searchMapper,
     UserService userService,
-    EventService eventService
+    EventService<DragonCave> eventService
   ) {
     super(repository, mapper, policy, searchMapper, userService, eventService);
   }

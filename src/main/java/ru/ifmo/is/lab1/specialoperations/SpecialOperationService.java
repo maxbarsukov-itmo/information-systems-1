@@ -20,7 +20,7 @@ public class SpecialOperationService {
 
   private final DragonRepository repository;
   private final DragonMapper mapper;
-  private final EventService eventService;
+  private final EventService<Dragon> eventService;
 
   public AverageAgeDto getAverageDragonAge() {
     var result = repository.getAverageAge();

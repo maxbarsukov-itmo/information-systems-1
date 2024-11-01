@@ -25,7 +25,7 @@ public class DragonService
     DragonPolicy policy,
     SearchMapper<Dragon> searchMapper,
     UserService userService,
-    EventService eventService
+    EventService<Dragon> eventService
   ) {
     super(repository, mapper, policy, searchMapper, userService, eventService);
   }

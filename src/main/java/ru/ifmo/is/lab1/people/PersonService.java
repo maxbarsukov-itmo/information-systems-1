@@ -25,7 +25,7 @@ public class PersonService
     PersonPolicy policy,
     SearchMapper<Person> searchMapper,
     UserService userService,
-    EventService eventService
+    EventService<Person> eventService
   ) {
     super(repository, mapper, policy, searchMapper, userService, eventService);
   }

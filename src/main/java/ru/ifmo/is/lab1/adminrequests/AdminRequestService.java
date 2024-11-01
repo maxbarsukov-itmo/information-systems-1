@@ -28,7 +28,7 @@ public class AdminRequestService {
   private final AdminRequestPolicy policy;
   private final UserRepository userRepository;
   private final UserService userService;
-  private final EventService eventService;
+  private final EventService<AdminRequest> eventService;
 
   public Page<AdminRequestDto> getAll(Pageable pageable) {
     var user = currentUser();

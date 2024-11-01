@@ -1,6 +1,7 @@
 package ru.ifmo.is.lab1.events;
 
 import jakarta.annotation.Nullable;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +19,15 @@ import java.time.ZonedDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class EventService {
+public class EventService<T extends BaseEntity> {
 
   private static final Logger logger = LoggerFactory.getLogger(EventService.class);
 
   private final EventRepository repository;
-  private final WebSocketHandler webSocketHandler;
+  private final WebSocketHandler<T> webSocketHandler;
   private final UserService userService;
   private final ResourceExtractor resourceExtractor;
+  private final HttpServletRequest httpServletRequest;
 
   @Transactional
   public Event create(EventCreateDto eventDto, @Nullable User creator) {
@@ -46,14 +48,14 @@ public class EventService {
   }
 
   @Transactional
-  public void notify(EventType eventType, BaseEntity entity) {
+  public void notify(EventType eventType, T entity) {
     var entityMetaInfo = resourceExtractor.getIdentification(entity);
     var resourceType = ResourceType.valueOfResource(entityMetaInfo.getLeft());
     var resourceId = entityMetaInfo.getRight();
 
     var eventDto = new EventCreateDto(resourceId, resourceType, eventType);
     var event = create(eventDto, currentUser());
-    webSocketHandler.notifyClients(event);
+    webSocketHandler.notifyClients(event, entity, (String) httpServletRequest.getAttribute("requestUUID"));
   }
 
   private User currentUser() {

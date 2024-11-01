@@ -11,15 +11,14 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import ru.ifmo.is.lab1.events.Event;
+import ru.ifmo.is.lab1.events.dto.EventDto;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Component
 @RequiredArgsConstructor
-public class WebSocketHandler extends TextWebSocketHandler {
+public class WebSocketHandler<T> extends TextWebSocketHandler {
 
   private static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
   private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
@@ -35,15 +34,18 @@ public class WebSocketHandler extends TextWebSocketHandler {
     sessions.remove(session);
   }
 
-  public void notifyClients(Event event) {
+  public void notifyClients(Event event, T entity, String requestUUID) {
     try {
-      Map<String, Object> payload = new HashMap<>();
-      payload.put("eventType", event.getType());
-      payload.put("resourceType", event.getResourceType().resource);
-      payload.put("resourceId", event.getResourceId());
+      var payload = EventDto.<T>builder()
+        .eventType(event.getType())
+        .resourceType(event.getResourceType())
+        .resourceId(event.getResourceId())
+        .requestUUID(requestUUID)
+        .entity(entity)
+        .build()
+        .getPayload();
 
-      var message = objectMapper.writeValueAsString(payload);
-      sendMessageToAll(message);
+      sendMessageToAll(objectMapper.writeValueAsString(payload));
     } catch (Exception ex) {
       logger.warn(ex.getLocalizedMessage());
     }

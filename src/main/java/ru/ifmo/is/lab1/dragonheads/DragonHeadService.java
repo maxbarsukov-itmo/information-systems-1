@@ -25,7 +25,7 @@ public class DragonHeadService
     DragonHeadPolicy policy,
     SearchMapper<DragonHead> searchMapper,
     UserService userService,
-    EventService eventService
+    EventService<DragonHead> eventService
   ) {
     super(repository, mapper, policy, searchMapper, userService, eventService);
   }

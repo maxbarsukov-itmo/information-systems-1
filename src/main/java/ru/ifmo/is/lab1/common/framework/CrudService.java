@@ -34,7 +34,7 @@ public abstract class CrudService<
   private TPolicy policy;
   private SearchMapper<T> searchMapper;
   private UserService userService;
-  private EventService eventService;
+  private EventService<T> eventService;
 
   public Page<TDto> getAll(Pageable pageable) {
     policy.showAll(currentUser());

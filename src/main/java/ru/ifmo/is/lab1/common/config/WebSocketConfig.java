@@ -7,14 +7,12 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import ru.ifmo.is.lab1.common.ws.WebSocketHandler;
 
-import java.util.List;
-
 @Configuration
 @EnableWebSocket
 @RequiredArgsConstructor
 public class WebSocketConfig implements WebSocketConfigurer {
 
-  private final WebSocketHandler webSocketHandler;
+  private final WebSocketHandler<Object> webSocketHandler;
 
   @Override
   public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {

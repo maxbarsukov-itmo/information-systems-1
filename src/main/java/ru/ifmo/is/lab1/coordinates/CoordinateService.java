@@ -25,7 +25,7 @@ public class CoordinateService
     CoordinatePolicy policy,
     SearchMapper<Coordinate> searchMapper,
     UserService userService,
-    EventService eventService
+    EventService<Coordinate> eventService
   ) {
     super(repository, mapper, policy, searchMapper, userService, eventService);
   }
