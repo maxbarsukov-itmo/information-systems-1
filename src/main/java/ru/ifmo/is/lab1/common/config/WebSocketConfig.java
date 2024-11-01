@@ -7,6 +7,8 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import ru.ifmo.is.lab1.common.ws.WebSocketHandler;
 
+import java.util.List;
+
 @Configuration
 @EnableWebSocket
 @RequiredArgsConstructor
@@ -16,6 +18,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
   @Override
   public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-    registry.addHandler(webSocketHandler, "/ws").setAllowedOriginPatterns("*");
+    registry
+      .addHandler(webSocketHandler, "/ws")
+      .setAllowedOrigins("http://localhost:3000", "http://localhost:5000");
   }
 }

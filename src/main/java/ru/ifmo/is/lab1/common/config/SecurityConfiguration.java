@@ -49,7 +49,7 @@ public class SecurityConfiguration {
       // Отключаем CORS
       .cors(cors -> cors.configurationSource(request -> {
         var corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOriginPatterns(List.of("*"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:5000"));
         corsConfiguration.setAllowedMethods(List.of(
           "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD", "CONNECT", "OPTIONS")
         );
