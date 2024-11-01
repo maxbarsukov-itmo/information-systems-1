@@ -4,13 +4,13 @@ export const APP_VERSION = 'v1';
 
 export const API_URL = process.env.REACT_APP_API_URL;
 
-export const USER_KEY = 'lab9_USER';
-export const TOKEN_KEY = 'lab9_TOKEN';
-export const LAST_UPDATED_KEY = 'lab9_LAST_UPDATED';
-export const UPDATED_BY_KEY = 'lab9_UPDATED_BY';
-export const REQUESTS_KEY = 'lab9_REQUESTS';
-export const USER_SETTINGS_KEY = 'lab9_USER_SETTINGS';
-export const NEEDS_UPDATE_KEY = 'lab9_NEEDS_UPDATE';
+export const USER_KEY = 'lab1_USER';
+export const TOKEN_KEY = 'lab1_TOKEN';
+export const LAST_UPDATED_KEY = 'lab1_LAST_UPDATED';
+export const UPDATED_BY_KEY = 'lab1_UPDATED_BY';
+export const REQUESTS_KEY = 'lab1_REQUESTS';
+export const USER_SETTINGS_KEY = 'lab1_USER_SETTINGS';
+export const NEEDS_UPDATE_KEY = 'lab1_NEEDS_UPDATE';
 
 export type FlowAlias = 'home' | 'chart';
 export interface FlowObject {
@@ -34,7 +34,6 @@ export const DEFAULT_USER_SETTINGS: UserSettings = {
   preferredLightTheme: 'light',
   autoChangeTheme: false,
   language: 'ru',
-  table: 'material',
 };
 
 export const LANGUAGES_INTERFACE = [
@@ -45,14 +44,6 @@ export const LANGUAGES_INTERFACE = [
   {
     type: 'ru',
     name: 'Русский',
-  },
-  {
-    type: 'is',
-    name: 'Íslenska',
-  },
-  {
-    type: 'sv',
-    name: 'Svenska',
   },
 ];
 

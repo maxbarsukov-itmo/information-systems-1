@@ -11,7 +11,7 @@ const Router = () => {
 
   useEffect(() => {
     setRoutes(getRoutes);
-    const newTitle = route.title ? `${route.title} | Lab9` : 'Lab9';
+    const newTitle = route.title ? `${route.title} | lab1` : 'lab1';
     if (document.title !== newTitle) document.title = newTitle;
   }, [languageSettings]);
 

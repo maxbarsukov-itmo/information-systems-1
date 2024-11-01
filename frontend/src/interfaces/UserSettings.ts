@@ -24,13 +24,10 @@ export interface CustomTheme {
   };
 }
 
-export type TableType = 'custom' | 'material';
-
 export default interface UserSettings {
   autoChangeTheme: boolean;
   preferredLightTheme: PaletteType | string;
   preferredDarkTheme: PaletteType | string;
   themeType: PaletteType | string;
   language: Language;
-  table: TableType;
 }

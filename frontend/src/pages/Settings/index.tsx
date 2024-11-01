@@ -7,7 +7,7 @@ import LinkToOutsidePage from 'components/blocks/LinkToOutsidePage';
 import { useTranslation } from 'react-i18next';
 import isDarkTheme from 'utils/isDarkTheme';
 
-import { Image, ChevronRight, Chat, Category } from 'react-iconly';
+import { Image, ChevronRight, Chat } from 'react-iconly';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,11 +48,6 @@ const Settings = () => {
   const { t } = useTranslation();
 
   const items = [
-    {
-      icon: Category,
-      to: '/table',
-      text: t`pages.Settings.subSettings.table`,
-    },
     {
       icon: Image,
       to: '/appearance',

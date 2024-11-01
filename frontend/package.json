@@ -1,5 +1,5 @@
 {
-  "name": "lab9-client",
+  "name": "lab1-client",
   "version": "0.1.0",
   "private": true,
   "repository": {
@@ -9,7 +9,7 @@
   "bugs": {
     "url": "https://github.com/maxbarsukov/itmo/issues"
   },
-  "homepage": "https://lab9-client.vercel.app/",
+  "homepage": "https://lab1-client.vercel.app/",
   "engines": {
     "node": ">=16.x"
   },

@@ -7,7 +7,6 @@ import Login from 'pages/Login';
 import Settings from 'pages/Settings';
 import SettingsAppearance from 'pages/Settings/Appearance';
 import SettingsLanguage from 'pages/Settings/Language';
-import SettingsTable from 'pages/Settings/Table';
 
 import i18n from 'config/i18n';
 import getContrastPaperColor from 'utils/getContrastPaperColor';
@@ -71,15 +70,6 @@ export const getRoutes = () => {
       appBarColor: theme => getContrastPaperColor(theme),
     },
     {
-      title: t`pages.app.routes.settingsTable`,
-      path: '/settings/table',
-      component: <SettingsTable />,
-      alias: 'settingsTable',
-      shouldShowAppBar: false,
-      shouldAppBarChangeColors: false,
-      appBarColor: theme => getContrastPaperColor(theme),
-    },
-    {
       title: t`pages.app.routes.login`,
       path: '/login',
       component: <Login />,
@@ -106,6 +96,7 @@ export const getRoutes = () => {
       shouldAppBarChangeColors: false,
       appBarColor: theme => theme.palette.background.default,
     },
+    // TODO: admin panel
   ];
   return routes;
 };

@@ -1,2 +1,2 @@
-type Language = 'en' | 'ru' | 'is' | 'sv';
+type Language = 'en' | 'ru';
 export default Language;

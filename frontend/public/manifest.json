@@ -1,7 +1,7 @@
 {
-  "short_name": "Lab9 Client",
-  "name": "Lab9 Client",
-  "description": "ITMO Programming laboratory work №9 additional task",
+  "short_name": "Lab1 Client",
+  "name": "Lab1 Client",
+  "description": "ITMO IS laboratory work",
   "icons": [
     {
       "src": "favicon.ico",

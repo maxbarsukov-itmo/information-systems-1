@@ -13,8 +13,6 @@ import updateLocalePlugin from 'dayjs/plugin/updateLocale';
 
 import 'dayjs/locale/ru';
 import 'dayjs/locale/en';
-import 'dayjs/locale/sv';
-import 'dayjs/locale/is';
 
 import 'config/i18n';
 
@@ -45,22 +43,6 @@ dayjs.updateLocale('en', {
     lastWeek: 'D MMMM[, at ]hh:mm A',
     sameDay: '[Today, at ]hh:mm',
     lastDay: '[Yesterday, at ]hh:mm',
-    sameElse: 'DD.MM.YYYY',
-  },
-});
-dayjs.updateLocale('sv', {
-  calendar: {
-    lastWeek: 'D MMMM[, klockan ]HH:mm',
-    sameDay: '[Idag klockan ]HH:mm',
-    lastDay: '[Igår klockan ]HH:mm',
-    sameElse: 'DD.MM.YYYY',
-  },
-});
-dayjs.updateLocale('is', {
-  calendar: {
-    lastWeek: 'D[. ]MMMM[, klukkan ]HH:mm',
-    sameDay: '[Í dag, klukkan ]HH:mm',
-    lastDay: '[Í gær, klukkan ]HH:mm',
     sameElse: 'DD.MM.YYYY',
   },
 });

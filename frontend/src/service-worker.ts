@@ -47,7 +47,7 @@ registerRoute(
 );
 
 setCacheNameDetails({
-  prefix: 'lab9-client',
+  prefix: 'lab1-client',
   suffix: APP_VERSION,
   precache: 'precache',
   runtime: 'runtime',
@@ -102,7 +102,7 @@ registerRoute(
   /^https?:\/\/.*\/api\/.*/,
   new NetworkFirst({
     networkTimeoutSeconds: 10,
-    cacheName: 'api-cache-lab9',
+    cacheName: 'api-cache-lab1',
     plugins: [
       ...cacheHeaderPlugin,
       new CacheableResponsePlugin({
@@ -141,7 +141,7 @@ registerRoute(
 registerRoute(
   /.*\/fonts\/.*/,
   new CacheFirst({
-    cacheName: 'lab9-fonts',
+    cacheName: 'lab1-fonts',
     plugins: [
       new CacheableResponsePlugin({
         statuses: [0, 200],

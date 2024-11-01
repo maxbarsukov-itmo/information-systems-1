@@ -5,7 +5,6 @@ import { useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import ErrorComponent from 'components/blocks/Error';
-import MaterialTable from 'components/blocks/Table/MaterialTable';
 import Table from 'components/blocks/Table';
 import Visualizer from 'pages/Home/Visualizer';
 
@@ -43,7 +42,6 @@ const useStyles = makeStyles(theme => ({
 const Home = ({ variant = 'home'}: { variant: FlowAlias }) => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const tableSettings = useSelector(store => store.settings.table);
 
   const classes = useStyles();
 
@@ -155,13 +153,8 @@ const Home = ({ variant = 'home'}: { variant: FlowAlias }) => {
         )}
         {(isFetched || !isFirstFetch) && !fetchError && products && (
           <>
-            {variant === 'home' && (tableSettings === 'material'
-              ? <MaterialTable data={products} />
-              : <Table data={products} />
-            )}
-            {variant === 'chart' && (
-              <Visualizer data={products} />
-            )}
+            {variant === 'home' && <Table data={products}/>}
+            {variant === 'chart' && <Visualizer data={products} />}
           </>
         )}
         {fetchError && <ErrorComponent code={500} message={fetchError} />}

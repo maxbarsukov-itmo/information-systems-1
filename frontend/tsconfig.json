@@ -19,7 +19,6 @@
     "noImplicitReturns": false,
     "noImplicitThis": true,
     "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",

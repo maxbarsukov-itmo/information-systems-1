@@ -23,7 +23,7 @@ export default class AuthService {
    * @throws 403 - Cannot log in
    */
   static async login(credentials: Credentials): Promise<AxiosResponse<AuthResponse>> {
-    return api.post<AuthResponse>('/auth/login', credentials);
+    return api.post<AuthResponse>('/auth/sign-in', credentials);
   }
 
   /**
@@ -34,6 +34,6 @@ export default class AuthService {
    * @throws 409 - User.ts with this username already exists
    */
   static async register(credentials: Credentials): Promise<AxiosResponse<AuthResponse>> {
-    return api.post<AuthResponse>('/auth/register', credentials);
+    return api.post<AuthResponse>('/auth/sign-up', credentials);
   }
 }

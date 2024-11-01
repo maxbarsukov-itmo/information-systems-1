@@ -3,7 +3,7 @@
 [![Dependabot](https://img.shields.io/badge/dependabot-enabled-success.svg)](https://dependabot.com)
 [![Code style: airbnb](https://img.shields.io/badge/code%20style-airbnb-blue.svg?style=flat-square)](https://github.com/airbnb/javascript)
 
-Web client for **Lab9** built with `React` + `Redux` + `Material UI`
+Web client for **lab1** built with `React` + `Redux` + `Material UI`
 
 ### Technologies
 
