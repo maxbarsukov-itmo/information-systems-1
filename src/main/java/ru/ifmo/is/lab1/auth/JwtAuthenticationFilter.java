@@ -16,7 +16,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import ru.ifmo.is.lab1.users.UserService;
+import ru.ifmo.is.lab1.users.Role;
+import ru.ifmo.is.lab1.users.User;
 
 import java.io.IOException;
 
@@ -27,7 +28,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   public static final String HEADER_NAME = "Authorization";
 
   private final JwtService jwtService;
-  private final UserService userService;
 
   @Override
   protected void doFilterInternal(
@@ -46,11 +46,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     // Обрезаем префикс и получаем имя пользователя из токена
     var jwt = authHeader.substring(BEARER_PREFIX.length());
     var username = jwtService.extractUsername(jwt);
+    var userId = jwtService.extractId(jwt); // Извлекаем ID пользователя
+    var role = jwtService.extractRole(jwt); // Извлекаем роль
 
     if (StringUtils.isNotEmpty(username) && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = userService
-        .userDetailsService()
-        .loadUserByUsername(username);
+      // Создаем объект UserDetails без запроса к БД
+      UserDetails userDetails = new User(userId, username, Role.valueOf(role), null,  null);
 
       // Если токен валиден, то аутентифицируем пользователя
       if (jwtService.isTokenValid(jwt, userDetails)) {

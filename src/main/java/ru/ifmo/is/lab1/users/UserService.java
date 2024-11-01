@@ -86,7 +86,7 @@ public class UserService {
   @Cacheable("users")
   public User getCurrentUser() {
     // Получение имени пользователя из контекста Spring Security
-    var username = SecurityContextHolder.getContext().getAuthentication().getName();
+    var username = getCurrentUsername();
     return getByUsername(username);
   }
 
