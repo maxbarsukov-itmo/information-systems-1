@@ -1,6 +1,7 @@
 package ru.ifmo.is.lab1.adminrequests;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,7 +23,7 @@ public class AdminRequestController {
   private final AdminRequestService service;
 
   @GetMapping
-  @Operation(summary = "Получить все запросы на администрирование")
+  @Operation(summary = "Получить все запросы на администрирование", security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   public ResponseEntity<Page<AdminRequestDto>> index(@PageableDefault(size = 20) Pageable pageable) {
     var adminRequests = service.getAll(pageable);
@@ -32,7 +33,7 @@ public class AdminRequestController {
   }
 
   @GetMapping("/pending")
-  @Operation(summary = "Получить все нерассмотренные запросы на администрирование")
+  @Operation(summary = "Получить все нерассмотренные запросы на администрирование", security = @SecurityRequirement(name = "bearerAuth"))
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Page<AdminRequestDto>> indexPending(@PageableDefault(size = 20) Pageable pageable) {
     var adminRequests = service.getAllPending(pageable);
@@ -43,7 +44,7 @@ public class AdminRequestController {
 
   @GetMapping("/{id}")
   @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-  @Operation(summary = "Получить запрос на администрирование по ID")
+  @Operation(summary = "Получить запрос на администрирование по ID", security = @SecurityRequirement(name = "bearerAuth"))
   public ResponseEntity<AdminRequestDto> show(@PathVariable int id) {
     var adminRequest = service.getById(id);
     return ResponseEntity.ok(adminRequest);
@@ -52,7 +53,7 @@ public class AdminRequestController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   @PreAuthorize("hasRole('USER')")
-  @Operation(summary = "Подать запрос на администрирование")
+  @Operation(summary = "Подать запрос на администрирование", security = @SecurityRequirement(name = "bearerAuth"))
   public ResponseEntity<AdminRequestDto> create() {
     var adminRequest = service.create();
     return ResponseEntity.status(HttpStatus.CREATED).body(adminRequest);
@@ -60,7 +61,7 @@ public class AdminRequestController {
 
   @PutMapping("/{id}")
   @PreAuthorize("hasRole('ADMIN')")
-  @Operation(summary = "Обработать запрос на администрирование по ID")
+  @Operation(summary = "Обработать запрос на администрирование по ID", security = @SecurityRequirement(name = "bearerAuth"))
   public ResponseEntity<AdminRequestDto> process(@PathVariable int id, @RequestParam boolean approved) {
     var adminRequest = service.process(id, approved);
     return ResponseEntity.ok(adminRequest);

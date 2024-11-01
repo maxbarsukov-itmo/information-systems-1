@@ -1,6 +1,7 @@
 package ru.ifmo.is.lab1.common.framework;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -55,7 +56,7 @@ public abstract class CrudController<
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-  @Operation(summary = "Создать объект")
+  @Operation(summary = "Создать объект", security = @SecurityRequirement(name = "bearerAuth"))
   public ResponseEntity<TDto> create(@Valid @RequestBody TCreateDto request) {
     var obj = service.create(request);
     return ResponseEntity.status(HttpStatus.CREATED).body(obj);
@@ -63,7 +64,7 @@ public abstract class CrudController<
 
   @PatchMapping("/{id}")
   @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-  @Operation(summary = "Обновить объект по ID")
+  @Operation(summary = "Обновить объект по ID", security = @SecurityRequirement(name = "bearerAuth"))
   public ResponseEntity<TDto> update(@PathVariable int id, @Valid @RequestBody TUpdateDto request) {
     var obj = service.update(request, id);
     return ResponseEntity.ok(obj);
@@ -71,7 +72,7 @@ public abstract class CrudController<
 
   @DeleteMapping("/{id}")
   @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-  @Operation(summary = "Удалить объект по ID")
+  @Operation(summary = "Удалить объект по ID", security = @SecurityRequirement(name = "bearerAuth"))
   public ResponseEntity<Void> delete(@PathVariable int id) {
     if (service.delete(id)) {
       return ResponseEntity.noContent().build();
