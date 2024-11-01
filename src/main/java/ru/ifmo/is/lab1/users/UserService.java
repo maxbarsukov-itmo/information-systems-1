@@ -3,12 +3,12 @@ package ru.ifmo.is.lab1.users;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import ru.ifmo.is.lab1.common.caching.RequestCache;
 import ru.ifmo.is.lab1.common.errors.UserWithThisPasswordAlreadyExists;
 import ru.ifmo.is.lab1.common.errors.UserWithThisUsernameAlreadyExists;
 
@@ -60,7 +60,7 @@ public class UserService {
    *
    * @return пользователь
    */
-  @Cacheable("users")
+  @RequestCache
   public User getByUsername(String username) {
     return repository.findByUsername(username)
       .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
@@ -83,7 +83,7 @@ public class UserService {
    *
    * @return текущий пользователь
    */
-  @Cacheable("users")
+  @RequestCache
   public User getCurrentUser() {
     // Получение имени пользователя из контекста Spring Security
     var username = getCurrentUsername();
