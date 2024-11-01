@@ -58,7 +58,7 @@ public abstract class CrudController<
   @Operation(summary = "Создать объект")
   public ResponseEntity<TDto> create(@Valid @RequestBody TCreateDto request) {
     var obj = service.create(request);
-    return ResponseEntity.ok(obj);
+    return ResponseEntity.status(HttpStatus.CREATED).body(obj);
   }
 
   @PatchMapping("/{id}")

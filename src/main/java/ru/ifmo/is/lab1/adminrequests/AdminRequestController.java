@@ -55,7 +55,7 @@ public class AdminRequestController {
   @Operation(summary = "Подать запрос на администрирование")
   public ResponseEntity<AdminRequestDto> create() {
     var adminRequest = service.create();
-    return ResponseEntity.ok(adminRequest);
+    return ResponseEntity.status(HttpStatus.CREATED).body(adminRequest);
   }
 
   @PutMapping("/{id}")
