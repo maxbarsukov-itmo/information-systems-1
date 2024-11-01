@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 import ru.ifmo.is.lab1.common.caching.RequestCache;
 import ru.ifmo.is.lab1.common.errors.UserWithThisPasswordAlreadyExists;
 import ru.ifmo.is.lab1.common.errors.UserWithThisUsernameAlreadyExists;
@@ -24,6 +25,7 @@ public class UserService {
    *
    * @return сохраненный пользователь
    */
+  @Transactional
   public User save(User user) {
     return repository.save(user);
   }
@@ -33,6 +35,7 @@ public class UserService {
    *
    * @return созданный пользователь
    */
+  @Transactional
   public User create(User user) {
     if (repository.existsByUsername(user.getUsername())) {
       throw new UserWithThisUsernameAlreadyExists("Пользователь с таким именем уже существует");

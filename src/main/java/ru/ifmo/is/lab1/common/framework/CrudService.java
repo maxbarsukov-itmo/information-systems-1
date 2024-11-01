@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+
 import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
 import ru.ifmo.is.lab1.common.framework.dto.AuditableDto;
 import ru.ifmo.is.lab1.common.search.SearchDto;
@@ -47,6 +50,7 @@ public abstract class CrudService<
     return objs.map(mapper::map);
   }
 
+  @Transactional
   public TDto create(TCreateDto objData) {
     policy.create(currentUser());
 
@@ -65,6 +69,7 @@ public abstract class CrudService<
     return mapper.map(obj);
   }
 
+  @Transactional
   public TDto update(TUpdateDto objData, int id) {
     var obj = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not Found: " + id));
     policy.update(currentUser(), obj);
@@ -77,6 +82,7 @@ public abstract class CrudService<
     return mapper.map(obj);
   }
 
+  @Transactional(isolation = Isolation.REPEATABLE_READ)
   public boolean delete(int id) {
     return repository.findById(id)
       .map(obj -> {

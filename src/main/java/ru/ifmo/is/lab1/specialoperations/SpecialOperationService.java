@@ -2,6 +2,9 @@ package ru.ifmo.is.lab1.specialoperations;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+
 import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
 import ru.ifmo.is.lab1.dragons.*;
 import ru.ifmo.is.lab1.events.EventService;
@@ -40,6 +43,7 @@ public class SpecialOperationService {
       .orElseGet(() -> new DragonResultDto(NO_DRAGONS_FOUND, null));
   }
 
+  @Transactional(isolation = Isolation.REPEATABLE_READ)
   public DragonResultDto killDragon(int id) {
     var dragon = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not Found: " + id));
 

@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import ru.ifmo.is.lab1.adminrequests.dto.AdminRequestDto;
 import ru.ifmo.is.lab1.common.errors.AdminRequestAlreadyProcessed;
 import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
@@ -53,6 +55,7 @@ public class AdminRequestService {
     return mapper.map(adminRequest);
   }
 
+  @Transactional
   public AdminRequestDto create() {
     var user = currentUser();
     policy.create(user);
@@ -73,6 +76,7 @@ public class AdminRequestService {
     return mapper.map(adminRequest);
   }
 
+  @Transactional
   public AdminRequestDto process(int id, boolean approved) {
     var currentUser = currentUser();
     var adminRequest = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not Found: " + id));

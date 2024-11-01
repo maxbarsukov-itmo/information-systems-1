@@ -5,6 +5,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ru.ifmo.is.lab1.auth.dto.AuthenticationDto;
 import ru.ifmo.is.lab1.auth.dto.SignInDto;
@@ -27,6 +28,7 @@ public class AuthenticationService {
    * @param request данные пользователя
    * @return токен
    */
+  @Transactional
   public AuthenticationDto signUp(SignUpDto request) {
     var user = User.builder()
       .username(request.getUsername())
@@ -46,6 +48,7 @@ public class AuthenticationService {
    * @param request данные пользователя
    * @return токен
    */
+  @Transactional
   public AuthenticationDto signIn(SignInDto request) {
     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
       request.getUsername(),

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.ifmo.is.lab1.common.entity.BaseEntity;
 import ru.ifmo.is.lab1.common.entity.ResourceExtractor;
 import ru.ifmo.is.lab1.common.ws.WebSocketHandler;
@@ -26,6 +27,7 @@ public class EventService {
   private final UserService userService;
   private final ResourceExtractor resourceExtractor;
 
+  @Transactional
   public Event create(EventCreateDto eventDto, @Nullable User creator) {
     logger.info("Event({}): {}-{} by User#{}",
       eventDto.getType(),
@@ -43,6 +45,7 @@ public class EventService {
     return repository.save(event);
   }
 
+  @Transactional
   public void notify(EventType eventType, BaseEntity entity) {
     var entityMetaInfo = resourceExtractor.getIdentification(entity);
     var resourceType = ResourceType.valueOfResource(entityMetaInfo.getLeft());
