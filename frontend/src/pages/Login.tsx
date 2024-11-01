@@ -21,9 +21,11 @@ import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import OutsidePage from 'components/blocks/OutsidePage';
 import LinkToOutsidePage from 'components/blocks/LinkToOutsidePage';
-import Credentials from 'interfaces/dto/Credentials';
+
 import { MIN_WIDTH } from 'config/constants';
 import { useTranslation } from 'react-i18next';
+
+import { SignInDto } from 'interfaces/dto/auth/SignInDto';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -125,7 +127,7 @@ const Login = ({ register = false }: { register?: boolean }) => {
   };
 
   const usernameErrorMessage = () => {
-    if (username.length < 4 || username.length > 15) return t('pages.Auth.errors.username.from4to15');
+    if (username.length < 4 || username.length > 15) return t('pages.Auth.errors.username.from4to255');
     return t('pages.Auth.errors.username.blank');
   };
 
@@ -134,7 +136,7 @@ const Login = ({ register = false }: { register?: boolean }) => {
   };
 
   const passwordErrorMessage = () => {
-    if (password.length < 4) return t('pages.Auth.errors.password.from4');
+    if (password.length < 4) return t('pages.Auth.errors.password.from6to128');
     return t('pages.Auth.errors.password.blank');
   };
 
@@ -142,7 +144,7 @@ const Login = ({ register = false }: { register?: boolean }) => {
 
   const handleLoginSubmit = async e => {
     e.preventDefault();
-    const credentials: Credentials = { name: username, password };
+    const credentials: SignInDto = { username, password };
     dispatch((register ? registerUser : loginUser)(credentials));
   };
 

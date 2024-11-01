@@ -10,7 +10,9 @@ import AuthService from 'services/api/AuthService';
 import Storage from 'utils/Storage';
 
 import { USER_KEY, TOKEN_KEY } from 'config/constants';
-import Credentials from 'interfaces/dto/Credentials';
+import { SignInDto } from 'interfaces/dto/auth/SignInDto';
+import { SignUpDto } from 'interfaces/dto/auth/SignUpDto';
+
 
 const getErrorMessage = error => error?.response?.data?.message || 'ERROR';
 
@@ -36,7 +38,7 @@ export const loadCurrentUser = () => dispatch => {
   );
 };
 
-export const login = (credentials: Credentials) => dispatch => {
+export const login = (credentials: SignInDto) => dispatch => {
   dispatch(loginLoading());
 
   return AuthService.login(credentials).then(
@@ -54,7 +56,7 @@ export const login = (credentials: Credentials) => dispatch => {
   );
 };
 
-export const register = (credentials: Credentials) => dispatch => {
+export const register = (credentials: SignUpDto) => dispatch => {
   dispatch(loginLoading());
 
   return AuthService.register(credentials).then(
