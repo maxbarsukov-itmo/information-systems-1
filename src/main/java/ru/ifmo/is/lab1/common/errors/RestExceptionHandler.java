@@ -6,12 +6,13 @@ import java.util.Objects;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -33,6 +34,25 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
   protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
     logger.info(ex.getClass().getName());
     final ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, ex.getLocalizedMessage(), "Policy Violation");
+    return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+  }
+
+  @ExceptionHandler({ AuthenticationException.class })
+  public ResponseEntity<Object> handleAuthenticationException(Exception ex) {
+    logger.info(ex.getClass().getName());
+    final ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, ex.getLocalizedMessage(), "Authentication failed");
+    return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+  }
+
+  // 403
+  @ExceptionHandler({ AccessDeniedException.class })
+  public ResponseEntity<Object> handleAccessDeniedException(Exception ex) {
+    logger.info(ex.getClass().getName());
+    final ApiError apiError = new ApiError(
+      HttpStatus.FORBIDDEN,
+      ex.getLocalizedMessage(),
+      "You have not been granted authority to perform this action"
+    );
     return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
   }
 
