@@ -1,8 +1,6 @@
 import axios from 'axios';
 import Storage from 'utils/Storage';
-import { TOKEN_KEY } from 'config/constants';
-
-export const API_URL = process.env.REACT_APP_API_URL;
+import { TOKEN_KEY, API_URL } from 'config/constants';
 
 const instance = axios.create({
   baseURL: API_URL,
