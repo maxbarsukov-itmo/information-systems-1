@@ -4,11 +4,11 @@ import Sort from "./Sort";
 export default interface Paged<T> {
   totalElements: number;
   totalPages: number;
-  pageable: Pageable;
+  pageable?: Pageable;
   size: number;
   content: T[];
   number: number;
-  sort: Sort;
+  sort?: Sort | string;
   first?: boolean;
   last?: boolean;
   numberOfElements: 0;
