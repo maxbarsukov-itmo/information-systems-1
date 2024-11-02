@@ -1,6 +1,7 @@
 export type ErrorResponse = {
+  status: string;
   message: string;
-  description?: string;
+  errors: string[];
 };
 
 type Response<T> = T | ErrorResponse;

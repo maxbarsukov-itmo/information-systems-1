@@ -1,10 +1,10 @@
-import User from 'interfaces/models/User';
-import MessageType from './MessageType';
+import { EventType } from '../models/EventType';
+import { ResourceType } from '../models/ResourceType';
 
-interface Event {
-  creator: User;
-  messageType: MessageType;
-  requestUuid: string;
+export interface Event<T> {
+    eventType: EventType;
+    resourceType: ResourceType;
+    resourceId: number;
+    requestUuid: string;
+    entity: T;
 }
-
-export default Event;

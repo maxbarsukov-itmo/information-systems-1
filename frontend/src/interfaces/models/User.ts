@@ -1,6 +1,12 @@
+import { ZonedDateTime } from 'luxon';
+
+import { Role } from "./Role";
+
 type User = {
   id: number;
-  name: string;
+  username: string;
+  role: Role;
+  createdAt: ZonedDateTime;
 };
 
 export default User;

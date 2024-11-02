@@ -1,3 +1,5 @@
+import { ZonedDateTime } from 'luxon';
+
 import User from '../../models/User';
 import { Status } from '../../models/Status';
 
@@ -7,5 +9,5 @@ export interface AdminRequestDto {
     status: Status;
     approvedBy?: User; // Optional field
     approvalDate?: Date; // Optional field
-    createdAt: Date;
+    createdAt: ZonedDateTime;
 }
