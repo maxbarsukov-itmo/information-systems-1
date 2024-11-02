@@ -105,7 +105,7 @@ const Home = ({ variant = 'home'}: { variant: FlowAlias }) => {
   }, [location.pathname, location.search]);
 
   const supportsWebSockets = 'WebSocket' in window || 'MozWebSocket' in window;
-  const WS_URL = 'ws://localhost:8081';
+  const WS_URL = 'ws://localhost:8080/ws';
 
   if (!supportsWebSockets) {
     useInterval(
