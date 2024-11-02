@@ -31,7 +31,7 @@ export interface ProductsState {
 
 const getCurrentName = () => {
   const t = i18n.t.bind(i18n);
-  return Storage.get(USER_KEY)?.name || t('pages.app.other.nobodyUpdated');
+  return Storage.get(USER_KEY)?.username || t('pages.app.other.nobodyUpdated');
 };
 
 const t = i18n.t.bind(i18n);
@@ -86,7 +86,7 @@ export const productsSlice = createSlice({
         state.products.push(action.payload.createdProduct);
         state.productsCount += 1;
       }
-      updated(state, action.payload.creator.name);
+      updated(state, action.payload.creator.username);
     },
     updateEvent: (state, action: PayloadAction<UpdateEvent>) => {
       if (state.products.map(p => p.id).includes(action.payload.updatedProduct.id)) {
@@ -97,21 +97,21 @@ export const productsSlice = createSlice({
         state.products.push(action.payload.updatedProduct);
         state.productsCount += 1;
       }
-      updated(state, action.payload.creator.name);
+      updated(state, action.payload.creator.username);
     },
     deleteEvent: (state, action: PayloadAction<DeleteEvent>) => {
       state.products = state.products.filter(product =>
         product.id !== action.payload.deletedId
       );
       state.productsCount = state.products.length;
-      updated(state, action.payload.creator.name);
+      updated(state, action.payload.creator.username);
     },
     clearEvent: (state, action: PayloadAction<ClearEvent>) => {
       state.products = state.products.filter(product =>
         !action.payload.deletedIds.includes(product.id)
       );
       state.productsCount = state.products.length;
-      updated(state, action.payload.creator.name);
+      updated(state, action.payload.creator.username);
     },
 
     getAllProductsLoading: state => {

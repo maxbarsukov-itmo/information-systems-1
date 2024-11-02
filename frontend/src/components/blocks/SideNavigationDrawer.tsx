@@ -216,9 +216,9 @@ const ProfileButton = () => {
   return shouldShowUser && user ? (
     <>
       <ButtonBase className={classes.root} onClick={openUserMenu}>
-        <UserAvatar alias={user.name} className={classes.avatar} src={null} />
+        <UserAvatar username={user.username} className={classes.avatar} src={null} />
         <div className={classes.textHolder}>
-          <Typography className={classes.username}>{user.name}</Typography>
+          <Typography className={classes.username}>{user.username}</Typography>
         </div>
       </ButtonBase>
       <UserMenu isOpen={isUserMenuOpen} setOpen={setUserMenuOpen} variant="modal" />

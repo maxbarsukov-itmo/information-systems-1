@@ -124,7 +124,7 @@ const AddOrEdit: React.FC<Props> = ({ productId, isOpen, setOpen }) => {
       unitOfMeasure: product?.unitOfMeasure || 'KILOGRAMS',
       hasManufacturer: !!product?.manufacturer?.id || false,
       manufacturerName: product?.manufacturer?.name || '',
-      manufacturerEmployeesCount: product?.manufacturer?.employeesCount || 0,
+      manufacturerEmployeesCount: Number(product?.manufacturer?.employeesCount) || 0,
       manufacturerType: product?.manufacturer?.type || 'COMMERCIAL',
       manufacturerStreet: product?.manufacturer?.street || '',
       manufacturerZipCode: product?.manufacturer?.zipCode || '',

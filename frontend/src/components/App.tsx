@@ -20,7 +20,6 @@ import { SnackbarProvider } from 'notistack';
 import useRoute from 'hooks/useRoute';
 import useAutoChangeTheme from 'hooks/useAutoChangeTheme';
 import useTitleChange from 'hooks/useTitleChange';
-import useUserDataFetch from 'hooks/useUserDataFetch';
 
 import { useSelector } from 'hooks';
 import isDarkTheme from 'utils/isDarkTheme';
@@ -154,7 +153,6 @@ const App = () => {
 
   useTitleChange();
   useAutoChangeTheme();
-  useUserDataFetch();
 
   useEffect(() => {
     document.body.className = classes.body;

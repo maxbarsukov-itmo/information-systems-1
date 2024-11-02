@@ -175,7 +175,7 @@ const AppBarComponent = () => {
             )}
             {shouldShowUser && userData && (
               <IconButton onClick={openUserMenu}>
-                <UserAvatar src={null} alias={userData.name} className={classes.avatar} />
+                <UserAvatar src={null} username={userData.username} className={classes.avatar} />
               </IconButton>
             )}
           </div>

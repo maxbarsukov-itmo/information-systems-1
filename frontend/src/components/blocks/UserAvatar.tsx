@@ -15,9 +15,9 @@ const useStyles = makeStyles(theme => ({
 
 const UserAvatar: React.FC<{
   src: string;
-  alias: string;
+  username: string;
   className?: string;
-}> = ({ src, alias, className, ...props }) => {
+}> = ({ src, username, className, ...props }) => {
   const classes = useStyles();
 
   const hasAvatar = !!src;
@@ -27,7 +27,7 @@ const UserAvatar: React.FC<{
       {hasAvatar ? (
         <Avatar className={className || classes.root} src={src} />
       ) : (
-        <UserPlaceholder num={alias?.length || 0} />
+        <UserPlaceholder num={username?.length || 0} />
       )}
     </div>
   );

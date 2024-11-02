@@ -21,23 +21,6 @@ export const setCurrentUser = user => dispatch => {
   dispatch(setUser(user));
 };
 
-export const loadCurrentUser = () => dispatch => {
-  dispatch(loginLoading());
-
-  return AuthService.me().then(
-    response => {
-      dispatch(loginSuccess(response.data.user));
-      Storage.set(USER_KEY, response.data.user);
-      return Promise.resolve();
-    },
-    error => {
-      dispatch(loginFail(getErrorMessage(error)));
-      Storage.remove(USER_KEY);
-      return Promise.reject();
-    }
-  );
-};
-
 export const login = (credentials: SignInDto) => dispatch => {
   dispatch(loginLoading());
 

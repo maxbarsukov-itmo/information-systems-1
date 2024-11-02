@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   avatar: {
     borderRadius: '50%',
   },
-  usernameAndAliasWrapper: {
+  usernameWrapper: {
     display: 'flex',
     flexDirection: 'column',
     marginLeft: theme.spacing(1),
@@ -49,14 +49,6 @@ const useStyles = makeStyles(theme => ({
     fontSize: 17,
     color: theme.palette.text.primary,
     lineHeight: '20px',
-  },
-  alias: {
-    fontFamily: 'Google Sans',
-    fontWeight: 500,
-    fontSize: 15,
-    color: theme.palette.primary.light,
-    lineHeight: '18px',
-    marginTop: theme.spacing(0.35),
   },
   logoutIcon: {
     color: theme.palette.text.secondary,
@@ -83,10 +75,9 @@ const UserAvatarAndLogin: React.FC<{ handleClose: () => void }> = ({ handleClose
     <div className={classes.root}>
       <div className={classes.avatarAndLogin}>
         <LinkToOutsidePage to={`/user/${user?.id}`} className={classes.link} onClick={handleClose}>
-          <UserAvatar src={null} alias={user?.name} className={classes.avatar} />
-          <div className={classes.usernameAndAliasWrapper}>
-            <Typography className={classes.username}>{user?.name}</Typography>
-            <Typography className={classes.alias}>@{user?.name}</Typography>
+          <UserAvatar src={null} username={user?.username} className={classes.avatar} />
+          <div className={classes.usernameWrapper}>
+            <Typography className={classes.username}>{user?.username}</Typography>
           </div>
         </LinkToOutsidePage>
       </div>

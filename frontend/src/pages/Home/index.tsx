@@ -19,7 +19,7 @@ import {
   deleteProduct,
   clearProduct,
 } from 'store/products/events';
-import Event, { CreateEvent, UpdateEvent, DeleteEvent } from 'interfaces/events';
+// import Event, { CreateEvent, UpdateEvent, DeleteEvent } from 'interfaces/events';
 
 import { Box, CircularProgress } from '@material-ui/core';
 import { useInterval } from 'usehooks-ts';
@@ -66,39 +66,39 @@ const Home = ({ variant = 'home'}: { variant: FlowAlias }) => {
     });
   };
 
-  const handleEvent = (event: Event) => {
-    const handlers = {
-      'CREATE': createProduct,
-      'UPDATE': updateProduct,
-      'DELETE': deleteProduct,
-      'ClEAR': clearProduct,
-    };
-    dispatch(handlers[event.messageType](event))
-      .then(() => {
-        const username = event.creator.name;
-        const notifications = {
-          'CREATE': t(
-            'pages.Home.Events.CREATE',
-            { username, id: (event as CreateEvent)?.createdProduct?.id || 1 }
-          ),
-          'UPDATE': t(
-            'pages.Home.Events.UPDATE',
-            { username, id: (event as UpdateEvent)?.updatedProduct?.id || 1 }
-          ),
-          'DELETE': t(
-            'pages.Home.Events.DELETE',
-            { username, id: (event as DeleteEvent)?.deletedId || 1 }
-          ),
-          'CLEAR': t('pages.Home.Events.CLEAR', { username }),
-        };
-        if (userData?.id !== event.creator.id) {
-          enqueueSnackbar(notifications[event.messageType], {
-            variant: 'info', autoHideDuration: 2000,
-          });
-        }
-      });
-    return event;
-  };
+  // const handleEvent = (event: Event) => {
+  //   const handlers = {
+  //     'CREATE': createProduct,
+  //     'UPDATE': updateProduct,
+  //     'DELETE': deleteProduct,
+  //     'ClEAR': clearProduct,
+  //   };
+  //   dispatch(handlers[event.messageType](event))
+  //     .then(() => {
+  //       const username = event.creator.username;
+  //       const notifications = {
+  //         'CREATE': t(
+  //           'pages.Home.Events.CREATE',
+  //           { username, id: (event as CreateEvent)?.createdProduct?.id || 1 }
+  //         ),
+  //         'UPDATE': t(
+  //           'pages.Home.Events.UPDATE',
+  //           { username, id: (event as UpdateEvent)?.updatedProduct?.id || 1 }
+  //         ),
+  //         'DELETE': t(
+  //           'pages.Home.Events.DELETE',
+  //           { username, id: (event as DeleteEvent)?.deletedId || 1 }
+  //         ),
+  //         'CLEAR': t('pages.Home.Events.CLEAR', { username }),
+  //       };
+  //       if (userData?.id !== event.creator.id) {
+  //         enqueueSnackbar(notifications[event.messageType], {
+  //           variant: 'info', autoHideDuration: 2000,
+  //         });
+  //       }
+  //     });
+  //   return event;
+  // };
 
   useEffect(() => {
     fetch();
@@ -117,25 +117,25 @@ const Home = ({ variant = 'home'}: { variant: FlowAlias }) => {
   } else {
     const uuids = useSelector(state => state.requests.uuids);
 
-    useWebSocket(WS_URL, {
-      share: true,
-      filter: () => false,
-      shouldReconnect: () => true,
-      onOpen: () => console.log('> WebSocket connection established.'),
-      onClose: () => console.log('> WebSocket connection closed.'),
-      onError: () => console.log('> WebSocket error.'),
-      onMessage: (evt) => {
-        console.log('> WebSocket: new message.');
-        const event: Event = JSON.parse(evt.data);
-        if (uuids.includes(event.requestUuid)) {
-          console.log('> WebSocket: event by current user. Ignored.');
-          return;
-        }
+  //   useWebSocket(WS_URL, {
+  //     share: true,
+  //     filter: () => false,
+  //     shouldReconnect: () => true,
+  //     onOpen: () => console.log('> WebSocket connection established.'),
+  //     onClose: () => console.log('> WebSocket connection closed.'),
+  //     onError: () => console.log('> WebSocket error.'),
+  //     onMessage: (evt) => {
+  //       console.log('> WebSocket: new message.');
+  //       const event: Event = JSON.parse(evt.data);
+  //       if (uuids.includes(event.requestUuid)) {
+  //         console.log('> WebSocket: event by current user. Ignored.');
+  //         return;
+  //       }
 
-        console.log(`> WebSocket: handling event ${event.messageType} by ${event.creator.id}.`);
-        handleEvent(event);
-      },
-    });
+  //       console.log(`> WebSocket: handling event ${event.messageType} by ${event.creator.id}.`);
+  //       handleEvent(event);
+  //     },
+  //   });
   }
 
   return (

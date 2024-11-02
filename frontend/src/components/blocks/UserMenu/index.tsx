@@ -19,7 +19,6 @@ import { useTranslation } from 'react-i18next';
 import { APP_BAR_HEIGHT, DRAWER_WIDTH } from 'config/constants';
 
 import UserAvatarAndLogin from './UserAvatarAndLogin';
-import ManageAccountButton from './ManageAccountButton';
 
 const DIALOG_MAX_WIDTH = 440;
 const MODAL_MAX_WIDTH = 300;
@@ -108,7 +107,6 @@ const UserMenu: React.FC<Props> = ({ isOpen, setOpen, variant }) => {
           </Typography>
         </div>
         <UserAvatarAndLogin handleClose={handleClose} />
-        <ManageAccountButton />
       </Dialog>
     );
   }
@@ -119,7 +117,6 @@ const UserMenu: React.FC<Props> = ({ isOpen, setOpen, variant }) => {
           <div>
             <Paper className={classesModal.root}>
               <UserAvatarAndLogin handleClose={handleClose} />
-              <ManageAccountButton />
             </Paper>
           </div>
         </ClickAwayListener>

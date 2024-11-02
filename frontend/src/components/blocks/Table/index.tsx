@@ -182,7 +182,7 @@ const Table = ({ data }: { data: Product[] }) => {
       header: 'Creator ID',
       cell: info => info?.getValue() || null,
     }),
-    columnHelper.accessor(({ creator }) => creator?.name, {
+    columnHelper.accessor(({ creator }) => creator?.username, {
       header: 'Creator Name',
       cell: info => info?.getValue() || null,
     }),
