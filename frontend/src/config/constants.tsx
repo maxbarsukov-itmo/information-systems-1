@@ -39,13 +39,15 @@ export const DEFAULT_USER_SETTINGS: UserSettings = {
 export const LANGUAGES_INTERFACE = [
   {
     type: 'en',
-    name: 'English (IN)',
+    name: 'English',
   },
   {
     type: 'ru',
     name: 'Русский',
   },
 ];
+
+export const REQUEST_UUIDS_HISTORY_LENGTH = 128;
 
 export const HOUR = 1000 * 60 * 60;
 export const DEFAULT_UPDATE_INTERVAL = HOUR / 12;

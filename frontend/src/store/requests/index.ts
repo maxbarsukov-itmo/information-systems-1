@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 import Storage from 'utils/Storage';
-import { REQUESTS_KEY } from 'config/constants';
+import { REQUESTS_KEY, REQUEST_UUIDS_HISTORY_LENGTH } from 'config/constants';
 
 export interface RequestsState {
   uuids: string[];
@@ -17,11 +17,15 @@ export const requestsSlice = createSlice({
   initialState,
   reducers: {
     addRequest: (state, action: PayloadAction<string>) => {
-      if (action.payload.startsWith('[')) {
-        state.uuids.push(action.payload.slice(1,-1));
-      } else {
-        state.uuids.push(action.payload);
+      const newUuid = action.payload.startsWith('[')
+      ? action.payload.slice(1, -1)
+      : action.payload;
+
+      state.uuids.push(newUuid);
+      if (state.uuids.length > REQUEST_UUIDS_HISTORY_LENGTH) {
+        state.uuids.shift();
       }
+
       Storage.set(REQUESTS_KEY, state.uuids);
     },
   },
