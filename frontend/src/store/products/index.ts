@@ -204,8 +204,5 @@ export const {
   deleteProductLoading,
   deleteProductSuccess,
   deleteProductFail,
-  clearProductsLoading,
-  clearProductsSuccess,
-  clearProductsFail,
 } = productsSlice.actions;
 export default productsSlice.reducer;

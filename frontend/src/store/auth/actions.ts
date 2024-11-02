@@ -3,7 +3,6 @@ import {
   loginLoading,
   loginSuccess,
   logout as logoutUser,
-  setCurrentUser as setUser,
 } from 'store/auth';
 
 import AuthService from 'services/api/AuthService';
@@ -15,11 +14,6 @@ import { SignUpDto } from 'interfaces/dto/auth/SignUpDto';
 
 
 const getErrorMessage = error => error?.response?.data?.message || 'ERROR';
-
-export const setCurrentUser = user => dispatch => {
-  Storage.set(USER_KEY, user);
-  dispatch(setUser(user));
-};
 
 export const login = (credentials: SignInDto) => dispatch => {
   dispatch(loginLoading());
