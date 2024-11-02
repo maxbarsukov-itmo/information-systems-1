@@ -1,7 +1,7 @@
 {
   "pages": {
     "app": {
-      "appName": "Лаба 9 Клиент",
+      "appName": "Лаба 1 Клиент",
       "goBack": "Назад",
       "routes": {
         "home": "Таблица",
@@ -61,6 +61,15 @@
         "CLEAR": "Пользователь {{username}} только что удалил все свои продукты."
       },
       "Sidebar": {
+        "Tables": {
+          "Title": "Таблицы",
+          "dragons": "Драконы",
+          "people": "Люди",
+          "dragonCaves": "Пещеры",
+          "dragonHeads": "Головы драконов",
+          "locations": "Локации",
+          "coordinates": "Координаты"
+        },
         "Info": {
           "Information": "Информация",
           "productsCount": "Количество продуктов",
