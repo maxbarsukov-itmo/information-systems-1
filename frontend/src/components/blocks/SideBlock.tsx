@@ -16,13 +16,14 @@ const useStyles = makeStyles((theme) => ({
   titleContainer: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    marginBottom: 6,
   },
   title: {
     fontFamily: 'Google Sans',
     textTransform: 'uppercase',
-    fontWeight: 500,
-    fontSize: 13,
+    fontWeight: 700,
+    fontSize: 16,
     letterSpacing: '1px',
     color: theme.palette.text.hint,
     lineHeight: 'normal',
