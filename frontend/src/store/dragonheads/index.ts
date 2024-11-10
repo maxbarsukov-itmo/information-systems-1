@@ -6,26 +6,39 @@ import { DragonHeadCreateDto } from 'interfaces/dto/dragonheads/DragonHeadCreate
 import { DragonHeadUpdateDto } from 'interfaces/dto/dragonheads/DragonHeadUpdateDto';
 import { SearchDto } from 'interfaces/dto/search/SearchDto';
 
+import Loading from 'utils/Loading';
+import Paged from 'interfaces/models/Paged';
+
 export interface DragonHeadState {
-    items: DragonHeadDto[];
-    loading: boolean;
+    paged: Paged<DragonHeadDto>;
+    loading: Loading;
     error: string | null;
-    page: number;
-    size: number;
-    sort: string;
     search?: SearchDto;
-    totalItems: number;
 }
 
 const initialState: DragonHeadState = {
-    items: [],
-    loading: false,
+    paged: {
+        sort: 'id, desc',
+        content: [],
+        number: 0,
+        size: 20,
+        totalElements: 0,
+        totalPages: 0,
+        numberOfElements: 0,
+        first: false,
+        last: false,
+        empty: true,
+    },
+    loading: {
+        fetch: false,
+        get: false,
+        create: false,
+        update: false,
+        delete: false,
+        search: false,
+    },
     error: null,
-    page: 0,
-    size: 20,
     search: null,
-    sort: 'id,asc',
-    totalItems: 0,
 };
 
 export const fetchDragonHeads = createAsyncThunk(
@@ -73,52 +86,67 @@ const dragonHeadSlice = createSlice({
   initialState,
   reducers: {
       setPage: (state, action: PayloadAction<number>) => {
-          state.page = action.payload;
+          state.paged.number = action.payload;
       },
       setSize: (state, action: PayloadAction<number>) => {
-          state.size = action.payload;
+          state.paged.size = action.payload;
       },
       setSort: (state, action: PayloadAction<string>) => {
-          state.sort = action.payload;
+          state.paged.sort = action.payload;
       },
       setSearch: (state, action: PayloadAction<SearchDto>) => {
         state.search = action.payload;
     },
       handleEventUpdate: (state, action: PayloadAction<DragonHeadDto>) => {
-          const index = state.items.findIndex(item => item.id === action.payload.id);
+          const index = state.paged.content.findIndex(item => item.id === action.payload.id);
           if (index >= 0) {
-              state.items[index] = action.payload;
+              state.paged.content[index] = action.payload;
           }
       },
       handleEventDelete: (state, action: PayloadAction<number>) => {
-          state.items = state.items.filter(item => item.id !== action.payload);
       },
   },
   extraReducers: (builder) => {
       builder
           .addCase(fetchDragonHeads.pending, (state) => {
-              state.loading = true;
+              state.loading.fetch = true;
           })
           .addCase(fetchDragonHeads.fulfilled, (state, action) => {
-              state.loading = false;
-              state.items = action.payload.content;
-              state.totalItems = action.payload.numberOfElements;
+              state.loading.fetch = false;
+              state.paged = action.payload;
           })
           .addCase(fetchDragonHeads.rejected, (state, action) => {
-              state.loading = false;
+              state.loading.fetch = false;
               state.error = action.error.message || 'Failed to fetch dragon heads';
           })
+          .addCase(createDragonHead.pending, (state) => {
+              state.loading.create = true;
+          })
           .addCase(createDragonHead.fulfilled, (state, action) => {
-              state.items.unshift(action.payload);
+              state.loading.create = false;
+          })
+          .addCase(createDragonHead.rejected, (state, action) => {
+              state.loading.create = false;
+              state.error = action.error.message || 'Failed to create dragon head'; 
+          })
+          .addCase(updateDragonHead.pending, (state) => { 
+              state.loading.update = true;
           })
           .addCase(updateDragonHead.fulfilled, (state, action) => {
-              const index = state.items.findIndex(item => item.id === action.payload.id);
+              state.loading.update = false;
+          })
+          .addCase(fetchDragonHeads.rejected, (state, action) => {
+              state.loading.fetch = false;
+              state.error = action.error.message || 'Failed to fetch dragon heads';
+          })
+          .addCase(updateDragonHead.fulfilled, (state, action) => {
+              const index = state.paged.content.findIndex(item => item.id === action.payload.id);
               if (index >= 0) {
-                  state.items[index] = action.payload;
+                  state.paged.content[index] = action.payload;
               }
           })
           .addCase(deleteDragonHead.fulfilled, (state, action) => {
-              state.items = state.items.filter(item => item.id !== action.payload);
+              state.paged.content = state.paged.content.filter(item => item.id !== action.payload);
           });
   },
 });
