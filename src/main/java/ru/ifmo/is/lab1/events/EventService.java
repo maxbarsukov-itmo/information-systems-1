@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.ifmo.is.lab1.common.caching.RequestCache;
 import ru.ifmo.is.lab1.common.entity.BaseEntity;
 import ru.ifmo.is.lab1.common.entity.ResourceExtractor;
 import ru.ifmo.is.lab1.common.ws.WebSocketHandler;
@@ -58,6 +59,7 @@ public class EventService<T extends BaseEntity> {
     webSocketHandler.notifyClients(event, entity, (String) httpServletRequest.getAttribute("requestUUID"));
   }
 
+  @RequestCache
   private User currentUser() {
     try {
       return userService.getCurrentUser();

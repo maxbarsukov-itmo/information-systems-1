@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.function.Function;
 import javax.crypto.SecretKey;
 
+import ru.ifmo.is.lab1.common.caching.RequestCache;
 import ru.ifmo.is.lab1.users.User;
 
 @Service
@@ -126,6 +127,7 @@ public class JwtService {
    * @param token токен
    * @return данные
    */
+  @RequestCache
   private Claims extractAllClaims(String token) {
     return Jwts.parser()
       .verifyWith(getSigningKey())

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.ifmo.is.lab1.adminrequests.dto.AdminRequestDto;
+import ru.ifmo.is.lab1.common.caching.RequestCache;
 import ru.ifmo.is.lab1.common.errors.AdminRequestAlreadyProcessed;
 import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
 import ru.ifmo.is.lab1.common.errors.SomePendingRequestsExists;
@@ -104,6 +105,7 @@ public class AdminRequestService {
     return mapper.map(adminRequest);
   }
 
+  @RequestCache
   private User currentUser() {
     return userService.getCurrentUser();
   }

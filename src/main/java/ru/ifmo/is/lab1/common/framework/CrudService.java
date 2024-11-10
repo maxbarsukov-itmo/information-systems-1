@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import ru.ifmo.is.lab1.common.caching.RequestCache;
 import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
 import ru.ifmo.is.lab1.common.framework.dto.AuditableDto;
 import ru.ifmo.is.lab1.common.search.SearchDto;
@@ -93,6 +94,7 @@ public abstract class CrudService<
       }).orElse(false);
   }
 
+  @RequestCache
   private User currentUser() {
     try {
       return userService.getCurrentUser();

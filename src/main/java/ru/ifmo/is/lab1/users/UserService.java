@@ -67,7 +67,6 @@ public class UserService {
   public User getByUsername(String username) {
     return repository.findByUsername(username)
       .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
-
   }
 
   /**
@@ -98,6 +97,7 @@ public class UserService {
    *
    * @return имя текущего пользователь
    */
+  @RequestCache
   public String getCurrentUsername() {
     // Получение имени пользователя из контекста Spring Security
     return SecurityContextHolder.getContext().getAuthentication().getName();
