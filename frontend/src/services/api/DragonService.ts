@@ -4,8 +4,10 @@ import { SearchDto } from 'interfaces/dto/search/SearchDto';
 import { DragonDto } from 'interfaces/dto/dragons/DragonDto';
 import { DragonCreateDto } from 'interfaces/dto/dragons/DragonCreateDto';
 import { DragonUpdateDto } from 'interfaces/dto/dragons/DragonUpdateDto';
+import CrudService, { staticImplements } from 'interfaces/crud/CrudService';
 import Paged from 'interfaces/models/Paged';
 
+@staticImplements<CrudService<DragonDto, DragonCreateDto, DragonUpdateDto>>()
 export default class DragonService {
   static async getAll(page: number, size: number, sort: string): Promise<AxiosResponse<Paged<DragonDto>>> {
     return api.get<Paged<DragonDto>>(`/dragons?page=${page}&size=${size}&sort=${sort}`);

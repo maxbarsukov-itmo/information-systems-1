@@ -4,8 +4,10 @@ import { SearchDto } from 'interfaces/dto/search/SearchDto';
 import { LocationDto } from 'interfaces/dto/locations/LocationDto';
 import { LocationCreateDto } from 'interfaces/dto/locations/LocationCreateDto';
 import { LocationUpdateDto } from 'interfaces/dto/locations/LocationUpdateDto';
+import CrudService, { staticImplements } from 'interfaces/crud/CrudService';
 import Paged from 'interfaces/models/Paged';
 
+@staticImplements<CrudService<LocationDto, LocationCreateDto, LocationUpdateDto>>()
 export default class LocationService {
   static async getAll(page: number, size: number, sort: string): Promise<AxiosResponse<Paged<LocationDto>>> {
     return api.get<Paged<LocationDto>>(`/locations?page=${page}&size=${size}&sort=${sort}`);

@@ -4,8 +4,10 @@ import { SearchDto } from 'interfaces/dto/search/SearchDto';
 import { PersonDto } from 'interfaces/dto/people/PersonDto';
 import { PersonCreateDto } from 'interfaces/dto/people/PersonCreateDto';
 import { PersonUpdateDto } from 'interfaces/dto/people/PersonUpdateDto';
+import CrudService, { staticImplements } from 'interfaces/crud/CrudService';
 import Paged from 'interfaces/models/Paged';
 
+@staticImplements<CrudService<PersonDto, PersonCreateDto, PersonUpdateDto>>()
 export default class PersonService {
   static async getAll(page: number, size: number, sort: string): Promise<AxiosResponse<Paged<PersonDto>>> {
     return api.get<Paged<PersonDto>>(`/people?page=${page}&size=${size}&sort=${sort}`);

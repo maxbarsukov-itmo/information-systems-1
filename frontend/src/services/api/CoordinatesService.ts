@@ -4,8 +4,10 @@ import { SearchDto } from 'interfaces/dto/search/SearchDto';
 import { CoordinateDto } from 'interfaces/dto/coordinates/CoordinateDto';
 import { CoordinateCreateDto } from 'interfaces/dto/coordinates/CoordinateCreateDto';
 import { CoordinateUpdateDto } from 'interfaces/dto/coordinates/CoordinateUpdateDto';
+import CrudService, { staticImplements } from 'interfaces/crud/CrudService';
 import Paged from 'interfaces/models/Paged';
 
+@staticImplements<CrudService<CoordinateDto, CoordinateCreateDto, CoordinateUpdateDto>>()
 export default class CoordinatesService {
   static async getAll(page: number, size: number, sort: string): Promise<AxiosResponse<Paged<CoordinateDto>>> {
     return api.get<Paged<CoordinateDto>>(`/coordinates?page=${page}&size=${size}&sort=${sort}`);
