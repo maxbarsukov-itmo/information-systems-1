@@ -5,7 +5,7 @@ import Loading from './Loading';
 import { SearchDto } from 'interfaces/dto/search/SearchDto';
 import { Draft } from 'immer';
 
-interface CrudState<T> {
+export interface CrudState<T> {
     paged: Paged<T>;
     loading: Loading;
     error: string | null;
@@ -21,7 +21,7 @@ const createCrudSlice = <T extends Identifiable, CreateDto, UpdateDto>(
     name: string,
     service: {
         getAll: (page: number, size: number, sort: string) => Promise<AxiosResponse<Paged<T>>>;
-        getById: (id: number) => Promise<AxiosResponse<T>>;
+        get: (id: number) => Promise<AxiosResponse<T>>;
         create: (data: CreateDto) => Promise<AxiosResponse<T>>;
         update: (id: number, data: UpdateDto) => Promise<AxiosResponse<T>>;
         delete: (id: number) => Promise<AxiosResponse<void>>;
@@ -64,7 +64,7 @@ const createCrudSlice = <T extends Identifiable, CreateDto, UpdateDto>(
     const getItem = createAsyncThunk(
         `${name}/getItem`,
         async (id: number) => {
-            const response = await service.getById(id);
+            const response = await service.get(id);
             return response.data;
         }
     );
