@@ -3,6 +3,8 @@ import AddOrEditModal from '../AddOrEdit';
 import { DragonHeadDto } from 'interfaces/dto/dragonheads/DragonHeadDto';
 import { useDispatch } from 'hooks';
 import { createDragonHead, updateDragonHead } from 'store/dragonheads';
+import { Paper, PaperProps } from '@material-ui/core';
+import Draggable from 'react-draggable';
 
 const initialState: DragonHeadDto = {
   id: 0,
@@ -13,13 +15,14 @@ const initialState: DragonHeadDto = {
 const buildRequest = (state: any): DragonHeadDto => {
   return {
     id: state.id,
-    size: state.name,
+    size: state.size,
     toothCount: state.toothCount,
-    };
+  };
 };
+
 const fields = [
-    { name: 'size', label: 'Size', type: 'number' as const },
-    { name: 'toothCount', label: 'Tooth Count', type: 'number' as const },
+  { name: 'size', label: 'Size', type: 'number' as const },
+  { name: 'toothCount', label: 'Tooth Count', type: 'number' as const },
 ];
 
 interface Props {
@@ -27,6 +30,14 @@ interface Props {
   isOpen: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+const DraggablePaper = (props: PaperProps) => {
+  return (
+    <Draggable handle="#add-or-edit-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+      <Paper {...props} />
+    </Draggable>
+  );
+};
 
 const DragonHeadModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
   const dispatch = useDispatch();
@@ -48,6 +59,7 @@ const DragonHeadModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
       buildRequest={buildRequest}
       initialState={initialState}
       fields={fields}
+      paperComponent={DraggablePaper}
     />
   );
 };

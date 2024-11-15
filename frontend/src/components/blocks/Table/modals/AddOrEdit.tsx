@@ -49,6 +49,7 @@ interface Props<T> {
   buildRequest: (state: any) => T;
   initialState: any;
   fields: FieldConfig[];
+  paperComponent?: React.ElementType;
 }
 
 const AddOrEditModal = <T extends {}>({ item, isOpen, setOpen, onSave, buildRequest, initialState, fields }: Props<T>) => {
