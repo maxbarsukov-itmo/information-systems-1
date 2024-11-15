@@ -3,7 +3,7 @@ import { SearchDto } from 'interfaces/dto/search/SearchDto';
 import Paged from 'interfaces/models/Paged';
 
 export function staticImplements<T>() {
-  return <U extends T>(constructor: U) => {constructor};
+  return <U extends T>(constructor: U) => {constructor;};
 }
 
 export default interface CrudService<Dto, CreateDto, UpdateDto> {

@@ -1,6 +1,5 @@
-import { Draft } from "immer";
-import Pageable from "./Pageable";
-import Sort from "./Sort";
+import Pageable from './Pageable';
+import Sort from './Sort';
 
 export default interface Paged<T> {
   totalElements: number;
@@ -9,9 +8,9 @@ export default interface Paged<T> {
   size: number;
   content: T[];
   number: number;
-  sort?: Sort | string;
+  sort?: Sort;
   first?: boolean;
   last?: boolean;
-  numberOfElements: 0;
+  numberOfElements: number;
   empty?: boolean;
 }
