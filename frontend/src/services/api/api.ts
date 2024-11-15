@@ -30,7 +30,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   response => {
     const { dispatch } = store; // direct access to redux store.
-    dispatch(addRequest(response.headers['x-response-uuid']));
+    dispatch(addRequest(response.headers['X-Response-UUID']));
     return response;
   },
   async error => {
