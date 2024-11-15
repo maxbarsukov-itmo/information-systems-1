@@ -1,15 +1,21 @@
 import auth from 'store/auth';
-import info from 'store/info';
-import products from 'store/products';
 import requests from 'store/requests';
 import settings from 'store/settings';
+import coordinates from 'store/coordinates';
+import dragonCaves from 'store/dragoncaves';
 import dragonHeads from 'store/dragonheads';
+import dragons from 'store/dragons';
+import locations from 'store/locations';
+import people from 'store/people';
 
 export default {
   auth,
-  info,
-  dragonHeads
-  products,
   requests,
   settings,
+  coordinates,
+  dragonCaves,
+  dragonHeads,
+  dragons,
+  locations,
+  people,
 };
