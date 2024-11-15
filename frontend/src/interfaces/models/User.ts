@@ -1,6 +1,6 @@
 import { ZonedDateTime } from 'luxon';
 
-import { Role } from "./Role";
+import { Role } from './Role';
 
 type User = {
   id: number;
