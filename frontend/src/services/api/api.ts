@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Storage from 'utils/Storage';
 import { TOKEN_KEY, API_URL } from 'config/constants';
+import store from 'store';
+import { addRequest } from 'store/requests';
 
 const instance = axios.create({
   baseURL: API_URL,
@@ -27,6 +29,8 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   response => {
+    const { dispatch } = store; // direct access to redux store.
+    dispatch(addRequest(response.headers['x-response-uuid']));
     return response;
   },
   async error => {
