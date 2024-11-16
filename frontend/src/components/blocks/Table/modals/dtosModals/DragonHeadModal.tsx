@@ -41,8 +41,26 @@ const DraggablePaper = (props: PaperProps) => {
 
 const DragonHeadModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
   const dispatch = useDispatch();
+  const [error, setError] = useState<string | null>(null);
+  const [isValid, setIsValid] = useState<boolean>(false);
+
+  useEffect(() => {
+    validateForm();
+  }, [item]);
+
+  const validateForm = () => {
+    if (item?.size == null || item?.toothCount == null) {
+      setError('Size and Tooth Count fields cannot be null');
+      setIsValid(false);
+      return;
+    }
+    setError(null);
+    setIsValid(true);
+  };
 
   const handleSave = (dragonHead: DragonHeadDto) => {
+    if (!isValid) return;
+
     if (dragonHead.id) {
       dispatch(updateDragonHead({ id: dragonHead.id, data: dragonHead }));
     } else {
@@ -59,7 +77,9 @@ const DragonHeadModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
       buildRequest={buildRequest}
       initialState={initialState}
       fields={fields}
-      paperComponent={DraggablePaper}
+      PaperComponent={DraggablePaper}
+      error={error}
+      isValid={isValid}
     />
   );
 };
