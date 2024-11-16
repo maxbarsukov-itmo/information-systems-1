@@ -33,7 +33,7 @@ const buildRequest = (state: any): PersonDto => {
   };
 };
 
-const buildHandleSave = (state: any): PersonCreateDto => {
+const buildHandleSave = (state: PersonDto): PersonCreateDto => {
   return {
     name: state.name,
     eyeColor: state.eyeColor,

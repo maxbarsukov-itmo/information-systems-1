@@ -41,7 +41,7 @@ const buildRequest = (state: any): DragonDto => {
   };
 };
 
-const buildHandleSave = (state: any): DragonCreateDto => {
+const buildHandleSave = (state: DragonDto): DragonCreateDto => {
   return {
     name: state.name,
     coordinatesId: state.coordinates.id,
