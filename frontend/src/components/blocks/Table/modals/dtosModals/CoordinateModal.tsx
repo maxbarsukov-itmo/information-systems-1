@@ -41,8 +41,14 @@ const DraggablePaper = (props: PaperProps) => {
 
 const CoordinateModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
   const dispatch = useDispatch();
+  const [error, setError] = useState<string | null>(null);
 
   const handleSave = (coordinate: CoordinateDto) => {
+    if (coordinate.x > 301) {
+      setError('X should be less or equal to 301');
+      return;
+    }
+    setError(null);
     if (coordinate.id) {
       dispatch(updateCoordinate({ id: coordinate.id, data: coordinate }));
     } else {
