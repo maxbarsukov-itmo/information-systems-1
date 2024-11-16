@@ -296,7 +296,7 @@ const ThemeCard = ({ theme }: { theme: CustomTheme }) => {
         component={ButtonBase}
         onClick={changeTheme}
         container
-        justify="center"
+        justifyContent="center"
         className={`${classes.box} ${isCurrent ? classes.border : ''}`}
         style={{ background: paper }}
       >
