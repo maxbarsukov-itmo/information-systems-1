@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AddOrEditModal from '../AddOrEdit';
 import { LocationDto } from 'interfaces/dto/locations/LocationDto';
 import { useDispatch } from 'hooks';
@@ -44,8 +44,26 @@ const DraggablePaper = (props: PaperProps) => {
 
 const LocationModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
   const dispatch = useDispatch();
+  const [error, setError] = useState<string | null>(null);
+  const [isValid, setIsValid] = useState<boolean>(false);
+
+  useEffect(() => {
+    validateForm();
+  }, [item]);
+
+  const validateForm = () => {
+    if (item?.z == null) {
+      setError('Z field cannot be null');
+      setIsValid(false);
+      return;
+    }
+    setError(null);
+    setIsValid(true);
+  };
 
   const handleSave = (location: LocationDto) => {
+    if (!isValid) return;
+
     if (location.id) {
       dispatch(updateLocation({ id: location.id, data: location }));
     } else {
@@ -63,6 +81,8 @@ const LocationModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
       initialState={initialState}
       fields={fields}
       paperComponent={DraggablePaper}
+      error={error}
+      isValid={isValid}
     />
   );
 };
