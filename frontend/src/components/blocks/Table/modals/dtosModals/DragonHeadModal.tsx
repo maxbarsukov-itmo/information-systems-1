@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AddOrEditModal from '../AddOrEdit';
 import { DragonHeadDto } from 'interfaces/dto/dragonheads/DragonHeadDto';
 import { useDispatch } from 'hooks';
@@ -77,7 +77,7 @@ const DragonHeadModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
       buildRequest={buildRequest}
       initialState={initialState}
       fields={fields}
-      PaperComponent={DraggablePaper}
+      paperComponent={DraggablePaper}
       error={error}
       isValid={isValid}
     />

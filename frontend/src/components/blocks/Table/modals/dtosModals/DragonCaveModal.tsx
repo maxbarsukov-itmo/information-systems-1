@@ -8,15 +8,13 @@ import Draggable from 'react-draggable';
 
 const initialState: DragonCaveDto = {
   id: 0,
-  name: '',
-  location: '',
+  depth: 0,
 };
 
 const buildRequest = (state: any): DragonCaveDto => {
   return {
     id: state.id,
-    name: state.name,
-    location: state.location,
+    depth: state.depth,
   };
 };
 
@@ -59,7 +57,7 @@ const DragonCaveModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
       buildRequest={buildRequest}
       initialState={initialState}
       fields={fields}
-      PaperComponent={DraggablePaper}
+      paperComponent={DraggablePaper}
     />
   );
 };
