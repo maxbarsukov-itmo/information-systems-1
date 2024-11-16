@@ -6,19 +6,20 @@ import { PersonCreateDto } from 'interfaces/dto/people/PersonCreateDto';
 import { PersonUpdateDto } from 'interfaces/dto/people/PersonUpdateDto';
 import CrudService, { staticImplements } from 'interfaces/crud/CrudService';
 import Paged from 'interfaces/models/Paged';
+import { createCrudUri } from './utils/uri';
 
 @staticImplements<CrudService<PersonDto, PersonCreateDto, PersonUpdateDto>>()
 export default class PersonService {
-  static async getAll(page: number, size: number, sort: string): Promise<AxiosResponse<Paged<PersonDto>>> {
-    return api.get<Paged<PersonDto>>(`/people?page=${page}&size=${size}&sort=${sort}`);
+  static async getAll(page: number, size: number, sort: string[]): Promise<AxiosResponse<Paged<PersonDto>>> {
+    return api.get<Paged<PersonDto>>(`/people${createCrudUri(page, size, sort)}`);
   }
 
   static async get(id: number): Promise<AxiosResponse<PersonDto>> {
     return api.get<PersonDto>(`/people/${id}`);
   }
 
-  static async search(search: SearchDto, page: number, size: number, sort: string): Promise<AxiosResponse<Paged<PersonDto>>> {
-    return api.post<Paged<PersonDto>>(`/people/search?page=${page}&size=${size}&sort=${sort}`, search);
+  static async search(search: SearchDto, page: number, size: number, sort: string[]): Promise<AxiosResponse<Paged<PersonDto>>> {
+    return api.post<Paged<PersonDto>>(`/people/search${createCrudUri(page, size, sort)}`, search);
   }
 
   static async create(Person: PersonCreateDto): Promise<AxiosResponse<PersonDto>> {

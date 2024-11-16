@@ -7,11 +7,11 @@ export function staticImplements<T>() {
 }
 
 export default interface CrudService<Dto, CreateDto, UpdateDto> {
-  getAll(page: number, size: number, sort: string): Promise<AxiosResponse<Paged<Dto>>>;
+  getAll(page: number, size: number, sort: string[]): Promise<AxiosResponse<Paged<Dto>>>;
 
   get(id: number): Promise<AxiosResponse<Dto>>;
 
-  search(search: SearchDto, page: number, size: number, sort: string): Promise<AxiosResponse<Paged<Dto>>>;
+  search(search: SearchDto, page: number, size: number, sort: string[]): Promise<AxiosResponse<Paged<Dto>>>;
 
   create(dto: CreateDto): Promise<AxiosResponse<Dto>>;
 

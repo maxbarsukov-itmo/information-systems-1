@@ -6,19 +6,20 @@ import { DragonHeadCreateDto } from 'interfaces/dto/dragonheads/DragonHeadCreate
 import { DragonHeadUpdateDto } from 'interfaces/dto/dragonheads/DragonHeadUpdateDto';
 import CrudService, { staticImplements } from 'interfaces/crud/CrudService';
 import Paged from 'interfaces/models/Paged';
+import { createCrudUri } from './utils/uri';
 
 @staticImplements<CrudService<DragonHeadDto, DragonHeadCreateDto, DragonHeadUpdateDto>>()
 export default class DragonHeadService {
-  static async getAll(page: number, size: number, sort: string): Promise<AxiosResponse<Paged<DragonHeadDto>>> {
-    return api.get<Paged<DragonHeadDto>>(`/dragon-heads?page=${page}&size=${size}&sort=${sort}`);
+  static async getAll(page: number, size: number, sort: string[]): Promise<AxiosResponse<Paged<DragonHeadDto>>> {
+    return api.get<Paged<DragonHeadDto>>(`/dragon-heads${createCrudUri(page, size, sort)}`);
   }
 
   static async get(id: number): Promise<AxiosResponse<DragonHeadDto>> {
     return api.get<DragonHeadDto>(`/dragon-heads/${id}`);
   }
 
-  static async search(search: SearchDto, page: number, size: number, sort: string): Promise<AxiosResponse<Paged<DragonHeadDto>>> {
-    return api.post<Paged<DragonHeadDto>>(`/dragon-heads/search?page=${page}&size=${size}&sort=${sort}`, search);
+  static async search(search: SearchDto, page: number, size: number, sort: string[]): Promise<AxiosResponse<Paged<DragonHeadDto>>> {
+    return api.post<Paged<DragonHeadDto>>(`/dragon-heads/search${createCrudUri(page, size, sort)}`, search);
   }
 
   static async create(dragonHead: DragonHeadCreateDto): Promise<AxiosResponse<DragonHeadDto>> {
