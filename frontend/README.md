@@ -127,8 +127,8 @@ Check the quality of code with `yarn lint`
 
 ## License <a name="license"></a>
 
-The project is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-*Copyright 2023 Max Barsukov*
+The project is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT). \
+*Copyright 2024 Max Barsukov*
 
 
 **Leave a star :star: if you find this project useful.**
