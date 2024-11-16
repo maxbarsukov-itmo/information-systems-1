@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Box, CircularProgress, Typography } from '@material-ui/core';
 
-import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
+import { Paper } from '@material-ui/core';
+import { DataGridPro, GridColDef, GridSortModel, GridFilterModel } from '@mui/x-data-grid-pro';
 
 import { useDispatch, useSelector } from 'hooks';
 import { DragonCaveDto } from 'interfaces/dto/dragoncaves/DragonCaveDto';
@@ -10,67 +9,76 @@ import Paged from 'interfaces/models/Paged';
 import { ELEMENTS_ON_PAGE } from 'config/constants';
 import { fetchDragonCaves } from 'store/dragoncaves';
 import ErrorComponent from 'components/blocks/Error';
+import SkeletonLoadingOverlay from './utils/SkeletonCell';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    background: theme.palette.background.default,
-    padding: 0,
-    width: '100%',
+const columns: GridColDef[] = [
+  {
+    field: 'id',
+    headerName: 'ID',
+    description: 'id',
+    flex: 1,
   },
-  loading: {
-    minWidth: '10vh',
-    minHeight: '10vh',
+  {
+    field: 'depth',
+    headerName: 'Depth',
+    description: 'depth',
+    flex: 1,
   },
-}));
+];
 
 const DragonCavesTable = () => {
   const dispatch = useDispatch();
 
-  const classes = useStyles();
+  const sortModelToArgs = (model) => model.filter(item => item.sort === 'asc' || item.sort === 'desc').map(sortItem => `${sortItem.field},${sortItem.sort}`);
 
-  const [page, setPage] = useState<number>(1);
+  const [filterModel, setFilterModel] = useState<GridFilterModel>({ items: [] });
+  const [sortModel, setSortModel] = useState<GridSortModel>([]);
+  const [page, setPage] = useState<number>(0);
   const [size, setSize] = useState<number>(ELEMENTS_ON_PAGE);
-  const [sort, setSort] = useState<string>('id,desc');
 
   const dragonCaves: Paged<DragonCaveDto> = useSelector(state => state.dragonCaves.items);
   const loading = useSelector(state => state.dragonCaves.loading);
   const errors = useSelector(state => state.dragonCaves.error);
 
   const fetch = () => {
-    dispatch(fetchDragonCaves({ page, size, sort }));
+    dispatch(fetchDragonCaves({
+      page,
+      size,
+      sort: sortModelToArgs(sortModel),
+    }));
   };
 
   useEffect(() => {
     fetch();
-  }, [location.pathname, location.search]);
-
-  const columns: GridColDef[] = [
-    {
-      field: 'id',
-      headerName: 'ID',
-      width: 150,
-    },
-    {
-      field: 'depth',
-      headerName: 'Depth',
-      width: 150,
-    },
-  ];
+  }, [page, size, JSON.stringify(sortModelToArgs(sortModel)), JSON.stringify(filterModel)]);
 
   return (
     <>
-      {loading.fetch && (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          minHeight="50vh"
-        >
-          <CircularProgress className={classes.loading} color="primary" />
-        </Box>
-      )}
-      {!loading.fetch && !errors.fetch && dragonCaves && (
-        <DataGridPro autoHeight rows={dragonCaves.content} columns={columns} />
+      {(loading.fetch || !dragonCaves) &&
+        <SkeletonLoadingOverlay columns={columns} pageSize={ELEMENTS_ON_PAGE} />
+      }
+      {!loading.fetch && dragonCaves && !errors.fetch && (
+        <Paper style={{ width: '100%' }}>
+          <DataGridPro
+            columns={columns}
+            rows={dragonCaves.content}
+            rowCount={dragonCaves.totalElements}
+            page={page}
+            autoHeight
+            pageSize={dragonCaves.size}
+            loading={loading.fetch}
+            pagination
+            sortingMode="server"
+            sortModel={sortModel}
+            filterMode="server"
+            paginationMode="server"
+            rowsPerPageOptions={[10, 20, 50]}
+            onPageSizeChange={setSize}
+            onPageChange={setPage}
+            onSortModelChange={setSortModel}
+            onFilterModelChange={setFilterModel}
+          />
+        </Paper>
       )}
       {errors.fetch && <ErrorComponent code={errors.fetch.code} message={errors.fetch.message} />}
     </>

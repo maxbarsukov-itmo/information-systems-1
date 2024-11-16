@@ -142,10 +142,10 @@ const TablesSidebar = () => {
         title={t`pages.Home.Sidebar.Tables.Title`}
       >
         { tablesItems.map((e, i) => (
-            <>
-              <SideBarItem data={e} key={e.alias} />
+            <div key={e.alias}>
+              <SideBarItem data={e} />
               {tablesItems.length - 1 !== i && <Divider />}
-            </>
+            </div>
           ))}
       </SideBlock>
     </Sidebar>
