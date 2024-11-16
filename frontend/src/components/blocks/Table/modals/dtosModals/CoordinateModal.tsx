@@ -82,7 +82,7 @@ const CoordinateModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
       buildRequest={buildRequest}
       initialState={initialState}
       fields={fields}
-      paperComponent={DraggablePaper}
+      PaperComponent={DraggablePaper}
       error={error}
       isValid={isValid}
     />

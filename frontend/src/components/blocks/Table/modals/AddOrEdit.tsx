@@ -51,7 +51,7 @@ interface Props<T> {
   buildRequest: (state: any) => T;
   initialState: any;
   fields: FieldConfig[];
-  paperComponent?: React.ComponentType<PaperProps>;
+  PaperComponent?: React.ComponentType<PaperProps>;
   error?: string | null;
   isValid?: boolean;
 }
@@ -157,7 +157,7 @@ const AddOrEditModal = <T extends {}>({ item, isOpen, setOpen, onSave, buildRequ
       open={isOpen}
       scroll="body"
       aria-labelledby="add-or-edit-dialog-title"
-      paperComponent={PaperComponent}
+      PaperComponent={PaperComponent}
       classes={{ paper: classes.paper }}
     >
       <DialogTitle id="add-or-edit-dialog-title" className={classes.header}>
