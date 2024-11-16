@@ -7,9 +7,15 @@ import { useDispatch, useSelector } from 'hooks';
 import { DragonCaveDto } from 'interfaces/dto/dragoncaves/DragonCaveDto';
 import Paged from 'interfaces/models/Paged';
 import { ELEMENTS_ON_PAGE } from 'config/constants';
-import { fetchDragonCaves } from 'store/dragoncaves';
+import { fetchDragonCaves, searchDragonCaves } from 'store/dragoncaves';
 import ErrorComponent from 'components/blocks/Error';
 import SkeletonLoadingOverlay from './utils/SkeletonCell';
+import { SearchDto, SearchCriteria, toOperation } from 'interfaces/dto/search';
+
+const columnTypes = {
+  id: 'number',
+  depth: 'number',
+};
 
 const columns: GridColDef[] = [
   {
@@ -40,12 +46,27 @@ const DragonCavesTable = () => {
   const loading = useSelector(state => state.dragonCaves.loading);
   const errors = useSelector(state => state.dragonCaves.error);
 
+  const filterToSearchDto = (filter: GridFilterModel): SearchDto => {
+    const searchCriteria: SearchCriteria[] = filter.items.map(item => {
+      return {
+        filterKey: item.columnField,
+        value: item.value,
+        operation: toOperation(item.operatorValue, columnTypes[item.columnField]),
+      };
+    });
+    return {
+      searchCriteriaList: searchCriteria,
+      dataOption: (filter.linkOperator === 'and' ? 'all' : 'any'),
+    };
+  };
+
   const fetch = () => {
-    dispatch(fetchDragonCaves({
-      page,
-      size,
-      sort: sortModelToArgs(sortModel),
-    }));
+    const requestData = { page, size, sort: sortModelToArgs(sortModel) };
+    if (filterModel.items.length > 0) {
+      dispatch(searchDragonCaves({ ...requestData, search: filterToSearchDto(filterModel) }));
+    } else {
+      dispatch(fetchDragonCaves(requestData));
+    }
   };
 
   useEffect(() => {
@@ -67,16 +88,19 @@ const DragonCavesTable = () => {
             autoHeight
             pageSize={dragonCaves.size}
             loading={loading.fetch}
-            pagination
+
             sortingMode="server"
             sortModel={sortModel}
+            onSortModelChange={setSortModel}
+
             filterMode="server"
+            onFilterModelChange={setFilterModel}
+
+            pagination
             paginationMode="server"
             rowsPerPageOptions={[10, 20, 50]}
             onPageSizeChange={setSize}
             onPageChange={setPage}
-            onSortModelChange={setSortModel}
-            onFilterModelChange={setFilterModel}
           />
         </Paper>
       )}

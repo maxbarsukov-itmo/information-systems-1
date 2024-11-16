@@ -11,7 +11,7 @@ import ApiError from 'interfaces/errors/ApiError';
 const extractApiError = (error: unknown) => {
   return {
     code: (<AxiosError>error)?.response?.status.toString(),
-    ...(<AxiosError>error)?.response?.data,
+    ...(<AxiosError>error)?.response?.data as Record<string, unknown>,
   } as ApiError;
 };
 
