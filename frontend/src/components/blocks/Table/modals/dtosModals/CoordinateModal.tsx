@@ -44,6 +44,10 @@ const CoordinateModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
   const [error, setError] = useState<string | null>(null);
 
   const handleSave = (coordinate: CoordinateDto) => {
+    if (coordinate.x == null || coordinate.y == null) {
+      setError('X and Y fields cannot be null');
+      return;
+    }
     if (coordinate.x > 301) {
       setError('X should be less or equal to 301');
       return;
