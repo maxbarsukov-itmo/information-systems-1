@@ -42,17 +42,30 @@ const DraggablePaper = (props: PaperProps) => {
 const CoordinateModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
   const dispatch = useDispatch();
   const [error, setError] = useState<string | null>(null);
+  const [isValid, setIsValid] = useState<boolean>(false);
 
-  const handleSave = (coordinate: CoordinateDto) => {
-    if (coordinate.x == null || coordinate.y == null) {
+  useEffect(() => {
+    validateForm();
+  }, [item]);
+
+  const validateForm = () => {
+    if (item?.x == null || item?.y == null) {
       setError('X and Y fields cannot be null');
+      setIsValid(false);
       return;
     }
-    if (coordinate.x > 301) {
+    if (item.x > 301) {
       setError('X should be less or equal to 301');
+      setIsValid(false);
       return;
     }
     setError(null);
+    setIsValid(true);
+  };
+
+  const handleSave = (coordinate: CoordinateDto) => {
+    if (!isValid) return;
+
     if (coordinate.id) {
       dispatch(updateCoordinate({ id: coordinate.id, data: coordinate }));
     } else {
