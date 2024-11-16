@@ -83,6 +83,8 @@ const CoordinateModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
       initialState={initialState}
       fields={fields}
       paperComponent={DraggablePaper}
+      error={error}
+      isValid={isValid}
     />
   );
 };
