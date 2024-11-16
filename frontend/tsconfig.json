@@ -19,6 +19,7 @@
     "noImplicitReturns": false,
     "noImplicitThis": true,
     "noImplicitAny": false,
+    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
