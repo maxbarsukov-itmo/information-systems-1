@@ -10,15 +10,17 @@ export const REQUESTS_KEY = 'lab1_REQUESTS';
 export const USER_SETTINGS_KEY = 'lab1_USER_SETTINGS';
 export const NEEDS_UPDATE_KEY = 'lab1_NEEDS_UPDATE';
 
-export type FlowAlias = 'home' | 'chart';
+export type Tables = 'dragons' | 'dragonHeads' | 'dragonCaves' | 'coordinates' | 'locations' | 'people';
+
+export type FlowAlias = 'tables' | 'chart';
 export interface FlowObject {
   title: string;
   alias: string;
 }
 export const FLOWS: FlowObject[] = [
   {
-    title: 'pages.app.navigationTabs.home',
-    alias: 'home',
+    title: 'pages.app.navigationTabs.tables',
+    alias: 'tables',
   },
   {
     title: 'pages.app.navigationTabs.chart',

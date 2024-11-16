@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import MainBlock from 'components/blocks/MainBlock';
-import Sidebar from 'components/blocks/InfoSideBar';
+import Sidebar from 'components/blocks/TablesSideBar';
 import FlowsBar from 'components/blocks/FlowsBar';
 
 import { APP_BAR_HEIGHT, FlowAlias } from 'config/constants';

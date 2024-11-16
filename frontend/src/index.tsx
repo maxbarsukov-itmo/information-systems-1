@@ -24,6 +24,11 @@ import App from 'components/App';
 
 import * as userSettingsUtils from 'utils/userSettings';
 
+import { LicenseInfo } from '@mui/x-license-pro';
+
+LicenseInfo.setReleaseInfo('MUI X cracked hahaha');
+LicenseInfo.setLicenseKey('feel free to write here any bullshit you want');
+
 const userSettings = userSettingsUtils.get();
 dayjs.locale(userSettings.language || 'ru');
 dayjs.extend(relativeTimePlugin);

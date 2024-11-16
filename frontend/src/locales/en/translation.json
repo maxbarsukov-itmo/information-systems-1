@@ -33,7 +33,7 @@
         "updateAvailable": "Update available"
       },
       "navigationTabs": {
-        "home": "Table",
+        "tables": "Tables",
         "chart": "Visualization",
         "settings": "Settings"
       },

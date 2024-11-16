@@ -95,11 +95,11 @@ export const makeNavigationTabs = (
 
   const tabs: TabObject[] = [
     {
-      label: t`pages.app.navigationTabs.home`,
+      label: t`pages.app.navigationTabs.tables`,
       icon: <Home set="light" size={size} />,
       to: () => '/',
-      tab: 'home',
-      match: 'home',
+      tab: 'tables',
+      match: 'tables',
     },
     {
       label: t`pages.app.navigationTabs.chart`,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { alpha, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Divider } from '@material-ui/core';
 import {
   GiDoubleDragon,
@@ -92,7 +92,7 @@ const SideBarItem: React.FC<{ data: SideBarCard }> = ({ data }) => {
   const Icon = icons[data.icon];
 
   const currentTable = () => {
-    if (history.location.pathname === data.alias) {
+    if (history.location.pathname === `/${data.alias}`) {
       return true;
     }
     return data.alias === 'dragons' && history.location.pathname === '/';
@@ -102,7 +102,7 @@ const SideBarItem: React.FC<{ data: SideBarCard }> = ({ data }) => {
     if (data.alias === 'dragons') {
       history.push('/');
     }
-    history.push(`/tables/${data.alias}`);
+    history.push(`/${data.alias}`);
   };
 
   return (

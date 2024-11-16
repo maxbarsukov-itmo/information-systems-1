@@ -33,7 +33,7 @@
         "updateAvailable": "Доступно обновление"
       },
       "navigationTabs": {
-        "home": "Таблица",
+        "tables": "Таблицы",
         "chart": "Визуализация",
         "settings": "Настройки"
       },
