@@ -10,6 +10,8 @@ import {
   TextField,
   IconButton,
   Typography,
+  PaperProps,
+  Paper,
   MenuItem,
   FormControlLabel,
   Checkbox,
@@ -49,10 +51,12 @@ interface Props<T> {
   buildRequest: (state: any) => T;
   initialState: any;
   fields: FieldConfig[];
-  paperComponent?: React.ElementType;
+  paperComponent?: React.ComponentType<PaperProps>;
+  error?: string | null;
+  isValid?: boolean;
 }
 
-const AddOrEditModal = <T extends {}>({ item, isOpen, setOpen, onSave, buildRequest, initialState, fields }: Props<T>) => {
+const AddOrEditModal = <T extends {}>({ item, isOpen, setOpen, onSave, buildRequest, initialState, fields, PaperComponent, error, isValid }: Props<T>) => {
   const classes = useStyles();
   const [state, setState] = useState(initialState);
 
@@ -68,7 +72,6 @@ const AddOrEditModal = <T extends {}>({ item, isOpen, setOpen, onSave, buildRequ
   const handleOk = () => {
     const request = buildRequest(state);
     onSave(request);
-    setOpen(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -154,6 +157,7 @@ const AddOrEditModal = <T extends {}>({ item, isOpen, setOpen, onSave, buildRequ
       open={isOpen}
       scroll="body"
       aria-labelledby="add-or-edit-dialog-title"
+      paperComponent={PaperComponent}
       classes={{ paper: classes.paper }}
     >
       <DialogTitle id="add-or-edit-dialog-title" className={classes.header}>
@@ -169,6 +173,7 @@ const AddOrEditModal = <T extends {}>({ item, isOpen, setOpen, onSave, buildRequ
         <DialogContentText>
           {item ? 'Edit the details of the item.' : 'Enter the details of the new item.'}
         </DialogContentText>
+        {error && <Typography color="error">{error}</Typography>}
         <form>
           {fields.map(field => renderField(field))}
         </form>
@@ -178,7 +183,7 @@ const AddOrEditModal = <T extends {}>({ item, isOpen, setOpen, onSave, buildRequ
         <Button onClick={handleCancel} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleOk} color="primary">
+        <Button onClick={handleOk} color="primary" disabled={!isValid}>
           Save
         </Button>
       </DialogActions>
