@@ -18,6 +18,8 @@
     "@material-ui/icons": "^4.11.3",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/styles": "^4.11.5",
+    "@mui/x-data-grid-pro": "4.0.0",
+    "@mui/x-license-pro": "4.0.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@tanstack/react-table": "8.9.1",
     "axios": "^0.21.2",
