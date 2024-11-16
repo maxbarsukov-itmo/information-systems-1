@@ -22,7 +22,7 @@ public class RequestServerFilter extends OncePerRequestFilter {
     var uuid = Generators.timeBasedEpochRandomGenerator().generate().toString();
 
     request.setAttribute("requestUUID", uuid);
-    response.setHeader("X-Response-UUID", uuid);
+    response.setHeader("X-Response-Uuid", uuid);
 
     filterChain.doFilter(request, response);
   }

@@ -56,6 +56,8 @@ public class SecurityConfiguration {
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setMaxAge(10L);
+        corsConfiguration.addExposedHeader("X-Response-Uuid");
+        corsConfiguration.addExposedHeader("X-Total-Count");
         return corsConfiguration;
       }))
 
