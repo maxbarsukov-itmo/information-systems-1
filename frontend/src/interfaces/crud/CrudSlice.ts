@@ -8,14 +8,14 @@ import CrudService from './CrudService';
 import Paged from 'interfaces/models/Paged';
 import ApiError from 'interfaces/errors/ApiError';
 
-const extractApiError = (error: unknown) => {
+export const extractApiError = (error: unknown) => {
   return {
     code: (<AxiosError>error)?.response?.status.toString(),
     ...(<AxiosError>error)?.response?.data as Record<string, unknown>,
   } as ApiError;
 };
 
-const rtkErrorToApiError = (error: SerializedError): Draft<ApiError> => {
+export const rtkErrorToApiError = (error: SerializedError): Draft<ApiError> => {
   return {
     code: error.code,
     status: error.name,
