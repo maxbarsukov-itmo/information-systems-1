@@ -15,7 +15,7 @@ const initialState: DragonDto = {
   name: '',
   coordinates: { id: 0, x: 0, y: 0 },
   cave: { id: 0, depth: 0 },
-  killer: { id: 0, name: '', 
+  killer: { id: 0, name: '',
   eyeColor: Color.BLACK,
   location: { id: 0, x: 0, y: 0, z: 0 },
   birthday: '', height: 0 },
@@ -111,7 +111,7 @@ const DragonModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
     const dragonCreateDto = buildHandleSave(dragon);
 
     if (dragon.id) {
-      dispatch(updateDragon({ id: dragon.id, data: dragon }));
+      dispatch(updateDragon({ id: dragon.id, updateDto: dragon }));
     } else {
       dispatch(createDragon(dragonCreateDto));
     }

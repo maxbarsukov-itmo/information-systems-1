@@ -12,8 +12,8 @@ import { PersonPinCircle } from '@material-ui/icons';
 const initialState: PersonDto = {
   id: 0,
   name: '',
-  eyeColor: Color.BLACK, 
-  hairColor: Color.BLACK, 
+  eyeColor: Color.BLACK,
+  hairColor: Color.BLACK,
   location: { id: 0, x: 0, y: 0, z: 0 },
   birthday: '',
   height: 0,
@@ -106,7 +106,7 @@ const PersonModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
     const personCreateDto = buildHandleSave(person);
 
     if (person.id) {
-      dispatch(updatePerson({ id: person.id, data: person }));
+      dispatch(updatePerson({ id: person.id, updateDto: person }));
     } else {
       dispatch(createPerson(personCreateDto));
     }

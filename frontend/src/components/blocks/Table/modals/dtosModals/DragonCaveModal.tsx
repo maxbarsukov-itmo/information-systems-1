@@ -42,7 +42,7 @@ const DragonCaveModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
 
   const handleSave = (dragonCave: DragonCaveDto) => {
     if (dragonCave.id) {
-      dispatch(updateDragonCave({ id: dragonCave.id, data: dragonCave }));
+      dispatch(updateDragonCave({ id: dragonCave.id, updateDto: dragonCave }));
     } else {
       dispatch(createDragonCave(dragonCave));
     }

@@ -67,7 +67,7 @@ const CoordinateModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
     if (!isValid) return;
 
     if (coordinate.id) {
-      dispatch(updateCoordinate({ id: coordinate.id, data: coordinate }));
+      dispatch(updateCoordinate({ id: coordinate.id, updateDto: coordinate }));
     } else {
       dispatch(createCoordinate(coordinate));
     }

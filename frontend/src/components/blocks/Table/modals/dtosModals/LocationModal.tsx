@@ -65,7 +65,7 @@ const LocationModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
     if (!isValid) return;
 
     if (location.id) {
-      dispatch(updateLocation({ id: location.id, data: location }));
+      dispatch(updateLocation({ id: location.id, updateDto: location }));
     } else {
       dispatch(createLocation(location));
     }

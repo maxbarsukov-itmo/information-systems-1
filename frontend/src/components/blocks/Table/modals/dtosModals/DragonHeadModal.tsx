@@ -62,7 +62,7 @@ const DragonHeadModal: React.FC<Props> = ({ item, isOpen, setOpen }) => {
     if (!isValid) return;
 
     if (dragonHead.id) {
-      dispatch(updateDragonHead({ id: dragonHead.id, data: dragonHead }));
+      dispatch(updateDragonHead({ id: dragonHead.id, updateDto: dragonHead }));
     } else {
       dispatch(createDragonHead(dragonHead));
     }
