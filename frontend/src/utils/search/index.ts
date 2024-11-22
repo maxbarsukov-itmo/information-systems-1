@@ -1,4 +1,4 @@
-import { Operation } from './SearchCriteria';
+import { Operation } from 'interfaces/dto/search/SearchCriteria';
 
 export type DataType = 'number' | 'string' | 'enum' | 'date' | 'dateTime' | 'boolean';
 
@@ -41,5 +41,5 @@ export const toOperation = (op: string, type?: DataType): Operation => {
   }
 };
 
-export type { SearchDto } from './SearchDto';
-export type { Operation, SearchCriteria } from './SearchCriteria';
+export type { SearchDto } from 'interfaces/dto/search/SearchDto';
+export type { Operation, SearchCriteria } from 'interfaces/dto/search/SearchCriteria';
