@@ -4,6 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { LinearProgress, Paper } from '@material-ui/core';
 import { DataGridPro, GridCellParams, GridColDef } from '@mui/x-data-grid-pro';
 import { Skeleton } from '@material-ui/lab';
+import { ReadyState } from 'react-use-websocket';
+import Footer from './Footer';
+import Toolbar from './Toolbar';
 
 const useStyles = makeStyles(theme => ({
   cell: {
@@ -32,7 +35,7 @@ function randomBetween(seed: number, min: number, max: number): () => number {
   return () => min + (max - min) * random();
 }
 
-const SkeletonLoadingOverlay: React.FC<{ columns: GridColDef[]; pageSize: number }> = ({ columns, pageSize }) => {
+const SkeletonLoadingOverlay: React.FC<{ columns: GridColDef[]; pageSize: number; readyStatus: ReadyState }> = ({ columns, pageSize, readyStatus }) => {
   const classes = useStyles();
   const data = Array.from(Array(pageSize).keys()).map(id => { return {id}; });
 
@@ -58,13 +61,19 @@ const SkeletonLoadingOverlay: React.FC<{ columns: GridColDef[]; pageSize: number
   return (
     <Paper style={{ width: '100%' }}>
       <DataGridPro
+        components={{
+          Toolbar,
+          Footer,
+          LoadingOverlay: LinearProgress,
+        }}
+        componentsProps={{
+          footer: { status: readyStatus },
+        }}
+
         autoHeight
         rows={data}
         columns={columnsCells}
         pageSize={pageSize}
-        components={{
-          LoadingOverlay: LinearProgress,
-        }}
         loading={true}
       />
     </Paper>

@@ -55,7 +55,7 @@ const StatusComponent = ({ status }: { status: ReadyState }) => {
        ? <FiberManualRecordOutlinedIcon fontSize="small" className={classes[connectionStatuses]} />
        : <FiberManualRecordIcon fontSize="small" className={classes[connectionStatuses]} />
       }
-      Status: <span className={classes.status}>{connectionStatuses}</span>
+      Status:&nbsp;<span className={classes.status}>{connectionStatuses}</span>
     </div>
   );
 };

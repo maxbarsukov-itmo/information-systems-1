@@ -7,7 +7,7 @@ import { DataGridPro, GridColDef, GridSortModel, GridFilterModel } from '@mui/x-
 
 import { useDispatch, useSelector } from 'hooks';
 
-import { SearchDto, SearchCriteria, toOperation } from 'utils/search';
+import { SearchDto, SearchCriteria, getNumberFilterOperations, Operation, getSpecialOperators } from 'utils/search';
 
 import Paged from 'interfaces/models/Paged';
 import { Event } from 'interfaces/events/Event';
@@ -21,17 +21,13 @@ import Toolbar from 'components/blocks/tables/utils/Toolbar';
 import SkeletonLoadingOverlay from 'components/blocks/tables/utils/SkeletonCell';
 import { renderHeader } from 'components/blocks/tables/utils/renderHeader';
 
-const columnTypes = {
-  id: 'number',
-  depth: 'number',
-};
-
 const columns: GridColDef[] = [
   {
     field: 'id',
     headerName: 'ID',
     description: 'id',
     flex: 1,
+    filterOperators: getNumberFilterOperations(),
     renderHeader,
   },
   {
@@ -39,7 +35,7 @@ const columns: GridColDef[] = [
     headerName: 'Depth',
     description: 'depth',
     flex: 1,
-    renderHeader,
+    filterOperators: getNumberFilterOperations(),
   },
 ];
 
@@ -66,11 +62,12 @@ const DragonCavesTable = () => {
   };
 
   const filterToSearchDto = (filter: GridFilterModel): SearchDto => {
-    const searchCriteria: SearchCriteria[] = filter.items.map(item => {
+    const searchCriteria: SearchCriteria[] = filter.items.filter(item => !!item.value).map(item => {
+      const specOp = getSpecialOperators(item.operatorValue);
       return {
         filterKey: item.columnField,
-        value: item.value || '',
-        operation: toOperation(item.operatorValue, columnTypes[item.columnField]),
+        value: specOp?.value || item.value || '',
+        operation: (specOp?.operatorValue || item.operatorValue) as Operation,
       };
     });
     return {
@@ -107,20 +104,20 @@ const DragonCavesTable = () => {
     share: true,
     filter: () => false,
     shouldReconnect: () => true,
-    onOpen: () => console.log('> WebSocket connection established.'),
-    onClose: () => console.log('> WebSocket connection closed.'),
-    onError: () => console.error('> WebSocket error.'),
+    onOpen: () => console.log('🌐 WebSocket connection established.'),
+    onClose: () => console.log('🌐 WebSocket connection closed.'),
+    onError: () => console.error('🌐 WebSocket error.'),
 
     onMessage: (evt) => {
-      console.log('> WebSocket: new message.');
+      console.log('🌐 WebSocket: new message.');
       const event: Event<DragonCaveDto> = JSON.parse(evt.data);
 
       if (uuids.includes(event.requestUuid)) {
-        console.log('> WebSocket: event by current user. Ignored.');
+        console.log('🌐 WebSocket: event by current user. Ignored.');
         return;
       }
 
-      console.log(`> WebSocket: handling event ${event.eventType}.`);
+      console.log(`🌐 WebSocket: handling event ${event.eventType}.`);
       handleEvent(event);
     },
   });
@@ -156,7 +153,7 @@ const DragonCavesTable = () => {
   return (
     <div onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
       {(loading.fetch || !dragonCaves) &&
-        <SkeletonLoadingOverlay columns={columns} pageSize={ELEMENTS_ON_PAGE} />
+        <SkeletonLoadingOverlay columns={columns} pageSize={ELEMENTS_ON_PAGE} readyStatus={readyState} />
       }
       {!loading.fetch && dragonCaves && !errors.fetch && (
         <Paper style={{ width: '100%' }}>
@@ -164,8 +161,8 @@ const DragonCavesTable = () => {
             columns={columns}
             rows={dragonCaves.content}
             components={{
-              Toolbar: Toolbar,
-              Footer: Footer,
+              Toolbar,
+              Footer,
             }}
             componentsProps={{
               footer: { status: readyState },
