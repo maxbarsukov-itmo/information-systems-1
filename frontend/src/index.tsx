@@ -37,18 +37,18 @@ dayjs.extend(updateLocalePlugin);
 
 dayjs.updateLocale('ru', {
   calendar: {
-    lastWeek: 'D MMMM[, в ]HH:mm',
-    sameDay: '[Сегодня, в ]HH:mm',
-    lastDay: '[Вчера, в ]HH:mm',
-    sameElse: 'DD.MM.YYYY',
+    lastWeek: 'D MMMM[, в ]HH:mm:ss',
+    sameDay: '[Сегодня, в ]HH:mm:ss',
+    lastDay: '[Вчера, в ]HH:mm:ss',
+    sameElse: 'DD.MM.YYYY[ в ]HH:mm:ss',
   },
 });
 dayjs.updateLocale('en', {
   calendar: {
-    lastWeek: 'D MMMM[, at ]hh:mm A',
-    sameDay: '[Today, at ]hh:mm',
-    lastDay: '[Yesterday, at ]hh:mm',
-    sameElse: 'DD.MM.YYYY',
+    lastWeek: 'D MMMM[, at ]hh:mm:ss A',
+    sameDay: '[Today, at ]hh:mm:ss A',
+    lastDay: '[Yesterday, at ]hh:mm:ss A',
+    sameElse: 'MM/DD/YYYY[ at ]hh:mm:ss A',
   },
 });
 
