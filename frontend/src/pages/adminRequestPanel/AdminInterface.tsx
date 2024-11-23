@@ -5,6 +5,20 @@ import { fetchAdminRequests, fetchPendingAdminRequests, processAdminRequest } fr
 import { AdminRequestDto } from 'interfaces/dto/adminrequests/AdminRequestDto';
 import { Paper, Tabs, Tab, CircularProgress, List, ListItem, ListItemText, Button } from '@material-ui/core';
 import { Status } from 'interfaces/models/Status';
+import { CheckCircle, Cancel, HourglassEmpty } from '@material-ui/icons';
+
+const getStatusIcon = (status: Status) => {
+  switch (status) {
+    case Status.APPROVED:
+      return <CheckCircle style={{ color: 'green' }} />;
+    case Status.REJECTED:
+      return <Cancel style={{ color: 'red' }} />;
+    case Status.PENDING:
+      return <HourglassEmpty style={{ color: 'orange' }} />;
+    default:
+      return null;
+  }
+};
 
 const AdminInterface = () => {
   const dispatch = useDispatch();
@@ -37,7 +51,13 @@ const AdminInterface = () => {
     <List>
       {requests.map((request: AdminRequestDto) => (
         <ListItem key={request.id}>
-          <ListItemText primary={`${request.status}: ${new Date(request.createdAt).toLocaleString()}`} />
+          <ListItemText primary={
+            <>
+              {getStatusIcon(request.status)}
+              <>{request.user.username}</>
+              {new Date(request.createdAt).toLocaleString()}
+            </>
+          }/>
           {request.status === Status.PENDING && (
             <div>
               <Button variant="contained" color="primary" onClick={() => handleProcessRequest(request.id, true)}>
