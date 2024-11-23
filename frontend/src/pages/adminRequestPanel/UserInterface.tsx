@@ -5,6 +5,7 @@ import { fetchAdminRequests, createAdminRequest } from 'store/admin';
 import { AdminRequestDto } from 'interfaces/dto/adminrequests/AdminRequestDto';
 import Paged from 'interfaces/models/Paged';
 import { Status } from 'interfaces/models/Status';
+import { Paper, Typography, Button, CircularProgress, List, ListItem, ListItemText } from '@material-ui/core';
 
 const UserInterface = () => {
   const dispatch = useDispatch();
@@ -19,32 +20,40 @@ const UserInterface = () => {
     dispatch(createAdminRequest());
   };
 
-  const hasPendingRequest = adminRequests.content?.some((request: AdminRequestDto) => request.status == Status.PENDING) ?? false;
+  const hasPendingRequest = adminRequests.content?.some((request: AdminRequestDto) => request.status === Status.PENDING) ?? false;
   const canSendRequest = !hasPendingRequest;
 
   return (
-    <div>
-      <h1>User Interface</h1>
-      <div>
-        <h2>Your Admin Requests</h2>
-        {loading.fetch ? (
-          <p>Loading...</p>
-        ) : (
-          <ul>
-            {adminRequests.content.map((request: AdminRequestDto) => (
-              <li key={request.id}>
-                {request.status}: {request.createdAt}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      {canSendRequest && (
-        <button onClick={handleSendRequest} disabled={loading.fetch}>
-          {loading.fetch ? 'Sending...' : 'Send Admin Request'}
-        </button>
+    <Paper style={{ padding: '16px' }}>
+      <Typography variant="h4" gutterBottom>
+        User Interface
+      </Typography>
+      <Typography variant="h6" gutterBottom>
+        Your Admin Requests
+      </Typography>
+      {loading.fetch ? (
+        <CircularProgress />
+      ) : (
+        <List>
+          {adminRequests.content.map((request: AdminRequestDto) => (
+            <ListItem key={request.id}>
+              <ListItemText primary={`${request.status}: ${new Date(request.createdAt).toLocaleString()}`} />
+            </ListItem>
+          ))}
+        </List>
       )}
-    </div>
+      {canSendRequest && (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSendRequest}
+          disabled={loading.create}
+          style={{ marginTop: '16px' }}
+        >
+          {loading.create ? <CircularProgress size={24} /> : 'Send Admin Request'}
+        </Button>
+      )}
+    </Paper>
   );
 };
 
