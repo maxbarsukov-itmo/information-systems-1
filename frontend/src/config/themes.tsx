@@ -11,7 +11,7 @@ import {
 
 import i18n from 'config/i18n';
 
-import { Home, Location, Setting } from 'react-iconly';
+import { Home, InfoCircle, Location, Scan, Setting } from 'react-iconly';
 
 export type PaletteType = 'light' | 'dark' | 'lab8';
 
@@ -107,6 +107,13 @@ export const makeNavigationTabs = (
       to: () => '/chart',
       match: 'chart',
       tab: 'chart',
+    },
+    {
+      label: t`pages.app.routes.adminRequestPanel`,
+      icon: <Scan set="light" size={size} />,
+      to: () => '/admin-panel',
+      match: 'adminRequestPanel',
+      tab: 'adminRequestPanel',
     },
   ];
   if (replaceProfile) {

@@ -12,7 +12,8 @@
         "settingsTable": "Table",
         "user": "User",
         "login": "Log In",
-        "register": "Register"
+        "register": "Register",
+        "adminRequestPanel": "Admin Panel"
       },
       "themes": {
         "light": "Light",

@@ -12,7 +12,8 @@
         "settingsTable": "Таблица",
         "user": "Пользователь",
         "login": "Авторизация",
-        "register": "Регистрация"
+        "register": "Регистрация",
+        "adminRequestPanel": "Панель управления"
       },
       "themes": {
         "light": "Светлая",
