@@ -134,6 +134,15 @@ export const getRoutes = () => {
       appBarColor: theme => theme.palette.background.default,
     },
     {
+      title: t`pages.app.routes.adminRequestPanel`,
+      path: '/admin-panel',
+      component: <AdminRequestPanel />,
+      alias: 'admin-panel',
+      shouldShowAppBar: true,
+      shouldAppBarChangeColors: true,
+      appBarColor: theme => theme.palette.background.paper,
+    },
+    {
       title: '404',
       path: '/:404*',
       component: <NotFound />,
@@ -141,15 +150,6 @@ export const getRoutes = () => {
       shouldShowAppBar: false,
       shouldAppBarChangeColors: false,
       appBarColor: theme => theme.palette.background.default,
-    },
-    {
-      title: t`pages.app.routes.adminRequestPanel`,
-      path: '/admin-panel',
-      component: <AdminRequestPanel />,
-      alias: 'adminRequestPanel',
-      shouldShowAppBar: true,
-      shouldAppBarChangeColors: true,
-      appBarColor: theme => theme.palette.background.paper,
     },
   ];
   return routes;

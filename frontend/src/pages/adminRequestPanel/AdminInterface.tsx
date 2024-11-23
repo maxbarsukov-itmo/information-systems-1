@@ -24,7 +24,7 @@ const AdminInterface = () => {
     }
   }, [dispatch, tabIndex, page, size]);
 
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+  const handleTabChange = (event: React.ChangeEvent<unknown>, newValue: number) => {
     setTabIndex(newValue);
     setPage(0);
   };
