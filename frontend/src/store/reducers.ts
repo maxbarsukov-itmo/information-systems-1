@@ -7,9 +7,11 @@ import dragonHeads from 'store/dragonheads';
 import dragons from 'store/dragons';
 import locations from 'store/locations';
 import people from 'store/people';
+import adminRequests from 'store/admin';
 
 export default {
   auth,
+  adminRequests,
   requests,
   settings,
   coordinates,
