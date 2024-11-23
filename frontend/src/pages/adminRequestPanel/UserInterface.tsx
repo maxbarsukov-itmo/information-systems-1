@@ -6,6 +6,20 @@ import { AdminRequestDto } from 'interfaces/dto/adminrequests/AdminRequestDto';
 import Paged from 'interfaces/models/Paged';
 import { Status } from 'interfaces/models/Status';
 import { Paper, Typography, Button, CircularProgress, List, ListItem, ListItemText } from '@material-ui/core';
+import { CheckCircle, Cancel, HourglassEmpty } from '@material-ui/icons';
+
+const getStatusIcon = (status: Status) => {
+  switch (status) {
+    case Status.APPROVED:
+      return <CheckCircle style={{ color: 'green' }} />;
+    case Status.REJECTED:
+      return <Cancel style={{ color: 'red' }} />;
+    case Status.PENDING:
+      return <HourglassEmpty style={{ color: 'orange' }} />;
+    default:
+      return null;
+  }
+};
 
 const UserInterface = () => {
   const dispatch = useDispatch();
@@ -37,7 +51,9 @@ const UserInterface = () => {
         <List>
           {adminRequests?.content?.map((request: AdminRequestDto) => (
             <ListItem key={request.id}>
-              <ListItemText primary={`${request.status}: ${new Date(request.createdAt).toLocaleString()}`} />
+              <ListItemText primary={
+                <>{getStatusIcon(request.status)} {new Date(request.createdAt).toLocaleString()}</>
+                } />
             </ListItem>
           ))}
         </List>
