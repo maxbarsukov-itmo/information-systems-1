@@ -9,7 +9,7 @@ import { Paper, Typography, Button, CircularProgress, List, ListItem, ListItemTe
 
 const UserInterface = () => {
   const dispatch = useDispatch();
-  const adminRequests: Paged<AdminRequestDto> = useSelector(state => state.adminRequests.data);
+  const adminRequests: Paged<AdminRequestDto> | null = useSelector(state => state.adminRequests.data);
   const loading = useSelector((state: RootState) => state.adminRequests.loading);
   
   useEffect(() => {
@@ -20,7 +20,7 @@ const UserInterface = () => {
     dispatch(createAdminRequest());
   };
 
-  const hasPendingRequest = adminRequests.content?.some((request: AdminRequestDto) => request.status === Status.PENDING) ?? false;
+  const hasPendingRequest = adminRequests?.content?.some((request: AdminRequestDto) => request.status === Status.PENDING) ?? false;
   const canSendRequest = !hasPendingRequest;
 
   return (
@@ -35,7 +35,7 @@ const UserInterface = () => {
         <CircularProgress />
       ) : (
         <List>
-          {adminRequests.content.map((request: AdminRequestDto) => (
+          {adminRequests?.content?.map((request: AdminRequestDto) => (
             <ListItem key={request.id}>
               <ListItemText primary={`${request.status}: ${new Date(request.createdAt).toLocaleString()}`} />
             </ListItem>
