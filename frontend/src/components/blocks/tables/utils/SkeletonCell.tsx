@@ -2,7 +2,7 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { LinearProgress, Paper } from '@material-ui/core';
-import { DataGridPro, GridCellParams, GridColDef } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridCellParams, GridColDef, GridDensity } from '@mui/x-data-grid-pro';
 import { Skeleton } from '@material-ui/lab';
 import { ReadyState } from 'react-use-websocket';
 import Footer from './Footer';
@@ -35,7 +35,7 @@ function randomBetween(seed: number, min: number, max: number): () => number {
   return () => min + (max - min) * random();
 }
 
-const SkeletonLoadingOverlay: React.FC<{ columns: GridColDef[]; pageSize: number; readyStatus: ReadyState }> = ({ columns, pageSize, readyStatus }) => {
+const SkeletonLoadingOverlay: React.FC<{ columns: GridColDef[]; pageSize: number; readyStatus: ReadyState; density: GridDensity }> = ({ columns, pageSize, readyStatus, density }) => {
   const classes = useStyles();
   const data = Array.from(Array(pageSize).keys()).map(id => { return {id}; });
 
@@ -61,6 +61,7 @@ const SkeletonLoadingOverlay: React.FC<{ columns: GridColDef[]; pageSize: number
   return (
     <Paper style={{ width: '100%' }}>
       <DataGridPro
+        density={density}
         components={{
           Toolbar,
           Footer,

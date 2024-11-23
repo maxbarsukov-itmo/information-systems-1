@@ -10,6 +10,7 @@ export const TOKEN_KEY = 'lab1_TOKEN';
 export const REQUESTS_KEY = 'lab1_REQUESTS';
 export const USER_SETTINGS_KEY = 'lab1_USER_SETTINGS';
 export const NEEDS_UPDATE_KEY = 'lab1_NEEDS_UPDATE';
+export const TABLES_KEY = 'lab1_TABLES';
 
 export type Tables = 'dragons' | 'dragonHeads' | 'dragonCaves' | 'coordinates' | 'locations' | 'people';
 
@@ -47,6 +48,8 @@ export const LANGUAGES_INTERFACE = [
     name: 'Русский',
   },
 ];
+
+export const NO_WS_INTERVAL = 5000;
 
 export const ELEMENTS_ON_PAGE = 10;
 
