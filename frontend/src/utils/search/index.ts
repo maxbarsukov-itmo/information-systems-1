@@ -1,4 +1,23 @@
-import { GridFilterInputValue, GridFilterOperator } from '@mui/x-data-grid-pro';
+import { GridFilterInputValue, GridFilterModel, GridFilterOperator } from '@mui/x-data-grid-pro';
+import { Operation, SearchCriteria } from 'interfaces/dto/search/SearchCriteria';
+import { SearchDto } from 'interfaces/dto/search/SearchDto';
+
+export const filterToSearchDto = (filter: GridFilterModel): SearchDto => {
+  const searchCriteria: SearchCriteria[] = filter.items
+    .filter(item => item.operatorValue.startsWith('special') || item.operatorValue === 'nu' || item.operatorValue === 'nn' || !!item.value)
+    .map(item => {
+      const specOp = getSpecialOperators(item.operatorValue);
+      return {
+        filterKey: item.columnField,
+        value: specOp?.value || item.value || '',
+        operation: (specOp?.operatorValue || item.operatorValue) as Operation,
+      };
+    });
+  return {
+    searchCriteriaList: searchCriteria,
+    dataOption: (filter.linkOperator === 'and' ? 'all' : 'any'),
+  };
+};
 
 export const getSpecialOperators = (operator: string) => {
   const specialOps = {
@@ -195,7 +214,7 @@ export const getEnumValueFilterOperations = (): GridFilterOperator[] => {
 
 // For 'dateTime'
 export const getDateTimeFilterOperations = (): GridFilterOperator[] => {
-  const InputComponentProps = { type: 'dateTime' };
+  const InputComponentProps = { type: 'datetime-local' };
   const operators: GridFilterOperator[] = [
     {
       // case "be" -> BEFORE;
