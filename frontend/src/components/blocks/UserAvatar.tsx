@@ -5,6 +5,13 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import UserPlaceholder from 'components/svg/UserPlaceholder';
 
+const hashCode = (s: string): number => {
+  return s.split('').reduce(function(a, b) {
+    a = ((a << 5) - a) + b.charCodeAt(0);
+    return a & a;
+  }, 0);
+};
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: 40,
@@ -27,7 +34,7 @@ const UserAvatar: React.FC<{
       {hasAvatar ? (
         <Avatar className={className || classes.root} src={src} />
       ) : (
-        <UserPlaceholder num={username?.length || 0} />
+        <UserPlaceholder num={Math.abs(hashCode(username)) || 0} />
       )}
     </div>
   );

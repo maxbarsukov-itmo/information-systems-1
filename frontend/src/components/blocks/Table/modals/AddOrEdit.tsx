@@ -56,7 +56,7 @@ interface Props<T> {
   isValid?: boolean;
 }
 
-const AddOrEditModal = <T extends Record<string, unknown>>({ item, isOpen, setOpen, onSave, buildRequest, initialState, fields, PaperComponent, error, isValid }: Props<T>) => {
+const AddOrEditModal = <T extends unknown>({ item, isOpen, setOpen, onSave, buildRequest, initialState, fields, PaperComponent, error, isValid }: Props<T>) => {
   const classes = useStyles();
   const [state, setState] = useState(initialState);
 

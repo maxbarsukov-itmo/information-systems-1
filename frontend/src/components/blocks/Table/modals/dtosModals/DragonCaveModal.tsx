@@ -19,8 +19,7 @@ const buildRequest = (state: any): DragonCaveDto => {
 };
 
 const fields = [
-  { name: 'name', label: 'Name', type: 'text' as const },
-  { name: 'location', label: 'Location', type: 'text' as const },
+  { name: 'depth', label: 'Depth', type: 'number' as const },
 ];
 
 interface Props {

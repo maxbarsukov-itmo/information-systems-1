@@ -6,7 +6,6 @@ import { DragonType } from '../../models/DragonType';
 import { PersonDto } from '../people/PersonDto';
 
 export interface DragonDto extends AuditableDto {
-    id: number;
     name: string;
     coordinates: CoordinateDto;
     cave?: DragonCaveDto;

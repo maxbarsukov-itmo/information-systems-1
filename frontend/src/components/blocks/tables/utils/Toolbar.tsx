@@ -9,8 +9,8 @@ const Toolbar = (props) => {
       <GridToolbarColumnsButton />
       <GridToolbarFilterButton />
       <GridToolbarDensitySelector />
-      <GridToolbarExport variant='outlined' />
       <Box sx={{ flexGrow: 1 }} />
+      <GridToolbarExport variant='outlined' />
       <QuickSearchToolbar {...props}/>
     </GridToolbarContainer>
   );

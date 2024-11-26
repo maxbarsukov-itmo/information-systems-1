@@ -1,9 +1,8 @@
-import { Color } from '../../models/Color'; 
-import { LocationDto } from '../locations/LocationDto'; 
-import { AuditableDto } from '../AuditableDto'; 
+import { Color } from '../../models/Color';
+import { LocationDto } from '../locations/LocationDto';
+import { AuditableDto } from '../AuditableDto';
 
 export interface PersonDto extends AuditableDto {
-    id: number;
     name: string;
     eyeColor: Color;
     hairColor?: Color;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid-pro';
+import { GridColDef } from '@mui/x-data-grid-pro';
 
 import { getNumberFilterOperations, getDateTimeFilterOperations } from 'utils/search';
 import { Event } from 'interfaces/events/Event';
@@ -7,7 +7,7 @@ import { DragonCaveDto } from 'interfaces/dto/dragoncaves/DragonCaveDto';
 import { fetchDragonCaves, searchDragonCaves } from 'store/dragoncaves';
 import { renderHeader } from 'components/blocks/tables/utils/renderHeader';
 import TemplateTable from './TemplateTable';
-import dayjs from 'dayjs';
+import { renderDateTime, renderUser } from './utils/renderer';
 
 const columns: GridColDef[] = [
   {
@@ -40,12 +40,19 @@ const columns: GridColDef[] = [
     type: 'dateTime',
     renderHeader,
     filterOperators: getDateTimeFilterOperations(),
-    renderCell: (params: GridRenderCellParams) => {
-      if (!params.value) return;
-      return (
-        <span>{dayjs(new Date(params.value.toString())).calendar().toLowerCase()}</span>
-      );
-    },
+    renderCell: renderDateTime,
+  },
+  {
+    field: 'createdBy',
+    headerName: 'Created By',
+    description: 'createdBy',
+    flex: 1,
+    resizable: true,
+    minWidth: 200,
+    type: 'string',
+    filterable: false,
+    sortable: false,
+    renderCell: renderUser,
   },
   {
     field: 'updatedAt',
@@ -55,14 +62,21 @@ const columns: GridColDef[] = [
     resizable: true,
     minWidth: 220,
     type: 'dateTime',
-    // renderHeader,
+    renderHeader,
     filterOperators: getDateTimeFilterOperations(),
-    renderCell: (params: GridRenderCellParams) => {
-      if (!params.value) return;
-      return (
-        <span>{dayjs(new Date(params.value.toString())).calendar().toLowerCase()}</span>
-      );
-    },
+    renderCell: renderDateTime,
+  },
+  {
+    field: 'updatedBy',
+    headerName: 'Updated By',
+    description: 'updatedBy',
+    flex: 1,
+    resizable: true,
+    minWidth: 200,
+    type: 'string',
+    filterable: false,
+    sortable: false,
+    renderCell: renderUser,
   },
 ];
 
