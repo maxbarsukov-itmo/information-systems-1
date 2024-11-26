@@ -10,6 +10,7 @@ import SettingsLanguage from 'pages/Settings/Language';
 
 import i18n from 'config/i18n';
 import getContrastPaperColor from 'utils/getContrastPaperColor';
+import AdminRequestPanel from 'pages/AdminRequestPanel';
 
 export interface Route {
   path: string | string[];
@@ -133,6 +134,15 @@ export const getRoutes = () => {
       appBarColor: theme => theme.palette.background.default,
     },
     {
+      title: t`pages.app.routes.adminRequestPanel`,
+      path: '/admin-panel',
+      component: <AdminRequestPanel />,
+      alias: 'admin-panel',
+      shouldShowAppBar: true,
+      shouldAppBarChangeColors: true,
+      appBarColor: theme => theme.palette.background.paper,
+    },
+    {
       title: '404',
       path: '/:404*',
       component: <NotFound />,
@@ -141,7 +151,6 @@ export const getRoutes = () => {
       shouldAppBarChangeColors: false,
       appBarColor: theme => theme.palette.background.default,
     },
-    // TODO: admin panel
   ];
   return routes;
 };
