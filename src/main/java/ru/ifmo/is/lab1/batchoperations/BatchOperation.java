@@ -38,15 +38,15 @@ public class BatchOperation implements BaseEntity {
 
   @NotNull
   @Column(name = "added_count", nullable = false)
-  private Long addedCount;
+  private Integer addedCount;
 
   @NotNull
   @Column(name = "updated_count", nullable = false)
-  private Long updatedCount;
+  private Integer updatedCount;
 
   @NotNull
   @Column(name = "deleted_count", nullable = false)
-  private Long deletedCount;
+  private Integer deletedCount;
 
   @Column(name = "error_message")
   private String errorMessage;
