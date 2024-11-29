@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BatchOperation",
+  "description": "Batch Import Operation schema for validating requested file",
+
+  "type": "array",
+  "minItems": 1,
+  "maxItems": 1024,
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": ["CREATE", "UPDATE", "DELETE"]
+      },
+      "resource_type": {
+        "type": "string",
+        "enum": ["coordinates", "dragon-caves", "dragon-heads", "dragons", "locations", "people"]
+      },
+      "resource_id": {
+        "type": "integer",
+        "minimum": 1,
+        "optional": true
+      },
+      "body": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "if": {
+      "properties": {
+        "resource_type": { "const": "dragon-caves" }
+      },
+      "required": ["resource_type"]
+    },
+    "then": {
+      "properties": {
+        "body": {
+          "$ref": "dragon-caves.json#/definitions/DragonCave"
+        }
+      }
+    },
+    "else": {
+      "properties": {
+        "body": {
+          "$ref": "#/definitions/NonEmptyBody"
+        }
+      }
+    },
+
+    "required": ["type", "resource_type"],
+    "oneOf": [
+      {
+        "properties": {
+          "type": { "enum": ["CREATE"] },
+          "resource_id": { "not": {} },
+          "body": { "type": "object" }
+        },
+        "required": ["body"]
+      },
+      {
+        "properties": {
+          "type": { "enum": ["UPDATE"] },
+          "resource_id": { "type": "integer", "minimum": 1 },
+          "body": { "type": "object" }
+        },
+        "required": ["body", "resource_id"]
+      },
+      {
+        "properties": {
+          "type": { "enum": ["DELETE"] },
+          "resource_id": { "type": "integer", "minimum": 1 },
+          "body": { "not": {} }
+        },
+        "required": ["resource_id"]
+      }
+    ]
+  },
+  "definitions": {
+    "NonEmptyBody": {
+      "type": "object",
+      "additionalProperties": true,
+      "minProperties": 1,
+      "oneOf": [
+        { "$ref": "coordinates.json#/definitions/Coordinate" },
+        { "$ref": "dragon-heads.json#/definitions/DragonHead" },
+        { "$ref": "dragons.json#/definitions/Dragon" },
+        { "$ref": "locations.json#/definitions/Location" },
+        { "$ref": "people.json#/definitions/Person" }
+      ]
+    }
+  }
+}

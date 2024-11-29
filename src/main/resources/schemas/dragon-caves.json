@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/DragonCave",
+
+  "definitions": {
+    "DragonCave": {
+      "title": "DragonCave",
+      "description": "Dragon Cave DTO",
+
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "depth": {
+          "type": ["number", "null"]
+        }
+      }
+    }
+  }
+}

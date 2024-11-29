@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/Coordinate",
+
+  "definitions": {
+    "Coordinate": {
+      "title": "Coordinate",
+      "description": "Coordinate DTO",
+
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "type": "integer",
+          "maximum": 301
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": ["x", "y"]
+    }
+  }
+}
