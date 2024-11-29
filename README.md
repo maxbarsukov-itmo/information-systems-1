@@ -12,9 +12,12 @@
 [![Made with: Spring Security](https://img.shields.io/badge/Spring%20Security-white?style=for-the-badge&logo=springsecurity&logoColor=6DB33F)](https://spring.io/projects/spring-security) \
 [![Made with: Java](https://img.shields.io/badge/Java-176579?style=for-the-badge&logo=coffeescript&logoColor=E78A2A)](https://www.java.com)
 [![Made with: Flyway](https://img.shields.io/badge/Flyway-CC0000?style=for-the-badge&logo=flyway&logoColor=white)](https://www.red-gate.com/products/flyway/)
-[![Made with: PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/) \
-[![Made with: Docker](https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Made with: PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Made with: Docker](https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/) \
 [![Made with: React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=23272f)](https://react.dev/)
+[![Made with: Redux](https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=redux&logoColor=white)](https://react.dev/)
+[![Made with: MUI](https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&logo=mui&logoColor=white)](https://react.dev/)
+[![Made with: JSS](https://img.shields.io/badge/JSS-F7DF1E?style=for-the-badge&logo=jss&logoColor=black)](https://react.dev/)
 
 |.pdf|.docx|
 |-|-|
@@ -42,8 +45,8 @@
   - При наличии **вложенных объектов** в основной объект из `ЛР1` необходимо задавать значения полей вложенных объектов в той же записи, что и основной объект.
 - Необходимо добавить в систему интерфейс для отображения истории импорта (обычный пользователь видит только операции импорта, запущенные им, администратор - все операции).
   - В истории должны отображаться `id` операции, статус ее завершения, пользователь, который ее запустил, число добавленных объектов в операции (только для успешно завершенных).
-- Согласовать с преподавателем и добавить в модель из первой лабораторной новые ограничения уникальности, проверяемые на программном уровне (эти новые ограничения должны быть реализованы в рамках бизнес-логики приложения и не должны быть отображены/реализованы в БД).
-- Реализовать сценарий с использованием `Apache JMeter`, имитирующий **одновременную работу нескольких пользователей с ИС**, и проверить **корректность изоляции транзакций**, используемых в ЛР. По итогам исследования поведения системы при ее одновременном использовании несколькими пользователями изменить уровень изоляции транзакций там, где это требуется. Обосновать изменения.
+- Согласовать с преподавателем и добавить в модель из `ЛР1` **новые ограничения уникальности**, проверяемые на программном уровне (эти новые ограничения должны быть реализованы в рамках бизнес-логики приложения и **не** должны быть отображены/реализованы в БД).
+- Реализовать сценарий с использованием `Apache JMeter`, имитирующий **одновременную работу нескольких пользователей с ИС**, и проверить **корректность изоляции транзакций**, используемых в ЛР. По итогам исследования поведения системы при ее одновременном использовании несколькими пользователями **изменить уровень изоляции транзакций** там, где это требуется. Обосновать изменения.
   1. Реализованный сценарий должен покрывать создание, редактирование, удаление и импорт объектов.
   2. Реализованный сценарий должен проверять корректность поведения системы при попытке нескольких пользователей обновить и\или удалить один и тот же объект (например, двух администраторов).
   3. Реализованный сценарий должен проверять корректность соблюдения системой ограничений уникальности предметной области при одновременной попытке нескольких пользователей создать объект с одним и тем же уникальным значением.
