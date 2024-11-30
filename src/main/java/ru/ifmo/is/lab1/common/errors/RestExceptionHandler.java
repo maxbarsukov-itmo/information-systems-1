@@ -29,6 +29,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+  @ExceptionHandler({ DetailedApiError.class })
+  public ResponseEntity<Object> handleDetailedApiError(DetailedApiError ex) {
+    logger.info(ex.getClass().getName());
+    final ApiError apiError = ex.getApiError();
+    return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+  }
+
   // 401
   @ExceptionHandler(value = { PolicyViolationError.class, PolicyViolationError.class })
   protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
