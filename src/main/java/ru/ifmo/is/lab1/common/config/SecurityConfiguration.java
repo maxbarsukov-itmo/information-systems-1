@@ -81,6 +81,11 @@ public class SecurityConfiguration {
           .requestMatchers(HttpMethod.PUT, "/api/admin-requests/**").hasRole("ADMIN"); // рассматривать запросы могут только админы
 
         request
+          // Доступ к данным операций импорта
+          .requestMatchers(HttpMethod.GET, "/api/import/**").authenticated() // только авторизованные пользователи могут читать данные
+          .requestMatchers(HttpMethod.POST, "/api/import/**").authenticated(); // только авторизованные пользователи могут создавать операции импорта
+
+        request
           // Доступ к специальным операциям над объектами
           .requestMatchers(HttpMethod.GET, "/api/special-operations/average-age").permitAll() // рассчитать среднее значение поля age для всех объектов
           .requestMatchers(HttpMethod.GET, "/api/special-operations/oldest-dragon").permitAll() // вернуть один (любой) объект, значение поля age которого является максимальным
