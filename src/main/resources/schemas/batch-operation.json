@@ -37,7 +37,7 @@
     "then": {
       "properties": {
         "body": {
-          "$ref": "dragon-caves.json#/definitions/DragonCave"
+          "$ref": "classpath:///schemas/dragon-caves.json#/definitions/DragonCave"
         }
       }
     },
@@ -83,11 +83,11 @@
       "additionalProperties": true,
       "minProperties": 1,
       "oneOf": [
-        { "$ref": "coordinates.json#/definitions/Coordinate" },
-        { "$ref": "dragon-heads.json#/definitions/DragonHead" },
-        { "$ref": "dragons.json#/definitions/Dragon" },
-        { "$ref": "locations.json#/definitions/Location" },
-        { "$ref": "people.json#/definitions/Person" }
+        { "$ref": "classpath:///schemas/coordinates.json#/definitions/Coordinate" },
+        { "$ref": "classpath:///schemas/dragon-heads.json#/definitions/DragonHead" },
+        { "$ref": "classpath:///schemas/dragons.json#/definitions/Dragon" },
+        { "$ref": "classpath:///schemas/locations.json#/definitions/Location" },
+        { "$ref": "classpath:///schemas/people.json#/definitions/Person" }
       ]
     }
   }

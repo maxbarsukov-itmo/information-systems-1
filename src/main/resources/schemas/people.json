@@ -35,7 +35,7 @@
           "type": ["string", "null"]
         },
         "location": {
-          "$ref": "locations.json#/definitions/Location"
+          "$ref": "classpath:///schemas/locations.json#/definitions/Location"
         },
         "locationId": {
           "type": "integer",

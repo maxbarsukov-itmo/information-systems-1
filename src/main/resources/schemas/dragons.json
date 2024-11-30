@@ -32,7 +32,7 @@
         },
 
         "coordinates": {
-          "$ref": "coordinates.json#/definitions/Coordinate"
+          "$ref": "classpath:///schemas/coordinates.json#/definitions/Coordinate"
         },
         "coordinatesId": {
           "type": "integer",
@@ -40,7 +40,7 @@
         },
 
         "cave": {
-          "$ref": "dragon-caves.json#/definitions/DragonCave"
+          "$ref": "classpath:///schemas/dragon-caves.json#/definitions/DragonCave"
         },
         "caveId": {
           "type": "integer",
@@ -48,7 +48,7 @@
         },
 
         "killer": {
-          "$ref": "people.json#/definitions/Person"
+          "$ref": "classpath:///schemas/people.json#/definitions/Person"
         },
         "killerId": {
           "type": "integer",
@@ -56,7 +56,7 @@
         },
 
         "head": {
-          "$ref": "dragon-heads.json#/definitions/DragonHead"
+          "$ref": "classpath:///schemas/dragon-heads.json#/definitions/DragonHead"
         },
         "headId": {
           "type": "integer",
