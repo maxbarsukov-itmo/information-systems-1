@@ -35,47 +35,74 @@
       "required": ["resourceType"]
     },
     "then": {
-      "properties": {
-        "body": {
-          "$ref": "classpath:///schemas/dragon-caves.json#/definitions/DragonCave"
+      "oneOf": [
+        {
+          "properties": {
+            "type": { "enum": ["CREATE"] },
+            "resourceId": { "not": {} },
+            "body": {
+              "$ref": "classpath:///schemas/dragon-caves.json#/definitions/DragonCave"
+            }
+          },
+          "required": ["body"]
+        },
+        {
+          "properties": {
+            "type": { "enum": ["UPDATE"] },
+            "resourceId": { "type": "integer", "minimum": 1 },
+            "body": {
+              "type": "object",
+              "additionalProperties": true,
+              "minProperties": 1
+            }
+          },
+          "required": ["body", "resourceId"]
+        },
+        {
+          "properties": {
+            "type": { "enum": ["DELETE"] },
+            "resourceId": { "type": "integer", "minimum": 1 },
+            "body": { "not": {} }
+          },
+          "required": ["resourceId"]
         }
-      }
+      ]
     },
     "else": {
-      "properties": {
-        "body": {
-          "$ref": "#/definitions/NonEmptyBody"
+      "oneOf": [
+        {
+          "properties": {
+            "type": { "enum": ["CREATE"] },
+            "resourceId": { "not": {} },
+            "body": {
+              "$ref": "#/definitions/NonEmptyBody"
+            }
+          },
+          "required": ["body"]
+        },
+        {
+          "properties": {
+            "type": { "enum": ["UPDATE"] },
+            "resourceId": { "type": "integer", "minimum": 1 },
+            "body": {
+              "type": "object",
+              "additionalProperties": true,
+              "minProperties": 1
+            }
+          },
+          "required": ["body", "resourceId"]
+        },
+        {
+          "properties": {
+            "type": { "enum": ["DELETE"] },
+            "resourceId": { "type": "integer", "minimum": 1 },
+            "body": { "not": {} }
+          },
+          "required": ["resourceId"]
         }
-      }
+      ]
     },
-
-    "required": ["type", "resourceType"],
-    "oneOf": [
-      {
-        "properties": {
-          "type": { "enum": ["CREATE"] },
-          "resourceId": { "not": {} },
-          "body": { "type": "object" }
-        },
-        "required": ["body"]
-      },
-      {
-        "properties": {
-          "type": { "enum": ["UPDATE"] },
-          "resourceId": { "type": "integer", "minimum": 1 },
-          "body": { "type": "object" }
-        },
-        "required": ["body", "resourceId"]
-      },
-      {
-        "properties": {
-          "type": { "enum": ["DELETE"] },
-          "resourceId": { "type": "integer", "minimum": 1 },
-          "body": { "not": {} }
-        },
-        "required": ["resourceId"]
-      }
-    ]
+    "required": ["type", "resourceType"]
   },
   "definitions": {
     "NonEmptyBody": {
