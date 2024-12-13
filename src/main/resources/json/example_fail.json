@@ -1,0 +1,51 @@
+[
+  {
+    "type": "CREATE",
+    "resourceType": "dragons",
+    "body": {
+      "name": "Draco",
+      "type": "FIRE",
+      "age": 500,
+      "wingspan": 200,
+      "speaking": false,
+      "coordinates": {
+        "x": 300,
+        "y": 400.5
+      },
+      "head": {
+        "size": 15,
+        "toothCount": 60
+      }
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "dragons",
+    "body": {
+      "name": "Toothless",
+      "type": "UNDERGROUND",
+      "age": 100,
+      "wingspan": 75,
+      "speaking": true,
+      "coordinates": {
+        "x": 150,
+        "y": 250.5
+      },
+      "headId": 1
+    }
+  },
+  {
+    "type": "UPDATE",
+    "resourceType": "dragons",
+    "resourceId": 2,
+    "body": {
+      "name": "Draco",
+      "type": "UNDERGROUND",
+      "age": 200,
+      "wingspan": 175,
+      "speaking": false,
+      "coordinatesId": 2,
+      "headId": 1
+    }
+  }
+]

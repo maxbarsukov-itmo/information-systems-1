@@ -1,0 +1,27 @@
+[
+  {
+    "type": "CREATE",
+    "resourceType": "dragon-caves",
+    "body": {
+      "depth": 1
+    }
+  },
+  {
+    "type": "UPDATE",
+    "resourceType": "dragon-heads",
+    "resourceId": 6,
+    "body": {
+      "size": 1,
+      "toothCount": 2
+    }
+  },
+  {
+    "type": "UPDATE",
+    "resourceType": "dragon-heads",
+    "resourceId": 6,
+    "body": {
+      "size": 10,
+      "toothCount": 20
+    }
+  }
+]

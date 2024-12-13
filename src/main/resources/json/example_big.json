@@ -1,0 +1,343 @@
+[
+  {
+    "type": "CREATE",
+    "resourceType": "coordinates",
+    "body": {
+      "x": 250,
+      "y": 300.5
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "coordinates",
+    "body": {
+      "x": 150,
+      "y": 200.75
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "coordinates",
+    "body": {
+      "x": 100,
+      "y": 50.25
+    }
+  },
+  {
+    "type": "UPDATE",
+    "resourceType": "coordinates",
+    "resourceId": 1,
+    "body": {
+      "x": 300,
+      "y": 400.1
+    }
+  },
+  {
+    "type": "UPDATE",
+    "resourceType": "coordinates",
+    "resourceId": 2,
+    "body": {
+      "x": 250,
+      "y": 450.2
+    }
+  },
+  {
+    "type": "DELETE",
+    "resourceType": "coordinates",
+    "resourceId": 2
+  },
+
+  {
+    "type": "CREATE",
+    "resourceType": "dragon-caves",
+    "body": {
+      "depth": 2.5
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "dragon-caves",
+    "body": {
+      "depth": 3.0
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "dragon-caves",
+    "body": {
+      "depth": null
+    }
+  },
+  {
+    "type": "UPDATE",
+    "resourceType": "dragon-caves",
+    "resourceId": 1,
+    "body": {
+      "depth": 4.0
+    }
+  },
+  {
+    "type": "UPDATE",
+    "resourceType": "dragon-caves",
+    "resourceId": 2,
+    "body": {
+      "depth": 5.5
+    }
+  },
+  {
+    "type": "DELETE",
+    "resourceType": "dragon-caves",
+    "resourceId": 2
+  },
+
+  {
+    "type": "CREATE",
+    "resourceType": "dragon-heads",
+    "body": {
+      "size": 2,
+      "toothCount": 20
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "dragon-heads",
+    "body": {
+      "size": 3,
+      "toothCount": 25
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "dragon-heads",
+    "body": {
+      "size": 4,
+      "toothCount": null
+    }
+  },
+  {
+    "type": "UPDATE",
+    "resourceType": "dragon-heads",
+    "resourceId": 1,
+    "body": {
+      "size": 5,
+      "toothCount": 30
+    }
+  },
+  {
+    "type": "UPDATE",
+    "resourceType": "dragon-heads",
+    "resourceId": 2,
+    "body": {
+      "size": 6,
+      "toothCount": 35
+    }
+  },
+  {
+    "type": "DELETE",
+    "resourceType": "dragon-heads",
+    "resourceId": 2
+  },
+
+  {
+    "type": "CREATE",
+    "resourceType": "locations",
+    "body": {
+      "x": 500.25,
+      "y": 600,
+      "z": 700
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "locations",
+    "body": {
+      "x": 250.75,
+      "y": 300,
+      "z": 400
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "locations",
+    "body": {
+      "x": 100.5,
+      "y": 200,
+      "z": 300
+    }
+  },
+  {
+    "type": "UPDATE",
+    "resourceType": "locations",
+    "resourceId": 1,
+    "body": {
+      "x": 550.5,
+      "y": 650,
+      "z": 750
+    }
+  },
+  {
+    "type": "UPDATE",
+    "resourceType": "locations",
+    "resourceId": 2,
+    "body": {
+      "x": 300.75,
+      "y": 400,
+      "z": 500
+    }
+  },
+  {
+    "type": "UPDATE",
+    "resourceType": "locations",
+    "resourceId": 3,
+    "body": {
+      "x": 150.5,
+      "y": 250,
+      "z": 350
+    }
+  },
+  {
+    "type": "DELETE",
+    "resourceType": "locations",
+    "resourceId": 2
+  },
+
+  {
+    "type": "CREATE",
+    "resourceType": "people",
+    "body": {
+      "name": "Jane Doe",
+      "eyeColor": "BLACK",
+      "birthday": "1985-02-15",
+      "height": 170.5,
+      "location": {
+        "x": 50.5,
+        "y": 60,
+        "z": 70
+      }
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "people",
+    "body": {
+      "name": "Alice Smith",
+      "eyeColor": "BROWN",
+      "birthday": "1992-07-20",
+      "height": 160,
+      "locationId": 1
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "people",
+    "body": {
+      "name": "Bob Brown",
+      "eyeColor": "GREEN",
+      "birthday": "2000-05-10",
+      "height": 180,
+      "location": {
+        "x": 20.5,
+        "y": 30,
+        "z": 40
+      }
+    }
+  },
+  {
+    "type": "UPDATE",
+    "resourceType": "people",
+    "resourceId": 1,
+    "body": {
+      "name": "Jane Doe",
+      "height": 172,
+      "eyeColor": "RED",
+      "birthday": "2000-05-10",
+      "locationId": 3,
+      "passportId": "ab111"
+    }
+  },
+  {
+    "type": "DELETE",
+    "resourceType": "people",
+    "resourceId": 2
+  },
+
+  {
+    "type": "CREATE",
+    "resourceType": "dragons",
+    "body": {
+      "name": "Falkor",
+      "type": "AIR",
+      "age": 300,
+      "wingspan": 100,
+      "speaking": true,
+      "coordinates": {
+        "x": 250,
+        "y": 350.5
+      },
+      "head": {
+        "size": 10,
+        "toothCount": 50
+      }
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "dragons",
+    "body": {
+      "name": "Draco",
+      "type": "FIRE",
+      "age": 500,
+      "wingspan": 200,
+      "speaking": false,
+      "killerId": 1,
+      "coordinates": {
+        "x": 300,
+        "y": 400.5
+      },
+      "head": {
+        "size": 15,
+        "toothCount": 60
+      }
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "dragons",
+    "body": {
+      "name": "Toothless",
+      "type": "UNDERGROUND",
+      "age": 100,
+      "wingspan": 75,
+      "speaking": true,
+      "killerId": 3,
+      "coordinates": {
+        "x": 150,
+        "y": 250.5
+      },
+      "head": {
+        "size": 8,
+        "toothCount": 40
+      }
+    }
+  },
+  {
+    "type": "UPDATE",
+    "resourceType": "dragons",
+    "resourceId": 1,
+    "body": {
+      "name": "Falkor The Great",
+      "type": "UNDERGROUND",
+      "age": 200,
+      "killerId": 1,
+      "wingspan": 175,
+      "speaking": false,
+      "coordinatesId": 3,
+      "headId": 1
+    }
+  },
+  {
+    "type": "DELETE",
+    "resourceType": "dragons",
+    "resourceId": 2
+  }
+]
