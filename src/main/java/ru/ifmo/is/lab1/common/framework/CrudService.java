@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ru.ifmo.is.lab1.common.caching.RequestCache;
 import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
-import ru.ifmo.is.lab1.common.errors.ResourceAlreadyExists;
 import ru.ifmo.is.lab1.common.framework.dto.AuditableDto;
 import ru.ifmo.is.lab1.common.search.SearchDto;
 import ru.ifmo.is.lab1.common.search.SearchMapper;
@@ -57,9 +56,8 @@ public abstract class CrudService<
     policy.create(currentUser());
 
     var obj = mapper.map(objData);
-    if (!isValid(obj)) {
-      throw new ResourceAlreadyExists(validationErrorMessage(obj));
-    }
+
+    validateCreate(obj, objData);
 
     obj.setCreatedBy(currentUser());
     obj.setCreatedAt(ZonedDateTime.now());
@@ -80,9 +78,7 @@ public abstract class CrudService<
     var obj = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not Found: " + id));
     policy.update(currentUser(), obj);
 
-    if (!isValid(obj)) {
-      throw new ResourceAlreadyExists(validationErrorMessage(obj));
-    }
+    validateUpdate(obj, objData);
 
     mapper.update(objData, obj);
     obj.setUpdatedBy(currentUser());
@@ -112,11 +108,9 @@ public abstract class CrudService<
     }
   }
 
-  public boolean isValid(T obj) {
-    return true;
+  protected void validateCreate(T obj, TCreateDto objData) {
   }
 
-  public String validationErrorMessage(T obj) {
-    return "";
+  protected void validateUpdate(T obj, TUpdateDto objData) {
   }
 }
