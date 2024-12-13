@@ -14,11 +14,11 @@
         "type": "string",
         "enum": ["CREATE", "UPDATE", "DELETE"]
       },
-      "resource_type": {
+      "resourceType": {
         "type": "string",
         "enum": ["coordinates", "dragon-caves", "dragon-heads", "dragons", "locations", "people"]
       },
-      "resource_id": {
+      "resourceId": {
         "type": "integer",
         "minimum": 1,
         "optional": true
@@ -30,9 +30,9 @@
     },
     "if": {
       "properties": {
-        "resource_type": { "const": "dragon-caves" }
+        "resourceType": { "const": "dragon-caves" }
       },
-      "required": ["resource_type"]
+      "required": ["resourceType"]
     },
     "then": {
       "properties": {
@@ -49,12 +49,12 @@
       }
     },
 
-    "required": ["type", "resource_type"],
+    "required": ["type", "resourceType"],
     "oneOf": [
       {
         "properties": {
           "type": { "enum": ["CREATE"] },
-          "resource_id": { "not": {} },
+          "resourceId": { "not": {} },
           "body": { "type": "object" }
         },
         "required": ["body"]
@@ -62,18 +62,18 @@
       {
         "properties": {
           "type": { "enum": ["UPDATE"] },
-          "resource_id": { "type": "integer", "minimum": 1 },
+          "resourceId": { "type": "integer", "minimum": 1 },
           "body": { "type": "object" }
         },
-        "required": ["body", "resource_id"]
+        "required": ["body", "resourceId"]
       },
       {
         "properties": {
           "type": { "enum": ["DELETE"] },
-          "resource_id": { "type": "integer", "minimum": 1 },
+          "resourceId": { "type": "integer", "minimum": 1 },
           "body": { "not": {} }
         },
-        "required": ["resource_id"]
+        "required": ["resourceId"]
       }
     ]
   },
