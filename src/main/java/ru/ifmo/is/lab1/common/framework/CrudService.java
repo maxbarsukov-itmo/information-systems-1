@@ -53,6 +53,8 @@ public abstract class CrudService<
 
   @Transactional
   public TDto create(TCreateDto objData) {
+    preAction();
+
     policy.create(currentUser());
 
     var obj = mapper.map(objData);
@@ -63,6 +65,8 @@ public abstract class CrudService<
     obj.setCreatedAt(ZonedDateTime.now());
     repository.save(obj);
     eventService.notify(EventType.CREATE, obj);
+
+    postAction();
     return mapper.map(obj);
   }
 
@@ -75,6 +79,8 @@ public abstract class CrudService<
 
   @Transactional
   public TDto update(TUpdateDto objData, int id) {
+    preAction();
+
     var obj = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not Found: " + id));
     policy.update(currentUser(), obj);
 
@@ -85,6 +91,8 @@ public abstract class CrudService<
     obj.setUpdatedAt(ZonedDateTime.now());
     repository.save(obj);
     eventService.notify(EventType.UPDATE, obj);
+
+    postAction();
     return mapper.map(obj);
   }
 
@@ -92,9 +100,11 @@ public abstract class CrudService<
   public boolean delete(int id) {
     return repository.findById(id)
       .map(obj -> {
+        preAction();
         policy.delete(currentUser(), obj);
         eventService.notify(EventType.DELETE, obj);
         repository.delete(obj);
+        postAction();
         return true;
       }).orElse(false);
   }
@@ -108,9 +118,15 @@ public abstract class CrudService<
     }
   }
 
-  protected void validateCreate(T obj, TCreateDto objData) {
+  protected void preAction() {
   }
 
-  protected void validateUpdate(T obj, TUpdateDto objData) {
+  protected void postAction() {
+  }
+
+  public void validateCreate(T obj, TCreateDto objData) {
+  }
+
+  public void validateUpdate(T obj, TUpdateDto objData) {
   }
 }

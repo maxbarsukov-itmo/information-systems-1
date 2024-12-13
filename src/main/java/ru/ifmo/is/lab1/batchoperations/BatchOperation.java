@@ -60,4 +60,16 @@ public class BatchOperation implements BaseEntity {
   @Column(name="created_at", nullable=false)
   @Convert(converter = ZonedDateTimeConverter.class)
   private ZonedDateTime createdAt;
+
+  public void incAddedCount() {
+    addedCount++;
+  }
+
+  public void incUpdatedCount() {
+    updatedCount++;
+  }
+
+  public void incDeletedCount() {
+    deletedCount++;
+  }
 }

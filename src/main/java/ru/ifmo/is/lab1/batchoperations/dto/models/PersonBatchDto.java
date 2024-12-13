@@ -1,11 +1,13 @@
 package ru.ifmo.is.lab1.batchoperations.dto.models;
 
+import lombok.Data;
 import jakarta.validation.constraints.*;
 import ru.ifmo.is.lab1.events.ResourceType;
 import ru.ifmo.is.lab1.people.Color;
 
 import java.time.LocalDate;
 
+@Data
 public class PersonBatchDto implements BatchDto {
   @NotBlank
   @Size(max = 255)

@@ -1,6 +1,7 @@
 package ru.ifmo.is.lab1.dragons;
 
 import org.springframework.stereotype.Service;
+import ru.ifmo.is.lab1.common.context.ApplicationLockBean;
 import ru.ifmo.is.lab1.common.errors.ResourceAlreadyExists;
 import ru.ifmo.is.lab1.common.framework.CrudService;
 import ru.ifmo.is.lab1.common.search.SearchMapper;
@@ -20,26 +21,41 @@ public class DragonService
     DragonUpdateDto
   > {
 
+  private final ApplicationLockBean applicationLock;
+
   public DragonService(
     DragonRepository repository,
     DragonMapper mapper,
     DragonPolicy policy,
     SearchMapper<Dragon> searchMapper,
     UserService userService,
-    EventService<Dragon> eventService
+    EventService<Dragon> eventService, ApplicationLockBean applicationLock
   ) {
     super(repository, mapper, policy, searchMapper, userService, eventService);
+    this.applicationLock = applicationLock;
   }
 
   @Override
-  protected void validateCreate(Dragon obj, DragonCreateDto dto) {
+  protected void preAction() {
+    super.preAction();
+    applicationLock.getImportLock().lock();
+  }
+
+  @Override
+  protected void postAction() {
+    applicationLock.getImportLock().unlock();
+    super.postAction();
+  }
+
+  @Override
+  public void validateCreate(Dragon obj, DragonCreateDto dto) {
     if (this.repository.countByName(dto.getName()) != 0L) {
       throw new ResourceAlreadyExists(errorMessage(dto.getName()));
     }
   }
 
   @Override
-  protected void validateUpdate(Dragon obj, DragonUpdateDto dto) {
+  public void validateUpdate(Dragon obj, DragonUpdateDto dto) {
     if (dto.getName().isPresent()) {
       if (this.repository.countByName(dto.getName().get()) != 0L) {
         throw new ResourceAlreadyExists(errorMessage(dto.getName().get()));

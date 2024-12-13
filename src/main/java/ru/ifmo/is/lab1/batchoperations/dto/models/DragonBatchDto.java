@@ -1,11 +1,13 @@
 package ru.ifmo.is.lab1.batchoperations.dto.models;
 
+import lombok.Data;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import ru.ifmo.is.lab1.dragons.DragonType;
 import ru.ifmo.is.lab1.events.ResourceType;
 
+@Data
 public class DragonBatchDto implements BatchDto {
   @NotNull
   @NotBlank
