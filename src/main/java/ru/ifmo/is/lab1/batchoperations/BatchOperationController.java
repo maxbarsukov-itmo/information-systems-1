@@ -42,7 +42,7 @@ public class BatchOperationController {
   @ResponseStatus(HttpStatus.CREATED)
   @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   @Operation(summary = "Импортировать объекты", security = @SecurityRequirement(name = "bearerAuth"))
-  public ResponseEntity<String> create(@RequestParam("file") MultipartFile file) throws IOException {
+  public ResponseEntity<BatchOperationDto> create(@RequestParam("file") MultipartFile file) throws IOException {
     if (file.isEmpty()) {
       throw new FileIsEmptyError("File not found");
     }
@@ -72,13 +72,12 @@ public class BatchOperationController {
       throw new DetailedApiError(error);
     }
 
-    var batchOperation = objectMapper
+    var operations = objectMapper
       .configure(DeserializationFeature.FAIL_ON_MISSING_EXTERNAL_TYPE_ID_PROPERTY, false)
       .readValue(file.getInputStream(), new TypeReference<List<BatchOperationUnitDto>>(){});
 
-    // ! TODO: var obj = service.create(request);
-    // ! TODO: return ResponseEntity.status(HttpStatus.CREATED).body(obj);
-    return ResponseEntity.ok(batchOperation.toString());
+    var obj = service.create(operations);
+    return ResponseEntity.status(HttpStatus.CREATED).body(obj);
   }
 
   @GetMapping
