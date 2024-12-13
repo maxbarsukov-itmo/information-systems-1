@@ -8,6 +8,8 @@ import java.util.Map;
 public enum ResourceType {
   @JsonProperty("admin-requests")
   ADMIN_REQUESTS("admin-requests"),
+  @JsonProperty("batch-operations")
+  BATCH_OPERATIONS("batch-operations"),
   @JsonProperty("coordinates")
   COORDINATES("coordinates"),
   @JsonProperty("dragon-caves")
