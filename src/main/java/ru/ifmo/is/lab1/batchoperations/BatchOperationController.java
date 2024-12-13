@@ -1,7 +1,7 @@
 package ru.ifmo.is.lab1.batchoperations;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.networknt.schema.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -18,9 +18,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.ifmo.is.lab1.batchoperations.dto.BatchOperationDto;
+import ru.ifmo.is.lab1.batchoperations.dto.BatchOperationUnitDto;
 import ru.ifmo.is.lab1.common.errors.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -56,8 +58,9 @@ public class BatchOperationController {
       .typeLoose(false)
       .build();
 
-    JsonSchema schema = jsonSchema(config);
-    JsonNode jsonNode = objectMapper.readTree(file.getInputStream());
+    var jsonContent = file.getInputStream();
+    var schema = jsonSchema(config);
+    var jsonNode = objectMapper.readTree(jsonContent);
     Set<ValidationMessage> errors = schema.validate(jsonNode);
 
     if (!errors.isEmpty()) {
@@ -69,9 +72,13 @@ public class BatchOperationController {
       throw new DetailedApiError(error);
     }
 
+    var batchOperation = objectMapper
+      .configure(DeserializationFeature.FAIL_ON_MISSING_EXTERNAL_TYPE_ID_PROPERTY, false)
+      .readValue(file.getInputStream(), new TypeReference<List<BatchOperationUnitDto>>(){});
+
     // ! TODO: var obj = service.create(request);
     // ! TODO: return ResponseEntity.status(HttpStatus.CREATED).body(obj);
-    return ResponseEntity.ok("OK");
+    return ResponseEntity.ok(batchOperation.toString());
   }
 
   @GetMapping

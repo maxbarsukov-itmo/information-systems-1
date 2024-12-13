@@ -1,15 +1,24 @@
 package ru.ifmo.is.lab1.events;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public enum ResourceType {
+  @JsonProperty("admin-requests")
   ADMIN_REQUESTS("admin-requests"),
+  @JsonProperty("coordinates")
   COORDINATES("coordinates"),
+  @JsonProperty("dragon-caves")
   DRAGON_CAVES("dragon-caves"),
+  @JsonProperty("dragon-heads")
   DRAGON_HEADS("dragon-heads"),
+  @JsonProperty("dragons")
   DRAGONS("dragons"),
+  @JsonProperty("locations")
   LOCATIONS("locations"),
+  @JsonProperty("people")
   PEOPLE("people");
 
   private static final Map<String, ResourceType> resources = new HashMap<>();
