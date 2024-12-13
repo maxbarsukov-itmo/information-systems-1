@@ -13,4 +13,7 @@ public interface DragonRepository extends CrudRepository<Dragon> {
 
   @Query("SELECT d FROM Dragon d JOIN d.cave dc WHERE dc.depth = (SELECT MAX(c.depth) FROM DragonCave c)")
   Optional<Dragon> findDragonInDeepestCave();
+
+  @Query("select count(d) from Dragon d where d.name = ?1")
+  long countByName(String name);
 }

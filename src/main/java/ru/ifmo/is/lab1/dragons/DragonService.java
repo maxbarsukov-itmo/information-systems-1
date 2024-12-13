@@ -29,4 +29,14 @@ public class DragonService
   ) {
     super(repository, mapper, policy, searchMapper, userService, eventService);
   }
+
+  @Override
+  public boolean isValid(Dragon obj) {
+    return this.repository.countByName(obj.getName()) == 0L;
+  }
+
+  @Override
+  public String validationErrorMessage(Dragon obj) {
+    return "Dragon with name '" + obj.getName() +"' already exists";
+  }
 }

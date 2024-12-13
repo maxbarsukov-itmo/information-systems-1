@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ru.ifmo.is.lab1.common.caching.RequestCache;
 import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
+import ru.ifmo.is.lab1.common.errors.ResourceAlreadyExists;
 import ru.ifmo.is.lab1.common.framework.dto.AuditableDto;
 import ru.ifmo.is.lab1.common.search.SearchDto;
 import ru.ifmo.is.lab1.common.search.SearchMapper;
@@ -30,7 +31,7 @@ public abstract class CrudService<
   TUpdateDto
   > {
 
-  private TRepository repository;
+  protected TRepository repository;
   private TMapper mapper;
   private TPolicy policy;
   private SearchMapper<T> searchMapper;
@@ -56,6 +57,10 @@ public abstract class CrudService<
     policy.create(currentUser());
 
     var obj = mapper.map(objData);
+    if (!isValid(obj)) {
+      throw new ResourceAlreadyExists(validationErrorMessage(obj));
+    }
+
     obj.setCreatedBy(currentUser());
     obj.setCreatedAt(ZonedDateTime.now());
     repository.save(obj);
@@ -74,6 +79,10 @@ public abstract class CrudService<
   public TDto update(TUpdateDto objData, int id) {
     var obj = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not Found: " + id));
     policy.update(currentUser(), obj);
+
+    if (!isValid(obj)) {
+      throw new ResourceAlreadyExists(validationErrorMessage(obj));
+    }
 
     mapper.update(objData, obj);
     obj.setUpdatedBy(currentUser());
@@ -101,5 +110,13 @@ public abstract class CrudService<
     } catch (UsernameNotFoundException _ex) {
       return null;
     }
+  }
+
+  public boolean isValid(T obj) {
+    return true;
+  }
+
+  public String validationErrorMessage(T obj) {
+    return "";
   }
 }
