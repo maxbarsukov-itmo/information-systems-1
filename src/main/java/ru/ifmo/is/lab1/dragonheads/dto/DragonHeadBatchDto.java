@@ -1,6 +1,6 @@
-package ru.ifmo.is.lab1.batchoperations.dto.models;
+package ru.ifmo.is.lab1.dragonheads.dto;
 
-import ru.ifmo.is.lab1.dragonheads.dto.DragonHeadUpdateDto;
+import ru.ifmo.is.lab1.common.framework.dto.BatchDto;
 import ru.ifmo.is.lab1.events.ResourceType;
 
 public class DragonHeadBatchDto extends DragonHeadUpdateDto implements BatchDto {

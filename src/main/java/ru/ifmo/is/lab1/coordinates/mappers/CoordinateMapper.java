@@ -1,8 +1,9 @@
-package ru.ifmo.is.lab1.coordinates;
+package ru.ifmo.is.lab1.coordinates.mappers;
 
 import org.mapstruct.*;
 import ru.ifmo.is.lab1.common.framework.CrudMapper;
 import ru.ifmo.is.lab1.common.mapper.*;
+import ru.ifmo.is.lab1.coordinates.Coordinate;
 import ru.ifmo.is.lab1.coordinates.dto.*;
 
 @Mapper(

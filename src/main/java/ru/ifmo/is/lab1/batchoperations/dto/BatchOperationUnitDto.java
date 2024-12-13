@@ -3,8 +3,14 @@ package ru.ifmo.is.lab1.batchoperations.dto;
 import lombok.*;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.validation.constraints.NotNull;
-import ru.ifmo.is.lab1.batchoperations.dto.models.*;
+import ru.ifmo.is.lab1.common.framework.dto.BatchDto;
+import ru.ifmo.is.lab1.coordinates.dto.CoordinateBatchDto;
+import ru.ifmo.is.lab1.dragoncaves.dto.DragonCaveBatchDto;
+import ru.ifmo.is.lab1.dragonheads.dto.DragonHeadBatchDto;
+import ru.ifmo.is.lab1.dragons.dto.DragonBatchDto;
 import ru.ifmo.is.lab1.events.ResourceType;
+import ru.ifmo.is.lab1.locations.dto.LocationBatchDto;
+import ru.ifmo.is.lab1.people.dto.PersonBatchDto;
 
 @Data
 @NoArgsConstructor

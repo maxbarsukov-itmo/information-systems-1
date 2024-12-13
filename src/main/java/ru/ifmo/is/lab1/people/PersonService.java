@@ -5,6 +5,7 @@ import ru.ifmo.is.lab1.common.framework.CrudService;
 import ru.ifmo.is.lab1.common.search.SearchMapper;
 import ru.ifmo.is.lab1.events.EventService;
 import ru.ifmo.is.lab1.people.dto.*;
+import ru.ifmo.is.lab1.people.mappers.PersonMapper;
 import ru.ifmo.is.lab1.users.UserService;
 
 @Service

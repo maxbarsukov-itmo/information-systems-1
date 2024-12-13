@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
 import ru.ifmo.is.lab1.dragons.*;
+import ru.ifmo.is.lab1.dragons.mappers.DragonMapper;
 import ru.ifmo.is.lab1.events.EventService;
 import ru.ifmo.is.lab1.events.EventType;
 import ru.ifmo.is.lab1.specialoperations.dto.*;

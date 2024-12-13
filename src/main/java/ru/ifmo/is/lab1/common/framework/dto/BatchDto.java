@@ -1,4 +1,4 @@
-package ru.ifmo.is.lab1.batchoperations.dto.models;
+package ru.ifmo.is.lab1.common.framework.dto;
 
 import ru.ifmo.is.lab1.events.ResourceType;
 

@@ -1,10 +1,15 @@
-package ru.ifmo.is.lab1.batchoperations.dto.models;
+package ru.ifmo.is.lab1.dragons.dto;
 
 import lombok.Data;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import ru.ifmo.is.lab1.common.framework.dto.BatchDto;
+import ru.ifmo.is.lab1.dragoncaves.dto.DragonCaveBatchDto;
+import ru.ifmo.is.lab1.dragonheads.dto.DragonHeadBatchDto;
 import ru.ifmo.is.lab1.dragons.DragonType;
+import ru.ifmo.is.lab1.people.dto.PersonBatchDto;
+import ru.ifmo.is.lab1.coordinates.dto.CoordinateBatchDto;
 import ru.ifmo.is.lab1.events.ResourceType;
 
 @Data

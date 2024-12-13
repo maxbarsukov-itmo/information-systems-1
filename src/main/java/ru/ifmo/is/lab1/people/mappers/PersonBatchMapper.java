@@ -1,14 +1,14 @@
-package ru.ifmo.is.lab1.batchoperations.mappers;
+package ru.ifmo.is.lab1.people.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
-import ru.ifmo.is.lab1.batchoperations.dto.models.DragonHeadBatchDto;
+import ru.ifmo.is.lab1.people.dto.PersonBatchDto;
 import ru.ifmo.is.lab1.common.mapper.JsonNullableMapper;
 import ru.ifmo.is.lab1.common.mapper.ReferenceMapper;
-import ru.ifmo.is.lab1.dragonheads.dto.DragonHeadCreateDto;
-import ru.ifmo.is.lab1.dragonheads.dto.DragonHeadUpdateDto;
+import ru.ifmo.is.lab1.people.dto.PersonCreateDto;
+import ru.ifmo.is.lab1.people.dto.PersonUpdateDto;
 
 @Mapper(
   uses = { JsonNullableMapper.class, ReferenceMapper.class },
@@ -16,7 +16,7 @@ import ru.ifmo.is.lab1.dragonheads.dto.DragonHeadUpdateDto;
   componentModel = MappingConstants.ComponentModel.SPRING,
   unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
-public abstract class DragonHeadBatchMapper {
-  public abstract DragonHeadCreateDto toCreate(DragonHeadBatchDto dto);
-  public abstract DragonHeadUpdateDto toUpdate(DragonHeadBatchDto model);
+public abstract class PersonBatchMapper {
+  public abstract PersonCreateDto toCreate(PersonBatchDto dto);
+  public abstract PersonUpdateDto toUpdate(PersonBatchDto model);
 }

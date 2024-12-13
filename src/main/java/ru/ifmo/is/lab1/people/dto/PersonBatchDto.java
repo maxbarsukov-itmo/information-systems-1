@@ -1,8 +1,10 @@
-package ru.ifmo.is.lab1.batchoperations.dto.models;
+package ru.ifmo.is.lab1.people.dto;
 
 import lombok.Data;
 import jakarta.validation.constraints.*;
+import ru.ifmo.is.lab1.common.framework.dto.BatchDto;
 import ru.ifmo.is.lab1.events.ResourceType;
+import ru.ifmo.is.lab1.locations.dto.LocationBatchDto;
 import ru.ifmo.is.lab1.people.Color;
 
 import java.time.LocalDate;

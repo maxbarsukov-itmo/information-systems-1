@@ -1,9 +1,10 @@
-package ru.ifmo.is.lab1.dragons;
+package ru.ifmo.is.lab1.dragons.mappers;
 
 import org.mapstruct.*;
 import ru.ifmo.is.lab1.common.framework.CrudMapper;
 import ru.ifmo.is.lab1.common.mapper.JsonNullableMapper;
 import ru.ifmo.is.lab1.common.mapper.ReferenceMapper;
+import ru.ifmo.is.lab1.dragons.Dragon;
 import ru.ifmo.is.lab1.dragons.dto.*;
 
 @Mapper(

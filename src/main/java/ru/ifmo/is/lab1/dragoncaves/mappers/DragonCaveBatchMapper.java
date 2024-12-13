@@ -1,7 +1,7 @@
-package ru.ifmo.is.lab1.batchoperations.mappers;
+package ru.ifmo.is.lab1.dragoncaves.mappers;
 
 import org.mapstruct.*;
-import ru.ifmo.is.lab1.batchoperations.dto.models.DragonCaveBatchDto;
+import ru.ifmo.is.lab1.dragoncaves.dto.DragonCaveBatchDto;
 import ru.ifmo.is.lab1.common.mapper.JsonNullableMapper;
 import ru.ifmo.is.lab1.common.mapper.ReferenceMapper;
 import ru.ifmo.is.lab1.dragoncaves.dto.DragonCaveCreateDto;

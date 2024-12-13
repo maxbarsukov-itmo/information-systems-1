@@ -1,8 +1,9 @@
-package ru.ifmo.is.lab1.dragoncaves;
+package ru.ifmo.is.lab1.dragoncaves.mappers;
 
 import org.mapstruct.*;
 import ru.ifmo.is.lab1.common.framework.CrudMapper;
 import ru.ifmo.is.lab1.common.mapper.*;
+import ru.ifmo.is.lab1.dragoncaves.DragonCave;
 import ru.ifmo.is.lab1.dragoncaves.dto.*;
 
 @Mapper(

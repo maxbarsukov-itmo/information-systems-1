@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.ifmo.is.lab1.common.framework.CrudService;
 import ru.ifmo.is.lab1.common.search.SearchMapper;
 import ru.ifmo.is.lab1.dragonheads.dto.*;
+import ru.ifmo.is.lab1.dragonheads.mappers.DragonHeadMapper;
 import ru.ifmo.is.lab1.events.EventService;
 import ru.ifmo.is.lab1.users.UserService;
 

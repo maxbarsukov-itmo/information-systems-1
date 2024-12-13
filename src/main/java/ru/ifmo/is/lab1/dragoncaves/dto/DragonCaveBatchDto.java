@@ -1,5 +1,6 @@
-package ru.ifmo.is.lab1.batchoperations.dto.models;
+package ru.ifmo.is.lab1.dragoncaves.dto;
 
+import ru.ifmo.is.lab1.common.framework.dto.BatchDto;
 import ru.ifmo.is.lab1.coordinates.dto.CoordinateUpdateDto;
 import ru.ifmo.is.lab1.events.ResourceType;
 

@@ -1,10 +1,11 @@
-package ru.ifmo.is.lab1.people;
+package ru.ifmo.is.lab1.people.mappers;
 
 import org.mapstruct.*;
 
 import ru.ifmo.is.lab1.common.framework.CrudMapper;
 import ru.ifmo.is.lab1.common.mapper.JsonNullableMapper;
 import ru.ifmo.is.lab1.common.mapper.ReferenceMapper;
+import ru.ifmo.is.lab1.people.Person;
 import ru.ifmo.is.lab1.people.dto.*;
 
 @Mapper(

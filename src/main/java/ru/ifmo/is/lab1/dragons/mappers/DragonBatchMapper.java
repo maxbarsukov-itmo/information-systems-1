@@ -1,14 +1,14 @@
-package ru.ifmo.is.lab1.batchoperations.mappers;
+package ru.ifmo.is.lab1.dragons.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
-import ru.ifmo.is.lab1.batchoperations.dto.models.LocationBatchDto;
+import ru.ifmo.is.lab1.dragons.dto.DragonBatchDto;
 import ru.ifmo.is.lab1.common.mapper.JsonNullableMapper;
 import ru.ifmo.is.lab1.common.mapper.ReferenceMapper;
-import ru.ifmo.is.lab1.locations.dto.LocationCreateDto;
-import ru.ifmo.is.lab1.locations.dto.LocationUpdateDto;
+import ru.ifmo.is.lab1.dragons.dto.DragonCreateDto;
+import ru.ifmo.is.lab1.dragons.dto.DragonUpdateDto;
 
 @Mapper(
   uses = { JsonNullableMapper.class, ReferenceMapper.class },
@@ -16,7 +16,7 @@ import ru.ifmo.is.lab1.locations.dto.LocationUpdateDto;
   componentModel = MappingConstants.ComponentModel.SPRING,
   unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
-public abstract class LocationBatchMapper {
-  public abstract LocationCreateDto toCreate(LocationBatchDto dto);
-  public abstract LocationUpdateDto toUpdate(LocationBatchDto model);
+public abstract class DragonBatchMapper {
+  public abstract DragonCreateDto toCreate(DragonBatchDto dto);
+  public abstract DragonUpdateDto toUpdate(DragonBatchDto model);
 }

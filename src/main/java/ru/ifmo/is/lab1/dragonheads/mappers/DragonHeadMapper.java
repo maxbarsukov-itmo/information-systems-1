@@ -1,8 +1,9 @@
-package ru.ifmo.is.lab1.dragonheads;
+package ru.ifmo.is.lab1.dragonheads.mappers;
 
 import org.mapstruct.*;
 import ru.ifmo.is.lab1.common.framework.CrudMapper;
 import ru.ifmo.is.lab1.common.mapper.*;
+import ru.ifmo.is.lab1.dragonheads.DragonHead;
 import ru.ifmo.is.lab1.dragonheads.dto.*;
 
 @Mapper(
