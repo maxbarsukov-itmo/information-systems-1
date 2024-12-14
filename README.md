@@ -5,9 +5,9 @@
 <img alt="anime" src="./.resources/anime.gif" height="300">
 
 > There are only two hard problems in two-phase distributed transactions: \
-> 2. Exactly-once delivery \
-> 1. Guaranteed order of messages \
-> 2. Exactly-once delivery
+> 2\. Exactly-once delivery \
+> 1\. Guaranteed order of messages \
+> 2\. Exactly-once delivery
 
 [![Made with: Spring](https://img.shields.io/badge/Spring-white?style=for-the-badge&logo=spring&logoColor=6DB33F)](https://spring.io/)
 [![Made with: Spring Boot](https://img.shields.io/badge/Spring%20Boot-white?style=for-the-badge&logo=springboot&logoColor=6DB33F)](https://spring.io/projects/spring-boot)
