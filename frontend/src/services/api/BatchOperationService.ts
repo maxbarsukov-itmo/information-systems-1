@@ -9,6 +9,10 @@ export default class BatchOperationService {
     return api.get<Paged<BatchOperationDto>>(`/import${createCrudUri(page, size, sort)}`);
   }
 
+  static async downloadFile(id: number): Promise<AxiosResponse<unknown>> {
+    return api.get(`/import/${id}/file`, { responseType: 'blob' });
+  }
+
   static async getById(id: number): Promise<AxiosResponse<BatchOperationDto>> {
     return api.get<BatchOperationDto>(`/import/${id}`);
   }
