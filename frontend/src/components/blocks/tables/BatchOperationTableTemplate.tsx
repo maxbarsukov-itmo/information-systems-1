@@ -3,7 +3,7 @@ import useWebSocket from 'react-use-websocket';
 import { useDebounce, useInterval } from 'usehooks-ts';
 
 import { Paper } from '@material-ui/core';
-import { DataGridPro, GridColDef, GridSortModel, GridFilterModel, GridDensity } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridSortModel, GridDensity } from '@mui/x-data-grid-pro';
 
 import { useDispatch, useSelector } from 'hooks';
 import { ELEMENTS_ON_PAGE, WS_URL, NO_WS_INTERVAL, TABLES_KEY } from 'config/constants';
@@ -25,7 +25,6 @@ interface TableState {
   size: number;
   search: string;
   density: GridDensity;
-  filterModel: GridFilterModel;
   sortModel: GridSortModel;
 }
 
@@ -49,7 +48,6 @@ const BatchOperationTableTemplate = <T extends unknown>({
   const storageKey = `${TABLES_KEY}/${resource}`;
   const state: TableState = Storage.get(storageKey);
 
-  const [filterModel, setFilterModel] = useState<GridFilterModel>(state?.filterModel || { items: [] });
   const [sortModel, setSortModel] = useState<GridSortModel>(state?.sortModel || []);
   const [page, setPage] = useState<number>(state?.page || 0);
   const [size, setSize] = useState<number>(state?.size || ELEMENTS_ON_PAGE);
@@ -72,7 +70,7 @@ const BatchOperationTableTemplate = <T extends unknown>({
 
   useEffect(() => {
     fetch();
-  }, [page, size, JSON.stringify(sortModelToArgs(sortModel)), JSON.stringify(filterModel)]);
+  }, [page, size, JSON.stringify(sortModelToArgs(sortModel))]);
 
   const supportsWebSockets = 'WebSocket' in window || 'MozWebSocket' in window;
   if (!supportsWebSockets) {
@@ -179,13 +177,6 @@ const BatchOperationTableTemplate = <T extends unknown>({
             onSortModelChange={model => {
               setSortModel(model);
               updateState({ sortModel: model });
-            }}
-
-            filterMode="server"
-            filterModel={filterModel}
-            onFilterModelChange={model => {
-              setFilterModel(model);
-              updateState({ filterModel: model });
             }}
 
             pagination
