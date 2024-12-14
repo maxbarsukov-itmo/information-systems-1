@@ -31,7 +31,7 @@ public class BatchOperationImporterService {
   private final LocationImportService locationImportService;
   private final PersonImportService personImportService;
 
-  @Transactional(isolation = Isolation.SERIALIZABLE)
+  @Transactional(isolation = Isolation.REPEATABLE_READ)
   public BatchOperation doImport(BatchOperation batchOperation, List<BatchOperationUnitDto> operations)
     throws ImportError, PolicyViolationError, ResourceAlreadyExists {
 

@@ -9,14 +9,20 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @RequiredArgsConstructor
 @Configuration
-public class MinioConfig {
-  private MinioProperties properties;
+public class MinioClientProvider {
+
+  private final MinioProperties properties;
 
   @Bean
-  public MinioClient client() {
+  public MinioClient getClient() {
     return MinioClient.builder()
       .endpoint(properties.getHost() + ":" + properties.getPortApi())
       .credentials(properties.getUsername(), properties.getPassword())
       .build();
+  }
+
+  @Bean
+  public String bucket() {
+    return properties.getBucketName();
   }
 }

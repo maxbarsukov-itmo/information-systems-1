@@ -8,9 +8,11 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import ru.ifmo.is.lab1.batchoperations.dto.BatchOperationDto;
 import ru.ifmo.is.lab1.batchoperations.dto.BatchOperationUnitDto;
 import ru.ifmo.is.lab1.common.errors.*;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -42,7 +45,7 @@ public class BatchOperationController {
   @ResponseStatus(HttpStatus.CREATED)
   @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   @Operation(summary = "Импортировать объекты", security = @SecurityRequirement(name = "bearerAuth"))
-  public ResponseEntity<BatchOperationDto> create(@RequestParam("file") MultipartFile file) throws IOException {
+  public ResponseEntity<BatchOperationDto> create(@RequestParam("file") MultipartFile file) throws Exception {
     if (file.isEmpty()) {
       throw new FileIsEmptyError("File not found");
     }
@@ -76,7 +79,11 @@ public class BatchOperationController {
       .configure(DeserializationFeature.FAIL_ON_MISSING_EXTERNAL_TYPE_ID_PROPERTY, false)
       .readValue(file.getInputStream(), new TypeReference<List<BatchOperationUnitDto>>(){});
 
-    var obj = service.create(operations);
+    var byteArray = new ByteArrayOutputStream();
+    IOUtils.copy(file.getInputStream(), byteArray);
+    var bytes = byteArray.toByteArray();
+
+    var obj = service.create(operations, file.getSize(), bytes);
     return ResponseEntity.status(HttpStatus.CREATED).body(obj);
   }
 
@@ -88,6 +95,16 @@ public class BatchOperationController {
     return ResponseEntity.ok()
       .header("X-Total-Count", String.valueOf(batchOperations.getTotalElements()))
       .body(batchOperations);
+  }
+
+  @GetMapping("/{id}/file")
+  @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+  @Operation(summary = "Получить файл для операции импорта по ID", security = @SecurityRequirement(name = "bearerAuth"))
+  public ResponseEntity<byte[]> getImportFile(@PathVariable int id) throws Exception {
+    var fileContent = service.getFile(id);
+    return ResponseEntity.ok()
+      .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + id + ".json\"")
+      .body(fileContent);
   }
 
   @GetMapping("/{id}")

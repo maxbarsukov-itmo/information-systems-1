@@ -16,9 +16,11 @@ import ru.ifmo.is.lab1.common.errors.ResourceAlreadyExists;
 import ru.ifmo.is.lab1.common.errors.ResourceNotFoundException;
 import ru.ifmo.is.lab1.events.EventService;
 import ru.ifmo.is.lab1.events.EventType;
+import ru.ifmo.is.lab1.storage.StorageService;
 import ru.ifmo.is.lab1.users.User;
 import ru.ifmo.is.lab1.users.UserService;
 
+import java.io.ByteArrayInputStream;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -37,8 +39,16 @@ public class BatchOperationService {
   private final BatchOperationPolicy policy;
   private final UserService userService;
   private final EventService<BatchOperation> eventService;
+  private final StorageService storageService;
 
-  public BatchOperationDto create(List<BatchOperationUnitDto> operations) {
+  public byte[] getFile(int id) throws Exception {
+    var batchOperation = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not Found: " + id));
+    policy.show(currentUser(), batchOperation);
+
+    return storageService.getFile(id);
+  }
+
+  public BatchOperationDto create(List<BatchOperationUnitDto> operations, long fileSize, byte[] bytes) throws Exception {
     var user = currentUser();
     policy.create(user);
 
@@ -54,6 +64,14 @@ public class BatchOperationService {
 
     batchOperation = repository.save(batchOperation);
     eventService.notify(EventType.CREATE, batchOperation);
+
+    if (!uploadFile(batchOperation.getId(), bytes, fileSize)) {
+      updateFailedImport(batchOperation, "Could not upload file to S3");
+      throw new RuntimeException("Could not upload file to S3");
+    }
+
+    logger.info("Uploaded uncommited file to S3");
+
     applicationLock.getImportLock().lock();
 
     try {
@@ -64,6 +82,8 @@ public class BatchOperationService {
       // If successfully imported, update status
       result.setStatus(Status.SUCCESS);
       result = repository.save(result);
+      storageService.commitFile(result.getId());
+      logger.info("File #{} committed in S3", result.getId());
 
       eventService.notify(EventType.UPDATE, result);
       return mapper.map(result);
@@ -77,13 +97,10 @@ public class BatchOperationService {
       logger.info("Unhandled RuntimeException in Batch operation #{} failed: {}", batchOperation.getId(), e.getMessage());
     } finally {
       applicationLock.getImportLock().unlock();
+      storageService.rollbackFile(batchOperation.getId());
     }
 
-    batchOperation.setStatus(Status.FAILED);
-    batchOperation.setAddedCount(0);
-    batchOperation.setUpdatedCount(0);
-    batchOperation.setDeletedCount(0);
-    batchOperation = repository.save(batchOperation);
+    batchOperation = updateFailedImport(batchOperation, null);
 
     eventService.notify(EventType.UPDATE, batchOperation);
     return mapper.map(batchOperation);
@@ -105,6 +122,27 @@ public class BatchOperationService {
     policy.show(currentUser(), batchOperation);
 
     return mapper.map(batchOperation);
+  }
+
+  public BatchOperation updateFailedImport(BatchOperation batchOperation, String message) {
+    batchOperation.setStatus(Status.FAILED);
+    batchOperation.setAddedCount(0);
+    batchOperation.setUpdatedCount(0);
+    batchOperation.setDeletedCount(0);
+    if (message != null) {
+      batchOperation.setErrorMessage(message);
+    }
+    return repository.save(batchOperation);
+  }
+
+  private boolean uploadFile(int importId, byte[] bytes, long objectSize) {
+    try {
+      storageService.uploadUncommitedFile(importId, new ByteArrayInputStream(bytes), objectSize);
+      return true;
+    } catch (Exception e) {
+      logger.error("Could not upload file to S3", e);
+      return false;
+    }
   }
 
   @RequestCache
