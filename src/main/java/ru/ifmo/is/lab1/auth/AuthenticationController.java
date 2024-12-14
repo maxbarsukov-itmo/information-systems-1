@@ -13,18 +13,25 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.ifmo.is.lab1.auth.dto.AuthenticationDto;
 import ru.ifmo.is.lab1.auth.dto.SignInDto;
 import ru.ifmo.is.lab1.auth.dto.SignUpDto;
+import ru.ifmo.is.lab1.common.context.ApplicationLockBean;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 @Tag(name = "Authentication")
 public class AuthenticationController {
+  private final ApplicationLockBean applicationLockBean;
   private final AuthenticationService authenticationService;
 
   @Operation(summary = "Регистрация пользователя")
   @PostMapping("/sign-up")
   public AuthenticationDto signUp(@RequestBody @Valid SignUpDto request) {
-    return authenticationService.signUp(request);
+    applicationLockBean.getImportLock().lock();
+    try {
+      return authenticationService.signUp(request);
+    } finally {
+      applicationLockBean.getImportLock().unlock();
+    }
   }
 
   @Operation(summary = "Авторизация пользователя")

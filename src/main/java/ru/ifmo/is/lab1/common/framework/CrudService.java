@@ -55,19 +55,22 @@ public abstract class CrudService<
   public TDto create(TCreateDto objData) {
     preAction();
 
-    policy.create(currentUser());
+    try {
+      policy.create(currentUser());
 
-    var obj = mapper.map(objData);
+      var obj = mapper.map(objData);
 
-    validateCreate(obj, objData);
+      validateCreate(obj, objData);
 
-    obj.setCreatedBy(currentUser());
-    obj.setCreatedAt(ZonedDateTime.now());
-    repository.save(obj);
-    eventService.notify(EventType.CREATE, obj);
+      obj.setCreatedBy(currentUser());
+      obj.setCreatedAt(ZonedDateTime.now());
+      repository.save(obj);
+      eventService.notify(EventType.CREATE, obj);
 
-    postAction();
-    return mapper.map(obj);
+      return mapper.map(obj);
+    } finally {
+      postAction();
+    }
   }
 
   public TDto getById(int id) {
@@ -81,32 +84,39 @@ public abstract class CrudService<
   public TDto update(TUpdateDto objData, int id) {
     preAction();
 
-    var obj = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not Found: " + id));
-    policy.update(currentUser(), obj);
+    try {
+      var obj = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not Found: " + id));
+      policy.update(currentUser(), obj);
 
-    validateUpdate(obj, objData);
+      validateUpdate(obj, objData);
 
-    mapper.update(objData, obj);
-    obj.setUpdatedBy(currentUser());
-    obj.setUpdatedAt(ZonedDateTime.now());
-    repository.save(obj);
-    eventService.notify(EventType.UPDATE, obj);
+      mapper.update(objData, obj);
+      obj.setUpdatedBy(currentUser());
+      obj.setUpdatedAt(ZonedDateTime.now());
+      repository.save(obj);
+      eventService.notify(EventType.UPDATE, obj);
 
-    postAction();
-    return mapper.map(obj);
+      return mapper.map(obj);
+    } finally {
+      postAction();
+    }
   }
 
   @Transactional(isolation = Isolation.REPEATABLE_READ)
   public boolean delete(int id) {
-    return repository.findById(id)
-      .map(obj -> {
-        preAction();
-        policy.delete(currentUser(), obj);
-        eventService.notify(EventType.DELETE, obj);
-        repository.delete(obj);
-        postAction();
-        return true;
-      }).orElse(false);
+    preAction();
+
+    try {
+      var obj = repository.findById(id);
+      return obj.map(o -> {
+          policy.delete(currentUser(), o);
+          eventService.notify(EventType.DELETE, o);
+          repository.delete(o);
+          return true;
+        }).orElse(false);
+    } finally {
+      postAction();
+    }
   }
 
   @RequestCache
