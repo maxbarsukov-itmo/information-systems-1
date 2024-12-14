@@ -28,7 +28,7 @@ const DragAndDropInterface = ({ onFileUpload }) => {
   const handleUpload = () => {
     if (file) {
       const formdata = new FormData();
-      formdata.append("file", file);
+      formdata.append('file', file);
       
       dispatch(uploadBatchOperation(formdata));
       onFileUpload();

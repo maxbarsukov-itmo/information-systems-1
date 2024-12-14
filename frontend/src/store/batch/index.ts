@@ -90,7 +90,7 @@ const batchOperationsSlice = createSlice({
       .addCase(fetchBatchOperation.rejected, (state, action) => {
         state.loading.get = false;
         state.error.get = action.payload as ApiError || rtkErrorToApiError(action.error);
-      })
+      });
   },
 });
 
