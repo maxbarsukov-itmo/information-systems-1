@@ -3,6 +3,10 @@ import { GridColDef } from '@mui/x-data-grid-pro';
 import { renderHeader } from './utils/renderHeader';
 import { getNumberFilterOperations, getDateTimeFilterOperations } from 'utils/search';
 import { renderUser, renderDateTime } from './utils/renderer';
+import { BatchOperationDto } from 'interfaces/dto/batchoperations/BatchOperationDto';
+import { fetchBatchOperations } from 'store/batch';
+import { Event } from 'interfaces/events/Event';
+import BatchOperationTableTemplate from './BatchOperationTableTemplate';
 
 const columns: GridColDef[] = [
     {
@@ -91,3 +95,22 @@ const columns: GridColDef[] = [
         renderCell: renderDateTime,
     },
 ];
+
+const BatchOperationsTable = () => {
+    const handleEvent = (event : Event<BatchOperationDto>) => {
+        // TODO: handle events
+        return; 
+    }
+
+    return (
+        <BatchOperationTableTemplate<BatchOperationDto>
+            resource={'batchoperations'}
+            columns={columns}
+            selector={state => state.batchOperations}
+            handleEvent={handleEvent}
+            fetchAction={fetchBatchOperations}
+        />
+    );
+}
+
+export default React.memo(BatchOperationsTable);
