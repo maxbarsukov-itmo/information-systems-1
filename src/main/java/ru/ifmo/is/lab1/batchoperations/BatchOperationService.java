@@ -82,7 +82,7 @@ public class BatchOperationService {
       // If successfully imported, update status
       result.setStatus(Status.SUCCESS);
       result = repository.save(result);
-      storageService.commitFile(result.getId());
+      storageService.commit(result.getId());
       logger.info("File #{} committed in S3", result.getId());
 
       eventService.notify(EventType.UPDATE, result);
@@ -97,7 +97,7 @@ public class BatchOperationService {
       logger.info("Unhandled RuntimeException in Batch operation #{} failed: {}", batchOperation.getId(), e.getMessage());
     } finally {
       applicationLock.getImportLock().unlock();
-      storageService.rollbackFile(batchOperation.getId());
+      storageService.rollback(batchOperation.getId());
     }
 
     batchOperation = updateFailedImport(batchOperation, null);
@@ -137,7 +137,7 @@ public class BatchOperationService {
 
   private boolean uploadFile(int importId, byte[] bytes, long objectSize) {
     try {
-      storageService.uploadUncommitedFile(importId, new ByteArrayInputStream(bytes), objectSize);
+      storageService.begin(importId, new ByteArrayInputStream(bytes), objectSize);
       return true;
     } catch (Exception e) {
       logger.error("Could not upload file to S3", e);
