@@ -8,6 +8,7 @@ import dragons from 'store/dragons';
 import locations from 'store/locations';
 import people from 'store/people';
 import adminRequests from 'store/admin';
+import batchOperations from 'store/batch';
 
 export default {
   auth,
@@ -20,4 +21,5 @@ export default {
   dragons,
   locations,
   people,
+  batchOperations,
 };
