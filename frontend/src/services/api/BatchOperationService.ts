@@ -12,4 +12,12 @@ export default class BatchOperationService {
   static async getById(id: number): Promise<AxiosResponse<BatchOperationDto>> {
     return api.get<BatchOperationDto>(`/batch-operations/${id}`);
   }
+
+  static async upload(formData: FormData): Promise<AxiosResponse<BatchOperationDto>> {
+    return api.post<BatchOperationDto>('/batch-operations', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  }
 }

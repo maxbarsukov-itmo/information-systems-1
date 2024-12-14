@@ -43,6 +43,19 @@ export const fetchBatchOperation = createAsyncThunk(
   }
 );
 
+export const uploadBatchOperation = createAsyncThunk(
+  'batchOperations/upload',
+  async (formData: FormData, { rejectWithValue }) => {
+    try {
+      const response = await BatchOperationService.upload(formData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(extractApiError(error));
+    }
+  }
+);
+
+
 const batchOperationsSlice = createSlice({
   name: 'batchOperations',
   initialState,
@@ -77,6 +90,20 @@ const batchOperationsSlice = createSlice({
       .addCase(fetchBatchOperation.rejected, (state, action) => {
         state.loading.get = false;
         state.error.get = action.payload as ApiError || rtkErrorToApiError(action.error);
+      })
+
+      // upload
+      .addCase(uploadBatchOperation.pending, (state) => {
+        state.loading.upload = true;
+        state.error.upload = null;
+      })
+      .addCase(uploadBatchOperation.fulfilled, (state) => {
+        state.loading.upload = false;
+        state.error.upload = null;
+      })
+      .addCase(uploadBatchOperation.rejected, (state, action) => {
+        state.loading.upload = false;
+        state.error.upload = action.payload as ApiError || rtkErrorToApiError(action.error);
       });
   },
 });
