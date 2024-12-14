@@ -1,0 +1,97 @@
+[
+  {
+    "type": "CREATE",
+    "resourceType": "coordinates",
+    "body": {
+      "x": 250,
+      "y": 300.5
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "locations",
+    "body": {
+      "x": 250.75,
+      "y": 300,
+      "z": 400
+    }
+  },
+  {
+    "type": "UPDATE",
+    "resourceType": "locations",
+    "resourceId": 1,
+    "body": {
+      "x": 550.5,
+      "y": 650,
+      "z": 750
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "people",
+    "body": {
+      "name": "Jane Doe",
+      "eyeColor": "BLACK",
+      "birthday": "1985-02-15",
+      "height": 170.5,
+      "location": {
+        "x": 50.5,
+        "y": 60,
+        "z": 70
+      }
+    }
+  },
+
+  {
+    "type": "UPDATE",
+    "resourceType": "people",
+    "resourceId": 1,
+    "body": {
+      "name": "Billy Johns",
+      "height": 172,
+      "eyeColor": "RED",
+      "birthday": "2000-05-10",
+      "locationId": 1,
+      "passportId": "ab111"
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "dragons",
+    "body": {
+      "name": "Falkor",
+      "type": "AIR",
+      "age": 300,
+      "wingspan": 100,
+      "speaking": true,
+      "coordinates": {
+        "x": 250,
+        "y": 350.5
+      },
+      "head": {
+        "size": 10,
+        "toothCount": 50
+      }
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "dragons",
+    "body": {
+      "name": "Draco",
+      "type": "FIRE",
+      "age": 500,
+      "wingspan": 200,
+      "speaking": false,
+      "killerId": 1,
+      "coordinates": {
+        "x": 300,
+        "y": 400.5
+      },
+      "head": {
+        "size": 15,
+        "toothCount": 60
+      }
+    }
+  }
+]

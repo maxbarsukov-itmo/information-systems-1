@@ -1,0 +1,41 @@
+[
+  {
+    "type": "CREATE",
+    "resourceType": "dragons",
+    "body": {
+      "name": "Dragon1",
+      "type": "AIR",
+      "age": 300,
+      "wingspan": 100,
+      "speaking": true,
+      "coordinates": {
+        "x": 250,
+        "y": 350.5
+      },
+      "head": {
+        "size": 10,
+        "toothCount": 50
+      }
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "dragons",
+    "body": {
+      "name": "Dragon2",
+      "type": "FIRE",
+      "age": 500,
+      "wingspan": 200,
+      "speaking": false,
+      "killerId": 1,
+      "coordinates": {
+        "x": 300,
+        "y": 400.5
+      },
+      "head": {
+        "size": 15,
+        "toothCount": 60
+      }
+    }
+  }
+]
