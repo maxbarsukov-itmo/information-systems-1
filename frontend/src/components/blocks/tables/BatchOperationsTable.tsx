@@ -2,7 +2,7 @@ import React from 'react';
 import { GridColDef } from '@mui/x-data-grid-pro';
 import { renderHeader } from './utils/renderHeader';
 import { getNumberFilterOperations, getDateTimeFilterOperations } from 'utils/search';
-import { renderUser, renderDateTime, renderMultilineText } from './utils/renderer';
+import { renderUser, renderDateTime, renderMultilineText, renderStatus } from './utils/renderer';
 import { BatchOperationDto } from 'interfaces/dto/batchoperations/BatchOperationDto';
 import { fetchBatchOperations } from 'store/batch';
 import { Event } from 'interfaces/events/Event';
@@ -27,6 +27,7 @@ const columns: GridColDef[] = [
         resizable: true,
         minWidth: 170,
         renderHeader,
+        renderCell: renderStatus,
         filterOperators: getNumberFilterOperations(),
     },
     {

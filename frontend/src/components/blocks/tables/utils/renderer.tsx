@@ -62,6 +62,56 @@ export const renderUser = (params: GridRenderCellParams) => {
   );
 };
 
+export const renderStatus = (params: GridRenderCellParams) => {
+  const text = params.value as string;
+  if (!text) return;
+
+  const base = {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: '5px',
+    padding: '1px',
+    fontWeight: 500,
+    borderRadius: '10px',
+    width: '70px',
+    height: '30px',
+  };
+
+  const progress = {
+    backgroundColor: '#ecc800',
+    color: '#e9e9e9',
+    ...base,
+  };
+
+  const success = {
+    backgroundColor: '#4caf50',
+    color: '#e9e9e9',
+    ...base,
+  };
+
+  const failed = {
+    backgroundColor: '#ab230e',
+    color: '#e9e9e9',
+    ...base,
+  };
+
+  const values = {
+    'SUCCESS': success,
+    'FAILED': failed,
+    'IN_PROGRESS': progress,
+  };
+
+  return (
+    <div style={{ display: 'flex' }}>
+      <div style={values[text]}>
+        {text}
+      </div>
+    </div>
+  );
+};
+
 const splitString = (input: string, lineLength: number): string => {
   const result: string[] = [];
 
@@ -80,12 +130,12 @@ export const renderMultilineText = (params: GridRenderCellParams) => {
   const classes = useStyles();
 
   return (
-    <span className={classes.root}>
+    <div className={classes.root}>
       <Typography style={{ wordBreak: 'break-all' }}
             dangerouslySetInnerHTML={{
               __html: splitString(text, 20),
             }}
       />
-    </span>
+    </div>
   );
 };
