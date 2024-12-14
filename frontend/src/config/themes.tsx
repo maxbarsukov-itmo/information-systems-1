@@ -11,7 +11,7 @@ import {
 
 import i18n from 'config/i18n';
 
-import { Home, InfoCircle, Location, Scan, Setting } from 'react-iconly';
+import { Home, Download, Location, Scan, Setting } from 'react-iconly';
 
 export type PaletteType = 'light' | 'dark' | 'lab8';
 
@@ -114,6 +114,13 @@ export const makeNavigationTabs = (
       to: () => '/admin-panel',
       match: 'adminRequestPanel',
       tab: 'adminRequestPanel',
+    },
+    {
+      label: t`pages.app.routes.batchOperationPanel`,
+      icon: <Download set="light" size={size} />,
+      to: () => '/batch-operation',
+      match: 'batchOperationPanel',
+      tab: 'batchOperationPanel',
     },
   ];
   if (replaceProfile) {

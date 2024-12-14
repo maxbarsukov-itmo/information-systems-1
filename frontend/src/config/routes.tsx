@@ -11,6 +11,7 @@ import SettingsLanguage from 'pages/Settings/Language';
 import i18n from 'config/i18n';
 import getContrastPaperColor from 'utils/getContrastPaperColor';
 import AdminRequestPanel from 'pages/AdminRequestPanel';
+import BatchOperationsPanel from 'pages/BatchOperationPanel';
 
 export interface Route {
   path: string | string[];
@@ -138,6 +139,15 @@ export const getRoutes = () => {
       path: '/admin-panel',
       component: <AdminRequestPanel />,
       alias: 'admin-panel',
+      shouldShowAppBar: true,
+      shouldAppBarChangeColors: true,
+      appBarColor: theme => theme.palette.background.paper,
+    },
+    {
+      title: t`pages.app.routes.batchOperationPanel`,
+      path: '/batch-operation',
+      component: <BatchOperationsPanel />,
+      alias: 'batch-operation',
       shouldShowAppBar: true,
       shouldAppBarChangeColors: true,
       appBarColor: theme => theme.palette.background.paper,
