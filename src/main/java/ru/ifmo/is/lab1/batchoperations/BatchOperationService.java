@@ -65,12 +65,11 @@ public class BatchOperationService {
     batchOperation = repository.save(batchOperation);
     eventService.notify(EventType.CREATE, batchOperation);
 
-    if (!uploadFile(batchOperation.getId(), bytes, fileSize)) {
-      updateFailedImport(batchOperation, "Could not upload file to S3");
-      throw new RuntimeException("Could not upload file to S3");
+    try {
+      storageService.create(batchOperation.getId(), new ByteArrayInputStream(bytes), fileSize);
+    } catch (Exception e) {
+      return mapper.map(fail(batchOperation, "Could not upload file to S3"));
     }
-
-    logger.info("Uploaded uncommited file to S3");
 
     applicationLock.getImportLock().lock();
 
@@ -82,8 +81,6 @@ public class BatchOperationService {
       // If successfully imported, update status
       result.setStatus(Status.SUCCESS);
       result = repository.save(result);
-      storageService.commit(result.getId());
-      logger.info("File #{} committed in S3", result.getId());
 
       eventService.notify(EventType.UPDATE, result);
       return mapper.map(result);
@@ -91,16 +88,17 @@ public class BatchOperationService {
     } catch (ImportError | ConstraintViolationException | ResourceAlreadyExists | ResourceNotFoundException e) {
       // If error happened during transaction, update status to FAILED and set error message
       batchOperation.setErrorMessage(e.getMessage());
+      delete(batchOperation.getId());
       logger.info("Batch operation #{} failed: {}", batchOperation.getId(), e.getMessage());
     } catch (Exception e) {
       batchOperation.setErrorMessage(e.getMessage());
+      delete(batchOperation.getId());
       logger.info("Unhandled RuntimeException in Batch operation #{} failed: {}", batchOperation.getId(), e.getMessage());
     } finally {
       applicationLock.getImportLock().unlock();
-      storageService.rollback(batchOperation.getId());
     }
 
-    batchOperation = updateFailedImport(batchOperation, null);
+    batchOperation = fail(batchOperation, null);
 
     eventService.notify(EventType.UPDATE, batchOperation);
     return mapper.map(batchOperation);
@@ -124,7 +122,7 @@ public class BatchOperationService {
     return mapper.map(batchOperation);
   }
 
-  public BatchOperation updateFailedImport(BatchOperation batchOperation, String message) {
+  public BatchOperation fail(BatchOperation batchOperation, String message) {
     batchOperation.setStatus(Status.FAILED);
     batchOperation.setAddedCount(0);
     batchOperation.setUpdatedCount(0);
@@ -135,13 +133,11 @@ public class BatchOperationService {
     return repository.save(batchOperation);
   }
 
-  private boolean uploadFile(int importId, byte[] bytes, long objectSize) {
+  private void delete(int id) {
     try {
-      storageService.begin(importId, new ByteArrayInputStream(bytes), objectSize);
-      return true;
+      storageService.delete(id);
     } catch (Exception e) {
-      logger.error("Could not upload file to S3", e);
-      return false;
+      logger.error("File deletion failed", e);
     }
   }
 

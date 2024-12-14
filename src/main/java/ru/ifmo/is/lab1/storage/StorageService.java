@@ -19,52 +19,36 @@ public class StorageService {
   public byte[] getFile(int id) throws Exception {
     MinioClient client = provider.getClient();
     InputStream obj = client.getObject(GetObjectArgs.builder()
-      .object(id + ".json")
+      .object(getFileName(id))
       .bucket(provider.bucket())
       .build());
     return obj.readAllBytes();
   }
 
-  public void begin(int id, InputStream stream, Long size) throws Exception {
+  public void create(int id, InputStream stream, Long size) throws Exception {
     MinioClient client = provider.getClient();
     client.putObject(
       PutObjectArgs.builder()
         .bucket(provider.bucket())
-        .object(id + "-draft.json")
+        .object(getFileName(id))
         .contentType("application/json")
         .stream(stream, size, -1)
         .build()
     );
   }
 
-  public void commit(int id) throws Exception {
+  public void delete(int id) throws Exception {
     MinioClient client = provider.getClient();
-    client.copyObject(
-      CopyObjectArgs.builder()
-        .source(CopySource.builder()
-          .bucket(provider.bucket())
-          .object(id + "-draft.json")
-          .build())
-        .bucket(provider.bucket())
-        .object(id + ".json")
-        .build()
-    );
     client.removeObject(
       RemoveObjectArgs.builder()
         .bucket(provider.bucket())
-        .object(id + "-draft.json")
+        .object(getFileName(id))
         .build()
     );
   }
 
-  public void rollback(int id) throws Exception {
-    MinioClient client = provider.getClient();
-    client.removeObject(
-      RemoveObjectArgs.builder()
-        .bucket(provider.bucket())
-        .object(id + "-draft.json")
-        .build()
-    );
+  private String getFileName(int id) {
+    return id + ".json";
   }
 
   @PostConstruct
