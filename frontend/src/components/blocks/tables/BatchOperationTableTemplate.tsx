@@ -17,7 +17,9 @@ import Footer from 'components/blocks/tables/utils/Footer';
 import Toolbar from 'components/blocks/tables/utils/Toolbar';
 import NoRowsOverlay from 'components/blocks/tables/utils/NoRowsOverlay';
 import SkeletonLoadingOverlay from 'components/blocks/tables/utils/SkeletonCell';
+import { BatchOperationDto } from 'interfaces/dto/batchoperations/BatchOperationDto';
 import { RootState } from 'store';
+import { addBatchOperation } from 'store/batch';
 import Storage from 'utils/Storage';
 
 interface TableState {
@@ -31,16 +33,12 @@ interface TableState {
 interface BatchOperationTableTemplateProps<T> {
   resource: string;
   columns: GridColDef[];
-  selector: (state: RootState) => any;
-  handleEvent: (event: Event<T>) => void;
   fetchAction;
 }
 
 const BatchOperationTableTemplate = <T extends unknown>({
   resource,
   columns,
-  selector,
-  handleEvent,
   fetchAction,
 }: BatchOperationTableTemplateProps<T>): JSX.Element => {
   const dispatch = useDispatch();
@@ -55,12 +53,20 @@ const BatchOperationTableTemplate = <T extends unknown>({
   const [searchText, setSearchText] = React.useState(state?.search || '');
   const debouncedSearchText = useDebounce(searchText, 700);
 
-  const { items, loading, error: errors } = useSelector(selector);
+  const { loading, error: errors } = useSelector(state => state.batchOperations);
+  const items = useSelector(state => state.batchOperations.data);
   const uuids = useSelector(state => state.requests.uuids);
 
   const fetch = () => {
     const requestData = { page, size, sort: sortModelToArgs(sortModel) };
     dispatch(fetchAction(requestData));
+  };
+
+  const handleEvent = (event : Event<T>) => {
+    if (event.resourceType == 'batch-operations') {
+      dispatch(addBatchOperation(event.entity as BatchOperationDto));
+    }
+    return;
   };
 
   const updateState = (state) => {
@@ -160,6 +166,8 @@ const BatchOperationTableTemplate = <T extends unknown>({
               },
             }}
 
+            disableColumnFilter
+            disableSelectionOnClick
             autoHeight
             loading={loading.fetch}
             columnBuffer={2}

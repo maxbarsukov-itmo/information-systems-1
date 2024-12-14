@@ -14,7 +14,7 @@ export const TABLES_KEY = 'lab1_TABLES';
 
 export type Tables = 'dragons' | 'dragonHeads' | 'dragonCaves' | 'coordinates' | 'locations' | 'people';
 
-export type FlowAlias = 'tables' | 'chart';
+export type FlowAlias = 'tables' | 'chart' | 'batchOperationPanel';
 export interface FlowObject {
   title: string;
   alias: string;
@@ -27,6 +27,10 @@ export const FLOWS: FlowObject[] = [
   {
     title: 'pages.app.navigationTabs.chart',
     alias: 'chart',
+  },
+  {
+    title: 'pages.app.navigationTabs.batchOperations',
+    alias: 'batch-operation',
   },
 ];
 

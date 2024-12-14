@@ -59,7 +59,16 @@ export const uploadBatchOperation = createAsyncThunk(
 const batchOperationsSlice = createSlice({
   name: 'batchOperations',
   initialState,
-  reducers: {},
+  reducers: {
+    addBatchOperation(state, action: PayloadAction<BatchOperationDto>) {
+      const index = state.data.content.findIndex(item => item.id === action.payload.id);
+      if (index >= 0) {
+        state.data.content[index] = action.payload;
+      } else {
+        state.data.numberOfElements = state.data.content.unshift(action.payload);
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       // fetchAll
@@ -94,4 +103,5 @@ const batchOperationsSlice = createSlice({
   },
 });
 
+export const { addBatchOperation } = batchOperationsSlice.actions;
 export default batchOperationsSlice.reducer;

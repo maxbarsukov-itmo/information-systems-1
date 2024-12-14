@@ -16,11 +16,11 @@ const BatchOperationPanel = () => {
         Batch Operation Panel
       </Typography>
       <DragAndDropInterface onFileUpload={handleFileUpload} />
-      
+
       <Paper style={{ marginTop: '16px', padding: '16px' }}>
         <BatchOperationsTable />
       </Paper>
-    
+
     </div>
   );
 };

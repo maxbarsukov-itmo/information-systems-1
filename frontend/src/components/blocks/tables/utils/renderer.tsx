@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { GiQueenCrown } from 'react-icons/gi';
 import dayjs from 'dayjs';
 import { GridRenderCellParams } from '@mui/x-data-grid-pro';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 
 import User from 'interfaces/models/User';
 import UserAvatar from 'components/blocks/UserAvatar';
@@ -58,6 +58,34 @@ export const renderUser = (params: GridRenderCellParams) => {
       }
       <span className={classes.id}>#{user.id}</span>
       <span className={user.role === Role.ROLE_ADMIN ? classes.admin : ''}>{user.username}</span>
+    </span>
+  );
+};
+
+const splitString = (input: string, lineLength: number): string => {
+  const result: string[] = [];
+
+  for (let i = 0; i < input.length; i += lineLength) {
+      result.push(input.substring(i, i + lineLength));
+  }
+
+  return result.join('<br>');
+};
+
+
+export const renderMultilineText = (params: GridRenderCellParams) => {
+  const text = params.value as string;
+  if (!text) return;
+
+  const classes = useStyles();
+
+  return (
+    <span className={classes.root}>
+      <Typography style={{ wordBreak: 'break-all' }}
+            dangerouslySetInnerHTML={{
+              __html: splitString(text, 20),
+            }}
+      />
     </span>
   );
 };

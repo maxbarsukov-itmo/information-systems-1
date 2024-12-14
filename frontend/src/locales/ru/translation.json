@@ -13,7 +13,8 @@
         "user": "Пользователь",
         "login": "Авторизация",
         "register": "Регистрация",
-        "adminRequestPanel": "Панель управления"
+        "adminRequestPanel": "Панель управления",
+        "batchOperationPanel": "Импорт"
       },
       "themes": {
         "light": "Светлая",
@@ -35,6 +36,7 @@
       },
       "navigationTabs": {
         "tables": "Таблицы",
+        "batchOperations": "Импорт",
         "chart": "Визуализация",
         "settings": "Настройки"
       },

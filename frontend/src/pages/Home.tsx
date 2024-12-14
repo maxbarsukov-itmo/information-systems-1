@@ -4,6 +4,7 @@ import AppWindow from 'components/blocks/AppWindow';
 import { FlowAlias, Tables } from 'config/constants';
 
 import DragonCavesTable from 'components/blocks/tables/DragonCavesTable';
+import BatchOperationsPanel from 'pages/BatchOperationPanel';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,6 +29,7 @@ const Home = ({ variant = 'tables', table = 'dragons' }: { variant: FlowAlias; t
           (table === 'people' && <DragonCavesTable />)
         )}
         {variant === 'chart' && <DragonCavesTable />}
+        {variant === 'batchOperationPanel' && <BatchOperationsPanel />}
       </div>
     </AppWindow>
   );

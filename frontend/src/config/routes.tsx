@@ -146,7 +146,7 @@ export const getRoutes = () => {
     {
       title: t`pages.app.routes.batchOperationPanel`,
       path: '/batch-operation',
-      component: <BatchOperationsPanel />,
+      component: <Home variant='batchOperationPanel' />,
       alias: 'batch-operation',
       shouldShowAppBar: true,
       shouldAppBarChangeColors: true,

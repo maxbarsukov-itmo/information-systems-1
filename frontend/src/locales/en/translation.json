@@ -13,7 +13,8 @@
         "user": "User",
         "login": "Log In",
         "register": "Register",
-        "adminRequestPanel": "Admin Panel"
+        "adminRequestPanel": "Admin Panel",
+        "batchOperationPanel": "Batch Import"
       },
       "themes": {
         "light": "Light",
@@ -35,6 +36,7 @@
       },
       "navigationTabs": {
         "tables": "Tables",
+        "batchOperations": "Batch Import",
         "chart": "Visualization",
         "settings": "Settings"
       },

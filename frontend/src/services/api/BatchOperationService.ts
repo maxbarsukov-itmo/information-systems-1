@@ -6,15 +6,15 @@ import { createCrudUri } from './utils/uri';
 
 export default class BatchOperationService {
   static async getAll(page: number, size: number, sort: string[]): Promise<AxiosResponse<Paged<BatchOperationDto>>> {
-    return api.get<Paged<BatchOperationDto>>(`/batch-operations${createCrudUri(page, size, sort)}`);
+    return api.get<Paged<BatchOperationDto>>(`/import${createCrudUri(page, size, sort)}`);
   }
 
   static async getById(id: number): Promise<AxiosResponse<BatchOperationDto>> {
-    return api.get<BatchOperationDto>(`/batch-operations/${id}`);
+    return api.get<BatchOperationDto>(`/import/${id}`);
   }
 
   static async upload(formData: FormData): Promise<AxiosResponse<BatchOperationDto>> {
-    return api.post<BatchOperationDto>('/batch-operations', formData, {
+    return api.post<BatchOperationDto>('/import', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
