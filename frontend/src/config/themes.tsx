@@ -121,7 +121,7 @@ export const makeNavigationTabs = (
       to: () => '/batch-operation',
       match: 'batchOperationPanel',
       tab: 'batchOperationPanel',
-    }
+    },
   ];
   if (replaceProfile) {
     tabs.push({
