@@ -91,20 +91,6 @@ const batchOperationsSlice = createSlice({
         state.loading.get = false;
         state.error.get = action.payload as ApiError || rtkErrorToApiError(action.error);
       })
-
-      // upload
-      .addCase(uploadBatchOperation.pending, (state) => {
-        state.loading.upload = true;
-        state.error.upload = null;
-      })
-      .addCase(uploadBatchOperation.fulfilled, (state) => {
-        state.loading.upload = false;
-        state.error.upload = null;
-      })
-      .addCase(uploadBatchOperation.rejected, (state, action) => {
-        state.loading.upload = false;
-        state.error.upload = action.payload as ApiError || rtkErrorToApiError(action.error);
-      });
   },
 });
 
