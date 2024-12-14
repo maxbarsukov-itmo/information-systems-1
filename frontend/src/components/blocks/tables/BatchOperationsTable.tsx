@@ -100,7 +100,7 @@ const BatchOperationsTable = () => {
     const handleEvent = (event : Event<BatchOperationDto>) => {
         // TODO: handle events
         return; 
-    }
+    };
 
     return (
         <BatchOperationTableTemplate<BatchOperationDto>
@@ -111,6 +111,6 @@ const BatchOperationsTable = () => {
             fetchAction={fetchBatchOperations}
         />
     );
-}
+};
 
 export default React.memo(BatchOperationsTable);
