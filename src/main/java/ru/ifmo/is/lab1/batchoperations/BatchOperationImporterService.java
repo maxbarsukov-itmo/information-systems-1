@@ -47,6 +47,7 @@ public class BatchOperationImporterService {
       }
     }
 
+    batchOperation.setStatus(Status.SUCCESS);
     return repository.save(batchOperation);
   }
 }

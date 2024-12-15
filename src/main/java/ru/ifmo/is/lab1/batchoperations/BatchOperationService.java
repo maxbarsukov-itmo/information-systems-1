@@ -79,9 +79,6 @@ public class BatchOperationService {
       var result = importer.doImport(batchOperation, operations);
 
       // If successfully imported, update status
-      result.setStatus(Status.SUCCESS);
-      result = repository.save(result);
-
       eventService.notify(EventType.UPDATE, result);
       return mapper.map(result);
 
